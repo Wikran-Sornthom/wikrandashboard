@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSC Breast Cancer — ตัวชี้วัดคุณภาพ</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card-bg: #1a1d24;
+    --card-border: #2a2e38;
+    --text-main: #f0f0f2;
+    --text-dim: #9498a3;
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --green: #22c55e;
+    --gray: #4b5563;
+    --blue: #3b82f6;
+    --purple: #a78bfa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    padding: 16px;
+    padding-bottom: 60px;
+  }
+  header { margin-bottom: 18px; }
+  header h1 { font-size: 1.4rem; margin: 0 0 4px 0; }
+  header .subtitle { color: var(--text-dim); font-size: 0.85rem; }
+  .updated { color: var(--text-dim); font-size: 0.75rem; margin-top: 6px; }
+
+  .note-box {
+    background: #1c2333;
+    border: 1px solid #2f3b57;
+    border-left: 4px solid var(--blue);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+    color: #c7cee0;
+    line-height: 1.6;
+  }
+  .note-box b { color: var(--text-main); }
+  .warn-box {
+    background: #2a1f16;
+    border: 1px solid #4a3620;
+    border-left: 4px solid var(--orange);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+    font-size: 0.78rem;
+    color: #e2c9a3;
+    line-height: 1.6;
+  }
+  .warn-box b { color: var(--text-main); }
+
+  .section-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 26px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .section-desc { color: var(--text-dim); font-size: 0.78rem; margin: -6px 0 14px 0; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 10px;
+  }
+  .kpi-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--gray);
+    border-radius: 10px;
+    padding: 13px 14px;
+  }
+  .kpi-card.good { border-left-color: var(--green); }
+  .kpi-card.bad { border-left-color: var(--red); }
+  .kpi-card.warn { border-left-color: var(--orange); }
+  .kpi-title { font-size: 0.8rem; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+  .kpi-target { font-size: 0.68rem; color: var(--text-dim); margin-bottom: 10px; }
+  .kpi-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.72rem; color: var(--text-dim); padding: 3px 0; border-top: 1px dashed #262a33; }
+  .kpi-row:first-of-type { border-top: none; }
+  .kpi-row .val { font-weight: 700; font-size: 0.9rem; }
+  .kpi-row.current .val { color: var(--text-main); }
+  .kpi-row .val.pass { color: var(--green); }
+  .kpi-row .val.fail { color: var(--red); }
+  .kpi-flag { display: inline-block; font-size: 0.65rem; background: #3a2a15; color: var(--orange); padding: 1px 6px; border-radius: 5px; margin-left: 6px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.76rem; }
+  th, td { padding: 7px 8px; text-align: right; border-bottom: 1px solid var(--card-border); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--text-dim); font-weight: 600; font-size: 0.7rem; }
+  tr.total-row td { font-weight: 700; border-top: 2px solid var(--card-border); color: var(--text-main); }
+  td.pct-good { color: var(--green); font-weight: 600; }
+  td.pct-bad { color: var(--red); font-weight: 600; }
+  .table-scroll { overflow-x: auto; border: 1px solid var(--card-border); border-radius: 10px; padding: 4px 10px; }
+
+  .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 150px; margin: 14px 0 6px 0; padding: 0 4px; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .bar { width: 100%; border-radius: 4px 4px 0 0; background: var(--blue); position: relative; min-height: 2px; }
+  .bar.below { background: var(--red); }
+  .bar-val { font-size: 0.62rem; color: var(--text-dim); margin-bottom: 3px; }
+  .bar-label { font-size: 0.62rem; color: var(--text-dim); margin-top: 6px; writing-mode: horizontal-tb; text-align: center; }
+  .target-line { position: relative; }
+  .target-line::before {
+    content: "";
+    position: absolute;
+    left: -4px; right: -4px; top: 0;
+    border-top: 2px dashed var(--green);
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .stat-tile-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap: 10px; margin-bottom: 14px; }
+  .stat-tile { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; text-align: center; }
+  .stat-tile .num { font-size: 1.5rem; font-weight: 700; }
+  .stat-tile .lbl { font-size: 0.68rem; color: var(--text-dim); margin-top: 4px; }
+
+  .tag { display: inline-block; font-size: 0.68rem; padding: 2px 8px; border-radius: 6px; background: #232733; color: #a8b0c4; margin-right: 6px; }
+
+  a.raw-link {
+    display: inline-block;
+    margin-top: 6px;
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 0.8rem;
+    border: 1px solid #2f3b57;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: #1c2333;
+  }
+  a.raw-link:hover { background: #232c42; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>คณะกรรมการ DSC Breast Cancer</h1>
+  <div class="subtitle">ตัวชี้วัดคุณภาพการดูแลผู้ป่วยมะเร็งเต้านม · งานพยาบาลผู้ป่วยนอกศัลยกรรม กลุ่มภารกิจด้านการพยาบาล · โรงพยาบาลมะเร็งอุบลราชธานี</div>
+  <div class="updated" id="lastUpdated"></div>
+</header>
+
+<div class="note-box">
+  <b>ที่มาของข้อมูล:</b> รวบรวมจากแบบรายงานเครื่องชี้วัดประจำเดือน (OPD ศัลยกรรม) 10 ฉบับ ตั้งแต่ <b>ต.ค. 2568 – ก.ค. 2569</b> (ปีงบประมาณ 2569) และตารางสรุปผลการดำเนินงาน 3 ปี (2567–2569) · ถ่ายจากเอกสารต้นฉบับ 14 ภาพ เมื่อ 19 ส.ค. 2569
+</div>
+
+<div class="warn-box">
+  <b>ข้อควรระวัง:</b> ตัวเลข "ร้อยละผู้ป่วยผ่าตัดภายใน 4 สัปดาห์" ในตารางสรุป 3 ปี (2569 = 78.05%) แตกต่างจากผลรวมที่คำนวณใหม่จากข้อมูลรายเดือนกลุ่ม Service Plan (68.1%) และจากข้อมูลรวมทุกกลุ่ม (57.8%) — ควรตรวจสอบกับผู้รับผิดชอบข้อมูลว่าฐานการคำนวณของตัวเลขสรุปประจำปีต่างจากไฟล์รายเดือนอย่างไร ก่อนนำไปใช้รายงานทางการ
+</div>
+
+<div class="section-title">ตัวชี้วัดหลัก 8 รายการ — เป้าหมาย และผลการดำเนินงาน 3 ปี</div>
+<div class="section-desc">ปี 2569 = 1 ต.ค. 2568 – 31 ก.ค. 2569 (10 เดือน ยังไม่ครบปีงบประมาณ)</div>
+<div class="kpi-grid" id="kpiGrid"></div>
+
+<div class="section-title">แนวโน้มรายเดือน — ร้อยละผู้ป่วยผ่าตัดภายใน 4 สัปดาห์ (กลุ่ม Service Plan)</div>
+<div class="section-desc">เป้าหมาย ≥ 80% · เส้นประสีเขียว = เป้าหมาย</div>
+<div class="card">
+  <div class="bar-chart" id="barChart"></div>
+</div>
+
+<div class="section-title">ตารางรายละเอียดรายเดือน — ระยะเวลารอผ่าตัดภายใน 4 สัปดาห์</div>
+<div class="section-desc">แยกกลุ่ม Service Plan / นอกเหนือ Service Plan / รวมทั้งหมด</div>
+<div class="table-scroll">
+  <table id="monthlyTable"></table>
+</div>
+
+<div class="section-title">ตารางรายละเอียดรายเดือน — ตัวชี้วัดอื่น ๆ</div>
+<div class="section-desc">CPR จากการคัดกรองล่าช้า / ข้อร้องเรียนรุนแรง / Febrile neutropenia / ข้อไหล่ติดหลังผ่าตัด / อัตราไม่มาตามนัด / รอตรวจ BIRADS4+</div>
+<div class="table-scroll">
+  <table id="otherTable"></table>
+</div>
+
+<div class="section-title">ข้อมูลดิบระดับผู้ป่วย</div>
+<div class="card">
+  <div class="stat-tile-row">
+    <div class="stat-tile"><div class="num">73</div><div class="lbl">รายที่บันทึกไว้</div></div>
+    <div class="stat-tile"><div class="num">71</div><div class="lbl">รวมตามรายงานสรุป</div></div>
+    <div class="stat-tile"><div class="num">10</div><div class="lbl">เดือนที่มีข้อมูล</div></div>
+  </div>
+  <div style="font-size:0.8rem; color:var(--text-dim); line-height:1.6;">
+    รายชื่อผู้ป่วยรายบุคคล (HN, วันผ่าตัด, วันตรวจชิ้นเนื้อ, ผลพยาธิวิทยา, จำนวนวันรอผ่าตัด, หมายเหตุ) เก็บแยกไว้ในไฟล์ CSV ต่างหาก
+    เพื่อไม่ให้ข้อมูลผู้ป่วยรายบุคคลปนอยู่ในหน้าจอที่อาจเปิดแสดงต่อที่ประชุม
+    <br><br>
+    <b style="color:var(--orange)">⚠ ข้อมูลนี้ถอดจากภาพถ่ายเอกสารด้วยสายตา อาจมีความคลาดเคลื่อนโดยเฉพาะช่อง "หมายเหตุ" และ "โรงพยาบาลต้นทาง" — กรุณาตรวจทานกับเอกสารต้นฉบับก่อนใช้อ้างอิงอย่างเป็นทางการ</b>
+  </div>
+  <div style="font-size:0.76rem; color:var(--text-dim); font-style:italic; margin-top:6px;">ไฟล์ CSV ข้อมูลดิบระดับผู้ป่วย (มี HN จริง) ไม่เปิดเผยในเว็บสาธารณะนี้ — มีเฉพาะในไฟล์บนคอมพิวเตอร์ของคุณหมอเท่านั้น</div>
+</div>
+
+<script>
+  const kpis = [
+    { title: "ร้อยละผู้ป่วยมะเร็งเต้านมที่มีภาวะข้อไหล่ติดหลังผ่าตัดที่ 1 เดือน", target: "≤ 10%", y2567: 0, y2568: 0, y2569: 0, unit: "%", lowerBetter: true },
+    { title: "จำนวนครั้งของการช่วยฟื้นคืนชีพ (CPR) ที่เกิดจากการคัดกรองล่าช้า", target: "0 ราย", y2567: 0, y2568: 0, y2569: 0, unit: "ราย", lowerBetter: true },
+    { title: "ร้อยละผู้ป่วยมะเร็งเต้านมที่ได้รับการรักษาด้วยการผ่าตัดภายในระยะเวลาที่กำหนด (4 สัปดาห์)", target: "≥ 80%", y2567: 71.43, y2568: 74.42, y2569: 78.05, unit: "%", lowerBetter: false, flag: "ตัวเลขปี 2569 นี้มาจากรายงานสรุป — ต่างจากผลคำนวณใหม่ (ดูกล่องเตือนด้านบน)" },
+    { title: "จำนวนผู้ป่วยมะเร็งเต้านมหลังได้รับยาเคมีที่มีภาวะ Febrile Neutropenia", target: "0 ราย", y2567: 2, y2568: 7, y2569: 5, unit: "ราย", lowerBetter: true },
+    { title: "ร้อยละความพึงพอใจของผู้รับบริการ", target: "≥ 80%", y2567: 94.3, y2568: 96.3, y2569: 95.48, unit: "%", lowerBetter: false },
+    { title: "อัตราการติดตามผู้ป่วยไม่มาตามนัด", target: "100%", y2567: 91.6, y2568: 85.7, y2569: 100, unit: "%", lowerBetter: false },
+    { title: "จำนวนข้อร้องเรียนที่รุนแรงของผู้มารับบริการ", target: "0 ราย", y2567: 5, y2568: 1, y2569: 1, unit: "ราย", lowerBetter: true },
+    { title: "ระยะเวลารอตรวจภายหลังส่งปรึกษา ผู้ป่วยผลเมมโมแกรม BIRADS 4 ขึ้นไป (≤ 2 สัปดาห์)", target: "100%", y2567: 100, y2568: 100, y2569: 100, unit: "%", lowerBetter: false },
+  ];
+
+  function passFail(k, val) {
+    // ประเมินคร่าวๆ ว่าผ่านเป้าหรือไม่ จาก target string
+    if (k.target.includes("≤")) {
+      const n = parseFloat(k.target.replace(/[^0-9.]/g,""));
+      return val <= n;
+    }
+    if (k.target.includes("≥")) {
+      const n = parseFloat(k.target.replace(/[^0-9.]/g,""));
+      return val >= n;
+    }
+    if (k.target.includes("100")) return val >= 99.99;
+    if (k.target.trim() === "0 ราย") return val === 0;
+    return null;
+  }
+
+  function renderKpis() {
+    const grid = document.getElementById("kpiGrid");
+    grid.innerHTML = kpis.map(k => {
+      const pf = passFail(k, k.y2569);
+      const cardCls = pf === null ? "" : (pf ? "good" : "bad");
+      const fmt = v => k.unit === "%" ? v.toFixed(2) + "%" : v + " ราย";
+      const valCls = (v) => {
+        const p = passFail(k, v);
+        return p === null ? "" : (p ? "pass" : "fail");
+      };
+      return `
+        <div class="kpi-card ${cardCls}">
+          <div class="kpi-title">${k.title}${k.flag ? `<span class="kpi-flag">⚠</span>` : ""}</div>
+          <div class="kpi-target">เป้าหมาย: ${k.target}</div>
+          <div class="kpi-row"><span>2567</span><span class="val">${fmt(k.y2567)}</span></div>
+          <div class="kpi-row"><span>2568</span><span class="val">${fmt(k.y2568)}</span></div>
+          <div class="kpi-row current"><span>2569 (ล่าสุด)</span><span class="val ${valCls(k.y2569)}">${fmt(k.y2569)}</span></div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  // ข้อมูลรายเดือน: ระยะเวลารอผ่าตัดภายใน 4 สัปดาห์ แยกกลุ่ม
+  const monthly = [
+    { m: "ต.ค.-68", spN: 6, sp4: 5, spPct: 83.3, nonN: 3, non4: 1, nonPct: 33.3, totN: 9, tot4: 6, totPct: 66.7 },
+    { m: "พ.ย.-68", spN: 9, sp4: 8, spPct: 88.9, nonN: 2, non4: 1, nonPct: 50.0, totN: 11, tot4: 9, totPct: 81.8 },
+    { m: "ธ.ค.-68", spN: 6, sp4: 4, spPct: 66.7, nonN: 0, non4: 0, nonPct: 0.0, totN: 6, tot4: 4, totPct: 66.7 },
+    { m: "ม.ค.-69", spN: 3, sp4: 2, spPct: 66.7, nonN: 4, non4: 1, nonPct: 25.0, totN: 7, tot4: 3, totPct: 42.9 },
+    { m: "ก.พ.-69", spN: 3, sp4: 1, spPct: 33.3, nonN: 0, non4: 0, nonPct: 0.0, totN: 3, tot4: 1, totPct: 33.3 },
+    { m: "มี.ค.-69", spN: 1, sp4: 1, spPct: 100.0, nonN: 2, non4: 2, nonPct: 100.0, totN: 3, tot4: 3, totPct: 100.0 },
+    { m: "เม.ย.-69", spN: 4, sp4: 3, spPct: 75.0, nonN: 5, non4: 2, nonPct: 40.0, totN: 9, tot4: 5, totPct: 55.6 },
+    { m: "พ.ค.-69", spN: 3, sp4: 2, spPct: 66.7, nonN: 2, non4: 2, nonPct: 100.0, totN: 5, tot4: 4, totPct: 80.0 },
+    { m: "มิ.ย.-69", spN: 7, sp4: 4, spPct: 57.1, nonN: 4, non4: 0, nonPct: 0.0, totN: 11, tot4: 4, totPct: 36.4 },
+    { m: "ก.ค.-69", spN: 5, sp4: 2, spPct: 40.0, nonN: 2, non4: 0, nonPct: 0.0, totN: 7, tot4: 2, totPct: 28.6 },
+  ];
+  const totals = {
+    spN: monthly.reduce((s,r)=>s+r.spN,0), sp4: monthly.reduce((s,r)=>s+r.sp4,0),
+    nonN: monthly.reduce((s,r)=>s+r.nonN,0), non4: monthly.reduce((s,r)=>s+r.non4,0),
+    totN: monthly.reduce((s,r)=>s+r.totN,0), tot4: monthly.reduce((s,r)=>s+r.tot4,0),
+  };
+  totals.spPct = (totals.sp4/totals.spN*100).toFixed(1);
+  totals.nonPct = (totals.non4/totals.nonN*100).toFixed(1);
+  totals.totPct = (totals.tot4/totals.totN*100).toFixed(1);
+
+  function renderBarChart() {
+    const el = document.getElementById("barChart");
+    const target = 80;
+    el.innerHTML = monthly.map(r => {
+      const h = Math.max(2, r.spPct);
+      const below = r.spPct < target;
+      return `
+        <div class="bar-col">
+          <div class="bar-val">${r.spPct.toFixed(1)}%</div>
+          <div class="bar ${below ? "below" : ""} ${Math.abs(r.spPct-target)<3 ? "target-line" : ""}" style="height:${h}%;"></div>
+          <div class="bar-label">${r.m}</div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function renderMonthlyTable() {
+    const t = document.getElementById("monthlyTable");
+    let html = `<thead><tr>
+      <th>เดือน</th>
+      <th>SP: จำนวน</th><th>SP: ≤4wk</th><th>SP: ร้อยละ</th>
+      <th>นอก SP: จำนวน</th><th>นอก SP: ≤4wk</th><th>นอก SP: ร้อยละ</th>
+      <th>รวม: จำนวน</th><th>รวม: ≤4wk</th><th>รวม: ร้อยละ</th>
+    </tr></thead><tbody>`;
+    monthly.forEach(r => {
+      const cls = p => p >= 80 ? "pct-good" : "pct-bad";
+      html += `<tr>
+        <td>${r.m}</td>
+        <td>${r.spN}</td><td>${r.sp4}</td><td class="${cls(r.spPct)}">${r.spPct.toFixed(1)}%</td>
+        <td>${r.nonN}</td><td>${r.non4}</td><td class="${cls(r.nonPct)}">${r.nonPct.toFixed(1)}%</td>
+        <td>${r.totN}</td><td>${r.tot4}</td><td class="${cls(r.totPct)}">${r.totPct.toFixed(1)}%</td>
+      </tr>`;
+    });
+    html += `<tr class="total-row">
+      <td>รวมทั้งหมด</td>
+      <td>${totals.spN}</td><td>${totals.sp4}</td><td>${totals.spPct}%</td>
+      <td>${totals.nonN}</td><td>${totals.non4}</td><td>${totals.nonPct}%</td>
+      <td>${totals.totN}</td><td>${totals.tot4}</td><td>${totals.totPct}%</td>
+    </tr>`;
+    html += "</tbody>";
+    t.innerHTML = html;
+  }
+
+  // ตัวชี้วัดอื่นๆ รายเดือน (จากแบบรายงานเครื่องชี้วัดประจำเดือน)
+  const otherMonthly = [
+    { m: "ต.ค.-68", cpr: 0, complaint: 0, febrile: 0.84, shoulder: 0.00, noshow: 100.00, birads: 100.00 },
+    { m: "พ.ย.-68", cpr: 0, complaint: 0, febrile: 0.00, shoulder: 0.00, noshow: 100.00, birads: 100.00 },
+    { m: "ธ.ค.-68", cpr: 0, complaint: 1, febrile: 0.47, shoulder: 0.00, noshow: 100.00, birads: 100.00 },
+    { m: "ม.ค.-69", cpr: 0, complaint: 0, febrile: 0.00, shoulder: 0.00, noshow: 100.00, birads: 100.00 },
+    { m: "ก.พ.-69", cpr: 0, complaint: 0, febrile: 0.94, shoulder: 0.00, noshow: 100.00, birads: 100.00 },
+    { m: "มี.ค.-69", cpr: 0, complaint: 0, febrile: 0.47, shoulder: 0.00, noshow: 100.00, birads: 100.00 },
+    { m: "เม.ย.-69", cpr: 0, complaint: 0, febrile: 0.00, shoulder: 0.00, noshow: 100.00, birads: 100.00 },
+    { m: "พ.ค.-69", cpr: 0, complaint: 0, febrile: 0.00, shoulder: 0.00, noshow: 100.00, birads: 100.00 },
+    { m: "มิ.ย.-69", cpr: 0, complaint: 0, febrile: 0.66, shoulder: 0.00, noshow: 100.00, birads: 100.00 },
+    { m: "ก.ค.-69", cpr: 0, complaint: 0, febrile: 0.66, shoulder: 0.00, noshow: 100.00, birads: 100.00 },
+  ];
+  function renderOtherTable() {
+    const t = document.getElementById("otherTable");
+    let html = `<thead><tr>
+      <th>เดือน</th>
+      <th>CPR ล่าช้า (ราย)</th>
+      <th>ข้อร้องเรียนรุนแรง (ราย)</th>
+      <th>Febrile neutropenia (%)</th>
+      <th>ข้อไหล่ติด (%)</th>
+      <th>ไม่มาตามนัด (%)</th>
+      <th>รอตรวจ BIRADS4+ (%)</th>
+    </tr></thead><tbody>`;
+    otherMonthly.forEach(r => {
+      html += `<tr>
+        <td>${r.m}</td>
+        <td>${r.cpr}</td>
+        <td class="${r.complaint>0?'pct-bad':''}">${r.complaint}</td>
+        <td>${r.febrile.toFixed(2)}%</td>
+        <td>${r.shoulder.toFixed(2)}%</td>
+        <td>${r.noshow.toFixed(2)}%</td>
+        <td>${r.birads.toFixed(2)}%</td>
+      </tr>`;
+    });
+    html += "</tbody>";
+    t.innerHTML = html;
+  }
+
+  renderKpis();
+  renderBarChart();
+  renderMonthlyTable();
+  renderOtherTable();
+
+  document.getElementById("lastUpdated").textContent =
+    "อัปเดตล่าสุด: " + new Date().toLocaleString("th-TH", { dateStyle: "medium", timeStyle: "short" });
+</script>
+
+</body>
+</html>

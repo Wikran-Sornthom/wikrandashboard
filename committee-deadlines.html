@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deadline Tracker — งานกรรมการ</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card-bg: #1a1d24;
+    --card-border: #2a2e38;
+    --text-main: #f0f0f2;
+    --text-dim: #9498a3;
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --green: #22c55e;
+    --gray: #4b5563;
+    --blue: #3b82f6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    padding: 16px;
+    padding-bottom: 60px;
+  }
+  header {
+    margin-bottom: 20px;
+  }
+  header h1 {
+    font-size: 1.4rem;
+    margin: 0 0 4px 0;
+  }
+  header .subtitle {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+  .updated {
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    margin-top: 6px;
+  }
+  .committee-section {
+    margin-bottom: 28px;
+  }
+  .committee-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--card-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .committee-title .count {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--gray);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .card.overdue { border-left-color: var(--red); }
+  .card.urgent { border-left-color: var(--orange); }
+  .card.normal { border-left-color: var(--green); }
+  .card.done { border-left-color: var(--gray); opacity: 0.5; }
+  .card-info { flex: 1; min-width: 0; }
+  .card-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 3px;
+  }
+  .card-title.done-text { text-decoration: line-through; }
+  .card-desc {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+    white-space: pre-wrap;
+  }
+  .card-ref {
+    display: inline-block;
+    background: #232733;
+    color: #a8b0c4;
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-top: 2px;
+  }
+  .card-date {
+    color: var(--text-dim);
+    font-size: 0.72rem;
+    margin-top: 4px;
+  }
+  .countdown {
+    text-align: right;
+    flex-shrink: 0;
+    min-width: 72px;
+  }
+  .countdown .num {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .countdown .label {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .countdown.overdue .num { color: var(--red); }
+  .countdown.urgent .num { color: var(--orange); }
+  .countdown.normal .num { color: var(--green); }
+  .countdown.done .num { color: var(--gray); font-size: 1.1rem; }
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-dim);
+    border: 1px dashed var(--card-border);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  .empty-state b { color: var(--text-main); }
+  .legend {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+  .legend span { display: flex; align-items: center; gap: 5px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Deadline Tracker — งานกรรมการ</h1>
+  <div class="subtitle">Ethic Committee · Clinical Research Center · Breast Excellent Center</div>
+  <div class="updated" id="lastUpdated"></div>
+</header>
+
+<div class="legend">
+  <span><span class="dot" style="background:var(--red)"></span> เลยกำหนด/ด่วนมาก (≤2 วัน)</span>
+  <span><span class="dot" style="background:var(--orange)"></span> ใกล้ถึง (≤7 วัน)</span>
+  <span><span class="dot" style="background:var(--green)"></span> ยังมีเวลา</span>
+  <span><span class="dot" style="background:var(--gray)"></span> เสร็จแล้ว</span>
+</div>
+
+<div id="content"></div>
+
+<script>
+  // ===== ข้อมูล deadline — ส่วนนี้จะถูกอัปเดตโดย Claude เมื่อมีเอกสาร/มติที่ประชุมใหม่ =====
+  const deadlines = [
+    {
+      committee: "งานประชุมวิชาการ/Conference",
+      title: "วิทยากร หัวข้อ \"Cancer Research\"",
+      desc: "งานประชุมวิชาการด้านโรคมะเร็ง ครั้งที่ 1 ปี 2569 — เวลา 10.00-11.00 น.",
+      ref: "ห้องปทุมชาติ ชั้น 5",
+      deadline: "2026-08-20",
+      status: "done"
+    },
+    {
+      committee: "งานประชุมวิชาการ/Conference",
+      title: "ผู้ดำเนินรายการ (Moderator) หัวข้อ \"Head and Neck Surgical Oncology\"",
+      desc: "งานประชุมวิชาการด้านโรคมะเร็ง ครั้งที่ 1 ปี 2569 — เวลา 11.00-12.00 น.",
+      ref: "ห้องปทุมชาติ ชั้น 5",
+      deadline: "2026-08-20",
+      status: "done"
+    },
+    {
+      committee: "งานประชุมวิชาการ/Conference",
+      title: "กรรมการตัดสิน Poster Presentation",
+      desc: "ช่วงนำเสนอผลงานโปสเตอร์ เวลา 09.00-12.00 น. (3 ช่วงย่อย)",
+      ref: "ห้องปทุมทิพย์ ชั้น 5",
+      deadline: "2026-08-20",
+      status: "done"
+    },
+    {
+      committee: "งานประชุมวิชาการ/Conference",
+      title: "พิธีมอบรางวัล Poster Presentation / พิธีปิดการประชุม",
+      desc: "ประกาศผลรางวัล Poster Presentation และ Poster Popular Vote — เวลา 13.00-13.30 น. (เปิดโหวต popular vote 08.30-09.00 น.)",
+      ref: "ห้องทับทิมสยาม 3 ชั้น 5",
+      deadline: "2026-08-21",
+      status: "pending"
+    },
+  ];
+
+  const COMMITTEES = ["Ethic Committee", "Clinical Research Center", "Breast Excellent Center", "งานประชุมวิชาการ/Conference"];
+
+  function daysUntil(dateStr) {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const target = new Date(dateStr + "T00:00:00");
+    return Math.round((target - today) / 86400000);
+  }
+
+  function statusClass(days, status) {
+    if (status === "done") return "done";
+    if (days < 0) return "overdue";
+    if (days <= 2) return "overdue";
+    if (days <= 7) return "urgent";
+    return "normal";
+  }
+
+  function countdownText(days, status) {
+    if (status === "done") return { num: "✓", label: "เสร็จแล้ว" };
+    if (days < 0) return { num: Math.abs(days), label: "วันที่เลยกำหนด" };
+    if (days === 0) return { num: "วันนี้", label: "ครบกำหนด" };
+    return { num: days, label: "วันเหลือ" };
+  }
+
+  function render() {
+    const content = document.getElementById("content");
+    content.innerHTML = "";
+
+    if (deadlines.length === 0) {
+      content.innerHTML = `<div class="empty-state">
+        ยังไม่มีข้อมูล deadline ในระบบ<br><br>
+        <b>วิธีเพิ่มข้อมูล:</b> ส่งเอกสาร วาระการประชุม หรือรูปมติที่ประชุม ให้ Claude ทางแชท
+        แล้ว Claude จะดึงรายการ deadline ออกมาและอัปเดตไฟล์นี้ให้อัตโนมัติ
+      </div>`;
+    } else {
+      COMMITTEES.forEach(committee => {
+        const items = deadlines
+          .filter(d => d.committee === committee)
+          .sort((a, b) => {
+            if (a.status === "done" && b.status !== "done") return 1;
+            if (b.status === "done" && a.status !== "done") return -1;
+            return new Date(a.deadline) - new Date(b.deadline);
+          });
+        if (items.length === 0) return;
+
+        const section = document.createElement("div");
+        section.className = "committee-section";
+        section.innerHTML = `<div class="committee-title">${committee} <span class="count">${items.length} รายการ</span></div>`;
+
+        items.forEach(item => {
+          const days = daysUntil(item.deadline);
+          const cls = statusClass(days, item.status);
+          const cd = countdownText(days, item.status);
+          const card = document.createElement("div");
+          card.className = "card " + cls;
+          card.innerHTML = `
+            <div class="card-info">
+              <div class="card-title ${item.status === 'done' ? 'done-text' : ''}">${item.title}</div>
+              ${item.desc ? `<div class="card-desc">${item.desc}</div>` : ""}
+              ${item.ref ? `<div class="card-ref">${item.ref}</div>` : ""}
+              <div class="card-date">ครบกำหนด: ${item.deadline}</div>
+            </div>
+            <div class="countdown ${cls}">
+              <div class="num">${cd.num}</div>
+              <div class="label">${cd.label}</div>
+            </div>
+          `;
+          section.appendChild(card);
+        });
+        content.appendChild(section);
+      });
+    }
+
+    document.getElementById("lastUpdated").textContent =
+      "อัปเดตล่าสุด: " + new Date().toLocaleString("th-TH", { dateStyle: "medium", timeStyle: "short" });
+  }
+
+  render();
+  // รีเฟรช countdown ทุกชั่วโมง (กรณีเปิดค้างไว้)
+  setInterval(render, 60 * 60 * 1000);
+</script>
+
+</body>
+</html>

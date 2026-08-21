@@ -1,0 +1,3060 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ผู้ช่วยหมอวิกรานต์ — รพ.มะเร็งอุบลราชธานี</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card-bg: #1a1d24;
+    --card-bg-2: #20242e;
+    --card-border: #2a2e38;
+    --text-main: #f0f0f2;
+    --text-dim: #9498a3;
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --green: #22c55e;
+    --gray: #4b5563;
+    --blue: #3b82f6;
+    --purple: #a78bfa;
+    --teal: #14b8a6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    padding: 16px;
+    padding-bottom: 70px;
+  }
+  header { margin-bottom: 14px; }
+  header h1 { font-size: 1.35rem; margin: 0 0 4px 0; }
+  header .subtitle { color: var(--text-dim); font-size: 0.82rem; line-height: 1.5; }
+  .updated { color: var(--text-dim); font-size: 0.72rem; margin-top: 8px; }
+
+  nav.tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 10px 0 14px 0;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--card-border);
+    -webkit-overflow-scrolling: touch;
+  }
+  nav.tabs button {
+    flex: 0 0 auto;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-dim);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  nav.tabs button.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+  }
+
+  .panel { display: none; padding-top: 8px; }
+  .panel.active { display: block; }
+
+  .section { margin: 22px 0; }
+  .section-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .section-desc { color: var(--text-dim); font-size: 0.78rem; margin-bottom: 12px; line-height: 1.6; }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--gray);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .card.blue { border-left-color: var(--blue); }
+  .card.green { border-left-color: var(--green); }
+  .card.purple { border-left-color: var(--purple); }
+  .card.orange { border-left-color: var(--orange); }
+  .card.teal { border-left-color: var(--teal); }
+
+  .card-title { font-weight: 600; font-size: 0.92rem; margin-bottom: 4px; }
+  .card-desc { color: var(--text-dim); font-size: 0.8rem; line-height: 1.6; }
+
+  a.link-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .link-card .arrow { float: right; color: var(--text-dim); }
+
+  .empty-state {
+    text-align: center;
+    padding: 26px 18px;
+    color: var(--text-dim);
+    border: 1px dashed var(--card-border);
+    border-radius: 12px;
+    font-size: 0.8rem;
+    line-height: 1.7;
+  }
+  .empty-state b { color: var(--text-main); }
+
+  .grid2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+  }
+
+  .stub {
+    background: linear-gradient(135deg, #1a1d24, #20242e);
+    border: 1px dashed var(--card-border);
+    border-radius: 12px;
+    padding: 18px;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+  .stub b { color: var(--text-main); }
+  .stub ul { margin: 8px 0 0 0; padding-left: 18px; }
+
+  .principle-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .principle-card .p-title {
+    font-weight: 700;
+    font-size: 0.92rem;
+    margin-bottom: 6px;
+    color: var(--teal);
+  }
+  .principle-card .p-body { font-size: 0.82rem; line-height: 1.75; color: var(--text-main); }
+  .principle-card .p-apply {
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: var(--card-bg-2);
+    border-radius: 8px;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    border-left: 3px solid var(--teal);
+  }
+  .principle-card .p-apply b { color: var(--text-main); }
+
+  /* ===== หลักการบริหาร: ห้องสมุดหลักการทั้งหมด (accordion) ===== */
+  .principles-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 18px 0 14px 0;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 8px 0;
+    z-index: 5;
+  }
+  .principles-toolbar input[type="text"] {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: var(--text-main);
+    font-size: 0.85rem;
+  }
+  .principles-toolbar input[type="text"]::placeholder { color: var(--text-dim); }
+  .principle-cat-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .principle-cat-chips .chip {
+    font-size: 0.72rem;
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-dim);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .principle-cat-chips .chip.active {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #0f1115;
+    font-weight: 600;
+  }
+  .principles-count { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 10px; }
+  .principles-count b { color: var(--text-main); }
+
+  details.principle-card { padding: 0; overflow: hidden; }
+  details.principle-card summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  details.principle-card summary::-webkit-details-marker { display: none; }
+  details.principle-card summary::after {
+    content: "▾";
+    margin-left: auto;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+  }
+  details.principle-card[open] summary::after { transform: rotate(180deg); }
+  details.principle-card .p-num { color: var(--text-dim); font-size: 0.8rem; flex-shrink: 0; }
+  details.principle-card .p-title-text {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--text-main);
+    flex: 1;
+  }
+  .p-cat-badge {
+    font-size: 0.66rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    border: 1px solid currentColor;
+  }
+  .p-cat-badge.cat-analytical { color: var(--blue); }
+  .p-cat-badge.cat-strategy { color: var(--purple); }
+  .p-cat-badge.cat-team { color: var(--teal); }
+  .p-cat-badge.cat-comm { color: var(--orange); }
+  .p-cat-badge.cat-self { color: var(--green); }
+  .p-cat-badge.cat-meeting { color: var(--red); }
+  .p-cat-badge.cat-time { color: #c4c9d4; }
+  .p-cat-badge.cat-other { color: var(--gray); }
+  details.principle-card .p-detail { padding: 0 16px 16px 16px; }
+  details.principle-card .p-body { color: var(--text-main); }
+  .p-keypoints { margin: 10px 0 0 0; padding-left: 18px; font-size: 0.8rem; color: var(--text-dim); line-height: 1.7; }
+  .p-keypoints li { margin-bottom: 3px; }
+  details.principle-card .p-apply { margin-top: 10px; }
+  .principles-empty { text-align: center; padding: 24px; color: var(--text-dim); font-size: 0.8rem; }
+
+  .sub-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--gray);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .sub-card.ok { border-left-color: var(--green); }
+  .sub-card.watch { border-left-color: var(--orange); }
+  .sub-card.due { border-left-color: var(--red); }
+  .sub-info { flex: 1; min-width: 0; }
+  .sub-journal { font-size: 0.72rem; color: var(--purple); font-weight: 600; margin-bottom: 3px; }
+  .sub-title { font-weight: 600; font-size: 0.88rem; line-height: 1.5; margin-bottom: 4px; }
+  .sub-meta { color: var(--text-dim); font-size: 0.76rem; line-height: 1.6; }
+  .sub-meta code { background: var(--card-bg-2); padding: 1px 6px; border-radius: 5px; font-size: 0.72rem; }
+  .sub-status {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 0.72rem;
+    padding: 2px 9px;
+    border-radius: 20px;
+    background: rgba(59,130,246,0.15);
+    color: var(--blue);
+  }
+  .sub-note { margin-top: 6px; font-size: 0.74rem; color: var(--text-dim); }
+  .sub-countdown { text-align: right; flex-shrink: 0; min-width: 78px; }
+  .sub-countdown .num { font-size: 1.35rem; font-weight: 700; line-height: 1; }
+  .sub-countdown .label { font-size: 0.66rem; color: var(--text-dim); margin-top: 2px; }
+  .sub-countdown.ok .num { color: var(--green); }
+  .sub-countdown.watch .num { color: var(--orange); }
+  .sub-countdown.due .num { color: var(--red); }
+
+  .stat-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .stat-tile {
+    flex: 1;
+    min-width: 90px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+  .stat-tile .n { font-size: 1.5rem; font-weight: 800; line-height: 1; }
+  .stat-tile .l { font-size: 0.7rem; color: var(--text-dim); margin-top: 4px; }
+  .stat-tile.red .n { color: var(--red); }
+  .stat-tile.orange .n { color: var(--orange); }
+  .stat-tile.green .n { color: var(--green); }
+  .stat-tile.blue .n { color: var(--blue); }
+
+  .pend-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--gray);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .pend-item.red { border-left-color: var(--red); }
+  .pend-item.orange { border-left-color: var(--orange); }
+  .pend-item.green { border-left-color: var(--green); }
+  .pend-item.blue { border-left-color: var(--blue); }
+  .pend-main { flex: 1; min-width: 0; }
+  .pend-tag {
+    display: inline-block;
+    font-size: 0.66rem;
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+    background: var(--card-bg-2);
+    color: var(--text-dim);
+  }
+  .pend-title { font-weight: 600; font-size: 0.85rem; line-height: 1.5; }
+  .pend-sub { font-size: 0.74rem; color: var(--text-dim); margin-top: 2px; }
+  .pend-right { text-align: right; flex-shrink: 0; min-width: 70px; }
+  .pend-right .num { font-size: 1.2rem; font-weight: 700; line-height: 1; }
+  .pend-right .label { font-size: 0.64rem; color: var(--text-dim); margin-top: 2px; }
+  .pend-right.red .num { color: var(--red); }
+  .pend-right.orange .num { color: var(--orange); }
+  .pend-right.green .num { color: var(--green); }
+  .pend-right.blue .num { color: var(--blue); }
+  .pend-group-title { font-size: 0.8rem; font-weight: 700; color: var(--text-dim); margin: 14px 0 6px 0; }
+  .sync-note { font-size: 0.7rem; color: var(--text-dim); margin-top: 6px; font-style: italic; }
+
+  .stat-tile.teal .n { color: var(--teal); }
+  .stat-tile.purple .n { color: var(--purple); }
+  .stat-tile.gray .n { color: var(--text-dim); }
+  .pend-item.gray { border-left-color: var(--gray); }
+
+  .queue-table-wrap { overflow-x: auto; margin-bottom: 14px; border: 1px solid var(--card-border); border-radius: 10px; }
+  .queue-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; min-width: 760px; }
+  .queue-table th { background: var(--card-bg-2); color: var(--text-dim); text-align: left; padding: 8px 10px; font-weight: 600; font-size: 0.7rem; white-space: nowrap; }
+  .queue-table td { padding: 8px 10px; border-top: 1px solid var(--card-border); vertical-align: top; }
+  .queue-table tr.date-row td { background: var(--card-bg-2); font-weight: 700; color: var(--text-main); padding: 6px 10px; font-size: 0.74rem; }
+  .queue-table tr.cancelled-row td { opacity: 0.5; text-decoration: line-through; }
+  .queue-table tr.cancelled-row td.note-cell { text-decoration: none; opacity: 1; color: var(--red); font-weight: 600; }
+  .queue-badge { display: inline-block; font-size: 0.66rem; font-weight: 700; padding: 1px 7px; border-radius: 8px; white-space: nowrap; }
+  .queue-badge.ga { background: rgba(239,68,68,0.15); color: var(--red); }
+  .queue-badge.mac { background: rgba(245,158,11,0.15); color: var(--orange); }
+  .queue-badge.iva { background: rgba(59,130,246,0.15); color: var(--blue); }
+  .queue-badge.la { background: rgba(34,197,94,0.15); color: var(--green); }
+
+  .or-filterbar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+  .or-filter-label { font-size: 0.72rem; color: var(--text-dim); min-width: 74px; }
+  .or-filter-group { display: flex; flex-wrap: wrap; gap: 6px; }
+  .or-filter-group .chip {
+    font-size: 0.72rem; padding: 5px 10px; border-radius: 20px;
+    border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-dim);
+    cursor: pointer; user-select: none; transition: .15s;
+  }
+  .or-filter-group .chip:hover { border-color: var(--text-dim); }
+  .or-filter-group .chip.active { background: var(--teal); border-color: var(--teal); color: #0f1115; font-weight: 600; }
+  .or-filter-group .chip.active.anes-GA { background: var(--red); border-color: var(--red); }
+  .or-filter-group .chip.active.anes-MAC { background: var(--orange); border-color: var(--orange); }
+  .or-filter-group .chip.active.anes-IVA { background: var(--blue); border-color: var(--blue); }
+  .or-filter-group .chip.active.anes-LA { background: var(--green); border-color: var(--green); }
+  .or-filter-reset {
+    align-self: flex-start; font-size: 0.7rem; color: var(--text-dim); background: none;
+    border: 1px solid var(--card-border); border-radius: 20px; padding: 5px 10px; cursor: pointer;
+  }
+  .or-filter-reset:hover { color: var(--text-main); border-color: var(--text-dim); }
+  .or-filter-count { font-size: 0.75rem; color: var(--text-dim); margin: 2px 0 12px 0; }
+  .or-filter-count b { color: var(--text-main); }
+
+  .or-cal-wrap { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; }
+  .or-cal-month { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 10px; flex: 1; min-width: 190px; }
+  .or-cal-month-title { font-size: 0.78rem; font-weight: 700; margin-bottom: 8px; text-align: center; }
+  .or-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .or-cal-wd { font-size: 0.6rem; color: var(--text-dim); text-align: center; padding-bottom: 2px; }
+  .or-cal-day {
+    position: relative; aspect-ratio: 1; border-radius: 6px; background: var(--card-bg-2);
+    font-size: 0.64rem; display: flex; align-items: center; justify-content: center; color: var(--text-dim);
+  }
+  .or-cal-day.blank { background: transparent; }
+  .or-cal-day.has-case { color: var(--text-main); font-weight: 700; cursor: pointer; border: 1px solid var(--card-border); }
+  .or-cal-day.has-case:hover { border-color: var(--teal); }
+  .or-cal-day.dim { opacity: 0.3; }
+  .or-cal-day .dotrow { position: absolute; bottom: 2px; left: 0; right: 0; display: flex; justify-content: center; gap: 1px; }
+  .or-cal-day .dotrow .dot { width: 4px; height: 4px; border-radius: 50%; display: inline-block; }
+  .or-cal-day .dotrow .dot.ga { background: var(--red); }
+  .or-cal-day .dotrow .dot.mac { background: var(--orange); }
+  .or-cal-day .dotrow .dot.iva { background: var(--blue); }
+  .or-cal-day .dotrow .dot.la { background: var(--green); }
+  .or-cal-day .dotrow .dot.cancelled { background: var(--gray); }
+  .or-cal-legend { display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.66rem; color: var(--text-dim); margin: 4px 0 18px 0; }
+  .or-cal-legend .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
+
+  .or-table-flash { animation: orFlash 1.6s ease; }
+  @keyframes orFlash { 0% { background: rgba(20,184,166,0.35); } 100% { background: transparent; } }
+
+  .checklist-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .checklist-box h4 { margin: 0 0 8px 0; font-size: 0.86rem; }
+  .checklist-box h4 .tag {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    font-weight: 600;
+  }
+  .tag.mi { background: rgba(34,197,94,0.15); color: var(--green); }
+  .tag.mai { background: rgba(239,68,68,0.15); color: var(--red); }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    cursor: pointer;
+  }
+  .check-item input { margin-top: 3px; flex-shrink: 0; width: 16px; height: 16px; accent-color: var(--green); }
+  .check-item span.done { text-decoration: line-through; color: var(--text-dim); }
+  .phrase-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .phrase-box .phrase {
+    background: var(--card-bg-2);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 0.76rem;
+    color: var(--text-dim);
+  }
+  .phrase b { color: var(--purple); display: block; margin-bottom: 2px; }
+
+  .source-note {
+    color: var(--text-dim);
+    font-size: 0.72rem;
+    margin-top: 24px;
+    text-align: center;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ผู้ช่วยหมอวิกรานต์</h1>
+  <div class="subtitle">รพ.มะเร็งอุบลราชธานี · งานบริการ · งานบริหาร/กรรมการ · งานวิจัย · OV-CCA · งานสอน · งานจุกจิก</div>
+  <div class="updated" id="lastUpdated"></div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="overview" class="active">ภาพรวม</button>
+  <button data-tab="service">งานบริการ</button>
+  <button data-tab="admin">งานบริหาร/กรรมการ</button>
+  <button data-tab="research">งานวิจัย</button>
+  <button data-tab="ovcca">OV-CCA</button>
+  <button data-tab="teach">งานสอน</button>
+  <button data-tab="misc">งานจุกจิก</button>
+  <button data-tab="principles">หลักการบริหาร</button>
+</nav>
+
+<!-- ===== ภาพรวม ===== -->
+<div class="panel active" id="panel-overview">
+  <div class="section">
+    <div class="section-title">🔴 งานที่ยังไม่สะสางทั้งหมด</div>
+    <div class="section-desc">รวมทุกอย่างที่ค้างอยู่จากทุกแท็บ มาไว้ที่เดียว เรียงตามความเร่งด่วน</div>
+    <div class="stat-row" id="statRow"></div>
+    <div id="pendingDated"></div>
+    <div class="pend-group-title" id="pendingRecurringTitle" style="display:none;">🔁 ติดตามต่อเนื่อง (เตือนอัตโนมัติ ไม่มีกำหนดตายตัว)</div>
+    <div id="pendingRecurring"></div>
+    <div class="sync-note">รายการงานบริหาร/กรรมการ คัดลอกมาจาก Deadline Tracker ด้วยมือ — ถ้าอัปเดตที่ไฟล์นั้นแยกต่างหาก แจ้ง Claude ให้ sync มาที่นี่ด้วย</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">4 บทบาทหลักของคุณหมอ</div>
+    <div class="section-desc">แตะแท็บด้านบนเพื่อดูรายละเอียดแต่ละงาน หรือดูสรุปย่อด้านล่าง</div>
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">🩺 งานบริการ</div>
+        <div class="card-desc">ตรวจ OPD ศัลยกรรม · ราวน์ผู้ป่วยใน · ผ่าตัด · รับปรึกษาต่างแผนก</div>
+      </div>
+      <div class="card purple">
+        <div class="card-title">🏛️ งานบริหาร</div>
+        <div class="card-desc">Ethic Committee · Head of Clinical Research Center · Head of Breast Excellent Center · คณะกรรมการ DSC Breast Cancer</div>
+      </div>
+      <div class="card orange">
+        <div class="card-title">🔍 งานอื่นๆ</div>
+        <div class="card-desc">ตรวจราชการประเด็น OV-CCA</div>
+      </div>
+      <div class="card teal">
+        <div class="card-title">🎓 งานสอน</div>
+        <div class="card-desc">หลักสูตรพยาบาลเฉพาะทางมะเร็ง — มะเร็งเต้านม และ colorectal cancer</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">เครื่องมือที่มีอยู่แล้ว</div>
+    <div class="section-desc">ไฟล์แยกในโฟลเดอร์เดียวกัน — เปิดจากที่นี่ได้เมื่อไฟล์อยู่ในโฟลเดอร์เดียวกัน</div>
+    <a class="link-card" href="./committee-deadlines.html">
+      <div class="card blue"><span class="arrow">→</span>
+        <div class="card-title">Deadline Tracker — งานกรรมการ</div>
+        <div class="card-desc">ติดตามกำหนดส่งงาน/ภารกิจของ Ethic Committee, CRC, Breast Excellent Center</div>
+      </div>
+    </a>
+    <a class="link-card" href="./crc-readiness-dashboard.html">
+      <div class="card purple"><span class="arrow">→</span>
+        <div class="card-title">ความพร้อมจัดตั้ง CRC</div>
+        <div class="card-desc">แดชบอร์ดติดตามความพร้อมก่อนรับตรวจเยี่ยมศูนย์วิจัยทางคลินิก</div>
+      </div>
+    </a>
+    <a class="link-card" href="./dsc-breast-committee.html">
+      <div class="card teal"><span class="arrow">→</span>
+        <div class="card-title">DSC Breast Cancer — ตัวชี้วัดคุณภาพ</div>
+        <div class="card-desc">8 ตัวชี้วัดหลัก + แนวโน้มรายเดือน (ต.ค.68–ก.ค.69) + ข้อมูลดิบรายผู้ป่วย</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="section">
+    <div class="section-title">วิธีอัปเดตข้อมูลในระบบนี้</div>
+    <div class="stub">
+      ทุกส่วนของแดชบอร์ดนี้ออกแบบให้ <b>Claude อัปเดตให้ได้ทุกครั้งที่คุณหมอส่งข้อมูลใหม่มาทางแชท</b> เช่น
+      ตารางออกตรวจ OPD, รายชื่อ case ที่นัดผ่าตัด, วาระประชุม, เอกสารตรวจราชการ OV-CCA หรือกำหนดการสอน —
+      เพียงพิมพ์บอกหรือแนบไฟล์ แล้ว Claude จะแก้ไขไฟล์นี้ให้ตรงกับข้อมูลจริง
+    </div>
+  </div>
+</div>
+
+<!-- ===== งานบริการ ===== -->
+<div class="panel" id="panel-service">
+  <div class="section">
+    <div class="section-title">🩺 งานบริการ</div>
+    <div class="section-desc">ตรวจ OPD ศัลยกรรม · ราวน์ผู้ป่วยใน · ผ่าตัดผู้ป่วย · รับปรึกษาต่างแผนก — ยังไม่มีข้อมูลจริงในระบบ เริ่มป้อนข้อมูลได้ทันที</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">คิว OPD วันนี้/สัปดาห์นี้</div>
+    <div class="empty-state">
+      ยังไม่มีตารางออกตรวจในระบบ<br><br>
+      <b>วิธีเพิ่มข้อมูล:</b> ส่งตารางออกตรวจ OPD หรือบอกวันเวลาที่ออกตรวจแต่ละสัปดาห์ให้ Claude
+      แล้วจะสร้างตารางเตือนล่วงหน้าให้อัตโนมัติ
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">รอบราวน์ผู้ป่วยใน</div>
+    <div class="empty-state">
+      ยังไม่มีรายชื่อผู้ป่วยที่ต้องติดตามในระบบ<br><br>
+      <b>วิธีเพิ่มข้อมูล:</b> ส่งรายชื่อ/เตียง/ประเด็นที่ต้องติดตามของผู้ป่วยแต่ละราย
+      Claude จะทำเป็นเช็กลิสต์ราวน์ประจำวันให้
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🗓️ คิวผ่าตัด</div>
+    <div class="empty-state">
+      ส่วนนี้มีข้อมูล HN ของผู้ป่วยจริง จึงไม่แสดงในหน้าเว็บสาธารณะนี้เพื่อความเป็นส่วนตัวของผู้ป่วย<br><br>
+      ดูปฏิทินคิวผ่าตัดฉบับเต็ม (พร้อมตัวกรองตามกลุ่มโรค/anesthesia) ได้จากไฟล์ work-assistant-hub.html บนคอมพิวเตอร์ของคุณหมอเท่านั้น
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">รับปรึกษาต่างแผนก (Consult)</div>
+    <div class="empty-state">
+      ยังไม่มี consult ค้างอยู่ในระบบ<br><br>
+      <b>วิธีเพิ่มข้อมูล:</b> ส่งแผนกที่ปรึกษามา วันที่รับเรื่อง และประเด็นที่ต้องตอบกลับ
+      Claude จะติดตามให้ไม่ตกหล่นและแจ้งเตือนเมื่อค้างนาน
+    </div>
+  </div>
+</div>
+
+<!-- ===== งานบริหาร/กรรมการ ===== -->
+<div class="panel" id="panel-admin">
+  <div class="section">
+    <div class="section-title">🏛️ งานบริหาร/กรรมการ</div>
+    <div class="section-desc">Ethic Committee · Head of Clinical Research Center · Head of Breast Excellent Center · คณะกรรมการ DSC Breast Cancer</div>
+    <div class="grid2">
+      <a class="link-card" href="./committee-deadlines.html">
+        <div class="card blue"><span class="arrow">→</span>
+          <div class="card-title">Deadline Tracker</div>
+          <div class="card-desc">กำหนดส่งงาน/ภารกิจของทั้ง 3 คณะกรรมการ</div>
+        </div>
+      </a>
+      <a class="link-card" href="./crc-readiness-dashboard.html">
+        <div class="card purple"><span class="arrow">→</span>
+          <div class="card-title">ความพร้อมจัดตั้ง CRC</div>
+          <div class="card-desc">Checklist และ roadmap เตรียมรับตรวจเยี่ยม</div>
+        </div>
+      </a>
+      <a class="link-card" href="./dsc-breast-committee.html">
+        <div class="card teal"><span class="arrow">→</span>
+          <div class="card-title">DSC Breast Cancer — ตัวชี้วัดคุณภาพ</div>
+          <div class="card-desc">8 ตัวชี้วัด + แนวโน้มรายเดือน + ข้อมูลดิบผู้ป่วย (ต.ค.68–ก.ค.69)</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📋 คณะกรรมการ DSC Breast Cancer — สรุปสถานะล่าสุด</div>
+    <div class="section-desc">หน้าที่: ตรวจติดตามตัวชี้วัดคุณภาพที่เกี่ยวข้องกับมะเร็งเต้านม · ข้อมูล ต.ค.68–ก.ค.69 (10 เดือน)</div>
+    <div class="stat-tile-row" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; margin-bottom:14px;">
+      <div class="stat-tile" style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:12px; text-align:center;">
+        <div style="font-size:1.5rem; font-weight:700; color:var(--red);">78.05%</div>
+        <div style="font-size:0.68rem; color:var(--text-dim); margin-top:4px;">ผ่าตัดภายใน 4 wk (เป้า ≥80%)</div>
+      </div>
+      <div class="stat-tile" style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:12px; text-align:center;">
+        <div style="font-size:1.5rem; font-weight:700; color:var(--green);">100%</div>
+        <div style="font-size:0.68rem; color:var(--text-dim); margin-top:4px;">รอตรวจ BIRADS4+ ≤2wk</div>
+      </div>
+      <div class="stat-tile" style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:12px; text-align:center;">
+        <div style="font-size:1.5rem; font-weight:700; color:var(--green);">0</div>
+        <div style="font-size:0.68rem; color:var(--text-dim); margin-top:4px;">CPR จากคัดกรองล่าช้า</div>
+      </div>
+      <div class="stat-tile" style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:12px; text-align:center;">
+        <div style="font-size:1.5rem; font-weight:700; color:var(--orange);">5</div>
+        <div style="font-size:0.68rem; color:var(--text-dim); margin-top:4px;">Febrile neutropenia (ราย/ปี)</div>
+      </div>
+    </div>
+    <div class="sync-note">ดูรายละเอียดครบทั้ง 8 ตัวชี้วัด แนวโน้มรายเดือน และข้อมูลดิบ 73 ราย ในหน้า “DSC Breast Cancer — ตัวชี้วัดคุณภาพ” (ลิงก์ด้านบน) — ค่าที่แสดงในตารางสรุปประจำปี (78.05%) ต่างจากผลรวมรายเดือนที่คำนวณใหม่ (68.1%) ควรตรวจสอบก่อนใช้รายงานทางการ</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✅ เช็กลิสต์ก่อนประชุม — ใช้ได้ทุกครั้งที่เป็นประธาน (EC / CRC / Breast Excellent Center)</div>
+    <div class="section-desc">สรุปจากหลัก “6 มี 5 ไม่” ในหนังสือที่คุณหมอแนบมา ปรับให้ใช้ได้จริงกับการประชุมคณะกรรมการ</div>
+
+    <div class="checklist-box">
+      <h4>6 สิ่งที่การประชุมต้องมี <span class="tag mi">MUST HAVE</span></h4>
+      <label class="check-item"><input type="checkbox" onchange="toggleDone(this)"><span>เตรียมพร้อม — เข้าใจปัญหาหลักและมีข้อมูลครบก่อนนัดประชุม ถ้ายังไม่พร้อมอย่ารีบเรียกประชุม</span></label>
+      <label class="check-item"><input type="checkbox" onchange="toggleDone(this)"><span>หัวข้อชัดเจน — กำหนดวาระ ลำดับประเด็น และแจ้งผู้เกี่ยวข้องล่วงหน้า</span></label>
+      <label class="check-item"><input type="checkbox" onchange="toggleDone(this)"><span>มีระเบียบวินัย — กติกาการประชุมชัดเจน (เวลาเริ่ม/จบ, การมาสาย)</span></label>
+      <label class="check-item"><input type="checkbox" onchange="toggleDone(this)"><span>มีวาระการประชุมเป็นลายลักษณ์อักษร แจกให้ผู้เข้าร่วมล่วงหน้า</span></label>
+      <label class="check-item"><input type="checkbox" onchange="toggleDone(this)"><span>มีผลลัพธ์ที่เป็นรูปธรรม — ทุกวาระต้องจบด้วยข้อสรุป ไม่ใช่แค่รายงานให้ฟัง</span></label>
+      <label class="check-item"><input type="checkbox" onchange="toggleDone(this)"><span>มีการติดตามผล — มอบหมายผู้รับผิดชอบและกำหนดวันตรวจสอบว่ามตินำไปปฏิบัติจริง</span></label>
+    </div>
+
+    <div class="checklist-box">
+      <h4>5 สิ่งที่ไม่ควรทำ <span class="tag mai">AVOID</span></h4>
+      <label class="check-item"><input type="checkbox" onchange="toggleDone(this)"><span>อย่าประชุมเพียงเพราะเป็นกิจวัตร — ถ้าไม่มีประเด็นจริง เลื่อนหรือยกเลิกได้</span></label>
+      <label class="check-item"><input type="checkbox" onchange="toggleDone(this)"><span>อย่าใช้ที่ประชุมเป็นที่ระบายอารมณ์หรือตำหนิเป็นการส่วนตัว</span></label>
+      <label class="check-item"><input type="checkbox" onchange="toggleDone(this)"><span>อย่าให้คนใดคนหนึ่งผูกขาดการพูด — เปิดให้ทุกเสียงมีส่วนร่วม</span></label>
+      <label class="check-item"><input type="checkbox" onchange="toggleDone(this)"><span>อย่าออกนอกประเด็น — ดึงกลับเข้าวาระหลักเสมอ</span></label>
+      <label class="check-item"><input type="checkbox" onchange="toggleDone(this)"><span>อย่าปล่อยให้ประชุมจบโดยไม่มีมติ — ทุกเรื่องที่หยิบยกต้องมีทางออกหรือผู้รับผิดชอบต่อ</span></label>
+    </div>
+
+    <div class="checklist-box">
+      <h4>4 ประโยคเปิดประเด็นที่มีประสิทธิภาพ</h4>
+      <div class="section-desc" style="margin-bottom:4px;">ใช้เมื่อจะหยิบยกปัญหาในที่ประชุม (โดยเฉพาะ EC ที่ต้องพูดถึงประเด็นอ่อนไหว) ให้ตรงประเด็นและไม่ใช้อารมณ์</div>
+      <div class="phrase-box">
+        <div class="phrase"><b>1. ฉันพบว่า...</b>ระบุข้อเท็จจริง/สถานการณ์ที่พบ</div>
+        <div class="phrase"><b>2. ฉันรู้สึกว่า...</b>ผลกระทบถ้าไม่แก้ไข</div>
+        <div class="phrase"><b>3. ฉันเสนอว่า...</b>มาตรฐาน/แนวทางที่ควรใช้</div>
+        <div class="phrase"><b>4. ฉันหวังว่า...</b>ผลลัพธ์ที่อยากเห็นหลังแก้ไข</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== งานวิจัย ===== -->
+<div class="panel" id="panel-research">
+  <div class="section">
+    <div class="section-title">🔬 งานวิจัย</div>
+    <div class="section-desc">ติดตามผลงานวิจัยที่ submit ไปแล้ว และงานวิจัยที่กำลังดำเนินการ</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">ติดตามหลัง submission (2 เรื่อง)</div>
+    <div class="section-desc">นับจากวันที่ submit อัตโนมัติ — สีจะเปลี่ยนเมื่อใกล้ถึงรอบที่ควรเข้าไปเช็กสถานะ/ทวงถาม</div>
+    <div id="submissionCards"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">งานวิจัยที่กำลังดำเนินการ</div>
+    <div class="empty-state">
+      ยังไม่มีข้อมูลในระบบ<br><br>
+      <b>วิธีเพิ่มข้อมูล:</b> ส่งชื่อโครงการวิจัยที่กำลังทำอยู่ ระยะที่ทำถึง (เก็บข้อมูล/วิเคราะห์/เขียน manuscript)
+      และกำหนดเวลาที่ตั้งใจไว้ Claude จะช่วยติดตามความคืบหน้าให้
+    </div>
+  </div>
+</div>
+
+<!-- ===== OV-CCA ===== -->
+<div class="panel" id="panel-ovcca">
+  <div class="section">
+    <div class="section-title">🔍 งานตรวจราชการ — ประเด็น OV-CCA</div>
+    <div class="section-desc">พยาธิใบไม้ตับและมะเร็งท่อน้ำดี (Opisthorchiasis–Cholangiocarcinoma) — ยังไม่ได้เริ่มสร้างเครื่องมือสนับสนุนส่วนนี้</div>
+    <div class="stub">
+      ส่วนนี้ยังเป็นโครงร่างเบื้องต้น รอข้อมูลจากคุณหมอเพื่อสร้างเครื่องมือจริง เช่น<br>
+      <ul>
+        <li>กำหนดการตรวจราชการและกำหนดส่งรายงาน</li>
+        <li>ตัวชี้วัด/ประเด็นที่ต้องเตรียมตอบ (คัดกรอง, การส่งต่อรักษา, ข้อมูลระบาดวิทยาในพื้นที่)</li>
+        <li>เอกสาร/สถิติอ้างอิงที่ต้องรวบรวมก่อนวันตรวจ</li>
+        <li>Checklist เตรียมนำเสนอต่อผู้ตรวจราชการ</li>
+      </ul>
+      ส่งกำหนดการหรือ TOR การตรวจราชการมาได้ทางแชท แล้ว Claude จะช่วยสร้างระบบติดตามให้
+    </div>
+  </div>
+</div>
+
+<!-- ===== งานสอน ===== -->
+<div class="panel" id="panel-teach">
+  <div class="section">
+    <div class="section-title">🎓 งานสอน — หลักสูตรพยาบาลเฉพาะทางมะเร็ง</div>
+    <div class="section-desc">หัวข้อมะเร็งเต้านม และ colorectal cancer — ยังไม่ได้เริ่มสร้างเครื่องมือสนับสนุนส่วนนี้</div>
+    <div class="stub">
+      ส่วนนี้ยังเป็นโครงร่างเบื้องต้น ตัวอย่างสิ่งที่ Claude ช่วยสร้างต่อได้<br>
+      <ul>
+        <li>ปฏิทินการสอน/กำหนดส่ง course material แต่ละรุ่น</li>
+        <li>โครงร่างเนื้อหา (course outline) หัวข้อมะเร็งเต้านม และ colorectal cancer</li>
+        <li>สไลด์/เอกสารประกอบการสอน (ผ่าน pptx/docx skill)</li>
+        <li>ธนาคารข้อสอบหรือกรณีศึกษาสำหรับฝึกพยาบาลเฉพาะทาง</li>
+      </ul>
+      บอกรอบการสอนถัดไปหรือส่งซิลลาบัสที่มีอยู่ Claude จะช่วยวางระบบให้
+    </div>
+  </div>
+</div>
+
+<!-- ===== งานจุกจิก ===== -->
+<div class="panel" id="panel-misc">
+  <div class="section">
+    <div class="section-title">📋 งานจุกจิก & ธุระที่ต้องสะสาง</div>
+    <div class="section-desc">งานเล็กๆ ที่ไม่เข้าหมวดไหนชัดเจน แต่ต้องไม่ตกหล่น</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">แจ้งเตือนอบรม/ประชุมออนไลน์</div>
+    <div class="section-desc">งานอบรมหรือประชุมที่ต้องเข้าร่วมตามวันเวลาที่กำหนด (ตั้งเตือนจริงตรงเวลาให้แล้ว)</div>
+    <div id="trainingCards"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">แจ้งเตือนอ่านงานวิจัยของผู้อื่น</div>
+    <div class="section-desc">เช่น peer review, ให้ feedback รายงานวิจัยของทีม, อ่านทานก่อนส่งตีพิมพ์</div>
+    <div id="miscCards-read"></div>
+    <div class="empty-state">
+      ยังมีที่ว่างสำหรับรายการอื่น<br><br>
+      <b>วิธีเพิ่มข้อมูล:</b> ส่งชื่อเรื่อง/เจ้าของงาน และกำหนดเวลาที่ต้องอ่าน/ตอบกลับ
+      ให้ Claude จะตั้งเตือนและติดตามให้เหมือนงาน consult
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">ธุระอื่นๆ ที่ต้องสะสาง</div>
+    <div class="section-desc">งานจิปาถะที่ไม่อยากให้ลืม — เอกสารเซ็น, ประสานงานเล็กๆ, ธุระส่วนตัวที่เกี่ยวกับงาน ฯลฯ</div>
+
+    <div id="miscCards-todo"></div>
+
+    <div class="empty-state">
+      ยังมีที่ว่างสำหรับรายการอื่น<br><br>
+      <b>วิธีเพิ่มข้อมูล:</b> พิมพ์บอกเป็นข้อๆ ได้เลย ไม่ต้องเป็นทางการ Claude จะรวบรวมเป็นเช็กลิสต์ให้
+      และช่วยเตือนถ้ามีอันไหนใกล้ครบกำหนด
+    </div>
+  </div>
+</div>
+
+<!-- ===== หลักการบริหาร ===== -->
+<div class="panel" id="panel-principles">
+  <div class="section">
+    <div class="section-title">📖 หลักการบริหารที่ใช้เป็นแนวทางออกแบบระบบนี้</div>
+    <div class="section-desc">
+      สรุปจากหนังสือ <b>“คิดถูกทาง ใช้ถูกวิธี บริหารถูกหลัก”</b> ที่คุณหมอแนบมา (เป็นหนังสือรวมเครื่องมือบริหาร/ภาวะผู้นำกว่า 150 หัวข้อ)
+      เลือกเฉพาะหลักที่ตรงกับสถานการณ์ของคุณหมอที่สุด คือ <b>สวมหลายบทบาทพร้อมกัน (บริการ/บริหาร/ตรวจราชการ/สอน)</b>
+      และมีความเสี่ยงจะกลายเป็น “คอขวด” ขององค์กรถ้าทำทุกอย่างเอง
+    </div>
+
+    <div class="principle-card">
+      <div class="p-title">1. หลักวงกลมทองคำ (Golden Circle) — ทำไม → ทำอย่างไร → ทำอะไร</div>
+      <div class="p-body">
+        คนส่วนใหญ่หยุดอยู่แค่ระดับ “ทำอะไร” แต่ผู้นำที่มีประสิทธิภาพเริ่มจาก “ทำไปทำไม” (แรงจูงใจ/คุณค่า) ก่อนจึงกำหนด
+        “ทำอย่างไร” (วิธีการ) แล้วค่อยลงเอยที่ “ทำอะไร” (ผลลัพธ์ที่จับต้องได้) — ช่วยให้การตัดสินใจสอดคล้องเป้าหมายและสื่อสารกับทีมได้ชัดเจนขึ้น
+      </div>
+      <div class="p-apply">
+        <b>นำไปใช้กับคุณหมอ:</b> ก่อนตั้งนโยบายใหม่ในแต่ละบทบาท (เช่น Breast Excellent Center) ลองตอบ 3 คำถามนี้ก่อนลงมือ —
+        ทำไมศูนย์นี้ต้องมีอยู่ / จะบรรลุเป้าหมายด้วยวิธีใด / ผลลัพธ์ที่จับต้องได้คืออะไร — จะช่วยสื่อสารกับทีมและคณะกรรมการได้ตรงจุดกว่าการลงรายละเอียดปฏิบัติการทันที
+      </div>
+    </div>
+
+    <div class="principle-card">
+      <div class="p-title">2. การบริหารแบบวงจรปิด (Closed-loop / PDCA)</div>
+      <div class="p-body">
+        วางแผน (กำหนดทิศทาง+เป้าหมาย) → ลงมือปฏิบัติ (แผนงานละเอียด แบ่งเป้าหมายย่อย) → ตรวจสอบ (ติดตามว่าผลตรงเป้าหรือไม่)
+        → ปรับปรุง (สรุปบทเรียน แก้ไขจุดที่ยังไม่ได้ผล) แล้ววนกลับไปวางแผนใหม่ — งานที่ดีต้อง “ปิดวงจร” ไม่ใช่แค่เริ่มแล้วปล่อยไป
+      </div>
+      <div class="p-apply">
+        <b>นำไปใช้กับคุณหมอ:</b> ใช้เป็นกรอบตรวจสอบทุกโครงการของ CRC/Breast Excellent Center — ก่อนปิดแต่ละ milestone
+        ถามว่า “ผลลัพธ์ตรงเป้าหรือไม่ อะไรที่ยังไม่เป็นไปตามคาด และมาตรการปรับปรุงคืออะไร” ก่อนเริ่มรอบถัดไป
+        (ดูตัวอย่างการปรับใช้แล้วใน roadmap ของ CRC readiness dashboard)
+      </div>
+    </div>
+
+    <div class="principle-card">
+      <div class="p-title">3. หลักการมอบอำนาจ (Delegation) — 3 ข้อดีของการปล่อยมือ</div>
+      <div class="p-body">
+        งานที่ไม่จำเป็นต้องลงมือทำเองควรมอบให้ผู้ใต้บังคับบัญชา เพราะ (1) คุณจะมีเวลา/พลังมากขึ้นสำหรับงานที่เป็นความรับผิดชอบหลักจริงๆ
+        และไม่กลายเป็นคอขวดของทีม (2) ผู้ใต้บังคับบัญชาได้พัฒนาตัวเอง ทีมจะมีคนที่รับมือปัญหายากได้มากขึ้นในอนาคต
+        (3) ช่วยให้เห็นจุดอ่อนด้านความสามารถของทีม นำไปสู่การจัดฝึกอบรมได้ทันเวลา — หัวใจคือ “มอบอำนาจบนพื้นฐานความไว้วางใจ” พร้อมกำหนดขอบเขตชัดเจนและติดตามผลสม่ำเสมอ
+      </div>
+      <div class="p-apply">
+        <b>นำไปใช้กับคุณหมอ:</b> ด้วย 4 บทบาทพร้อมกัน ความเสี่ยงสูงสุดคือกลายเป็นคอขวดของทุกคณะกรรมการ
+        ลองมองหา “บุคลากรแกนหลัก” ในแต่ละคณะ (เช่น EC, CRC ที่มีทีมงานประสานงานอยู่แล้ว) แล้วมอบหมายงานที่ไม่จำเป็นต้องตัดสินใจเองทั้งหมด
+        พร้อมกำหนดจุดติดตามผลชัดเจน (ดู 4 ตำแหน่งที่ยังขาดใน CRC dashboard เป็นจุดเริ่มมอบอำนาจได้)
+      </div>
+    </div>
+
+    <div class="principle-card">
+      <div class="p-title">4. หลักประชุมอย่างมีประสิทธิภาพ — “6 มี 5 ไม่”</div>
+      <div class="p-body">
+        ประชุมที่ดีต้อง <b>มี</b> การเตรียมพร้อม, หัวข้อชัดเจน, ระเบียบวินัย, วาระเป็นลายลักษณ์อักษร, ผลลัพธ์ที่จับต้องได้ และการติดตามผล —
+        และต้อง <b>ไม่</b> ประชุมเพราะเป็นกิจวัตร, ไม่ใช้เป็นที่ระบายอารมณ์, ไม่ให้คนเดียวผูกขาดการพูด, ไม่ออกนอกประเด็น, ไม่จบโดยไม่มีมติ
+      </div>
+      <div class="p-apply">
+        <b>นำไปใช้กับคุณหมอ:</b> ดูแท็บ “งานบริหาร/กรรมการ” ด้านบน — ทำเป็นเช็กลิสต์ใช้ได้จริงก่อนประชุม EC/CRC/Breast Excellent Center ทุกครั้งแล้ว
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section">
+    <div class="section-title">📚 ห้องสมุดหลักการทั้งหมด — คลิกเพื่ออ่าน</div>
+    <div class="section-desc">
+      สรุปครบทุกหลักการ/เครื่องมือ/กรอบความคิดที่หนังสือกล่าวถึง (สกัดจากทั้ง 101 หน้า) แต่ละหัวข้อคลิกเพื่อขยายอ่านสรุป ประเด็นสำคัญ
+      และตัวอย่างการนำไปปรับใช้กับบทบาทหัวหน้าแผนก/ประธานกรรมการ/อาจารย์แพทย์ของคุณหมอโดยเฉพาะ — ค้นหาหรือกรองตามหมวดได้ด้านล่าง
+    </div>
+
+    <div class="principles-toolbar">
+      <input type="text" id="principleSearch" placeholder="🔍 ค้นหาหลักการ (พิมพ์ชื่อหรือคำสำคัญ)..." oninput="renderPrinciples()">
+      <div class="principle-cat-chips" id="principleCatChips"></div>
+    </div>
+    <div class="principles-count" id="principlesCount"></div>
+    <div id="principlesList"></div>
+  </div>
+</div>
+
+<div class="source-note">
+  หลักการบริหารทั้ง 137 ข้อสรุปจากไฟล์ที่คุณหมอแนบ: “คิดถูกทาง ใช้ถูกวิธี บริหารถูกหลัก” (101 หน้า, OCR ภาษาไทย) — สกัดและสรุปด้วย AI จากเนื้อหาต้นฉบับทั้งเล่ม<br>
+  ระบบนี้จะขยายต่อได้เรื่อยๆ ตามข้อมูลที่คุณหมอส่งมา — พิมพ์บอกหรือแนบไฟล์ในแชทได้ทุกเมื่อ
+</div>
+
+<script>
+  function toggleDone(el) {
+    const span = el.nextElementSibling;
+    if (el.checked) span.classList.add('done');
+    else span.classList.remove('done');
+  }
+
+  // ===== งานวิจัย: ติดตามหลัง submission ===== (อัปเดตโดย Claude เมื่อมีอีเมลแจ้งสถานะใหม่)
+  const submissions = [
+    {
+      journal: "Asia Pacific Journal of Public Health (APJPH)",
+      manuscriptId: "APJPH-26-Aug-429",
+      title: "Impact of the COVID-19 Pandemic Period on Overall and Progression-Free Survival in Patients With Breast, Colorectal, Gastric, and Esophageal Cancer at a Regional Cancer Hospital in Thailand: A Retrospective Cohort Study",
+      authors: "Sornthom W, Charernboon T",
+      submitted: "2026-08-18",
+      status: "Submitted — อยู่ระหว่างพิจารณาเบื้องต้น (full consideration)",
+      followUpDays: 90,
+      note: "ระบบ ScholarOne Manuscripts — เช็กสถานะได้ตลอดเวลาผ่าน Author Center (mc.manuscriptcentral.com/apjph)"
+    },
+    {
+      journal: "Asian Pacific Journal of Cancer Prevention (APJCP)",
+      manuscriptId: "APJCP-2608-13809",
+      title: "Survival prediction in de novo Stage IV versus distant metastatic recurrent breast cancer: a single-center cohort with flexible parametric modelling",
+      authors: "Sornthom W",
+      submitted: "2026-08-09",
+      status: "Received — เข้าสู่กระบวนการ peer review",
+      followUpDays: 90,
+      note: "ติดต่อสอบถามผ่านระบบบรรณาธิการเท่านั้น — ทีมงานตอบกลับภายใน 5-8 วัน"
+    },
+  ];
+
+  function daysSince(dateStr) {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const start = new Date(dateStr + "T00:00:00");
+    return Math.round((today - start) / 86400000);
+  }
+
+  function renderSubmissions() {
+    const wrap = document.getElementById("submissionCards");
+    if (!wrap) return;
+    wrap.innerHTML = submissions.map(s => {
+      const elapsed = daysSince(s.submitted);
+      const remaining = s.followUpDays - elapsed;
+      let cls = "ok", label = "วันตั้งแต่ submit";
+      if (remaining <= 0) { cls = "due"; }
+      else if (remaining <= 14) { cls = "watch"; }
+      const countdownText = remaining <= 0
+        ? { num: Math.abs(remaining), label: "วันเลยรอบติดตาม" }
+        : { num: remaining, label: "วันถึงรอบติดตาม" };
+      return `
+        <div class="sub-card ${cls}">
+          <div class="sub-info">
+            <div class="sub-journal">${s.journal}</div>
+            <div class="sub-title">${s.title}</div>
+            <div class="sub-meta">
+              ผู้แต่ง: ${s.authors} · Manuscript ID: <code>${s.manuscriptId}</code><br>
+              Submit: ${s.submitted} (${elapsed} วันที่แล้ว)
+            </div>
+            <span class="sub-status">${s.status}</span>
+            <div class="sub-note">${s.note}</div>
+          </div>
+          <div class="sub-countdown ${cls}">
+            <div class="num">${countdownText.num}</div>
+            <div class="label">${countdownText.label}</div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+  renderSubmissions();
+
+  // ===== งานจุกจิก ===== (อัปเดตโดย Claude เมื่อมีรายการใหม่ หรือเมื่อเรื่องปิดแล้ว)
+  const miscTasks = [
+    {
+      group: "todo",
+      icon: "🧾",
+      title: "ติดตามใบเสร็จค่าลงทะเบียน — ประชุมวิชาการ TBS 2569 (ครั้งที่ 19)",
+      detail: `งานประชุมวิชาการสมาคมโรคเต้านมแห่งประเทศไทย ประจำปี 2569 ครั้งที่ 19 — หัวข้อ "The Future of Breast Care: Innovation, Integration and Inspiration"<br>
+        จัดวันที่ 18–21 ส.ค. 2569 · ห้องประชุมสยามมกุฎราชกุมาร อาคารเฉลิมพระบารมี 50 ปี กรุงเทพฯ<br>
+        ติดต่อขอใบเสร็จ: thaibreast@thaibreast.org · LINE ID: <b>thaibreast</b> · โทร 085-243-3500 (วันและเวลาราชการ)`,
+      reminderText: "เตือนทุกวันจันทร์",
+      overviewSub: "ติดต่อ thaibreast@thaibreast.org / LINE: thaibreast"
+    },
+    {
+      group: "read",
+      icon: "📄",
+      title: "อ่านงาน ป.โท ของพี่อัจรีย์ (Ajaree Betz)",
+      detail: `เรื่อง: <i>Epidemiologic Characteristics of Breast Cancer Patients at Ubon Ratchathani Cancer Center, Thailand, 2015–2024</i><br>
+        ได้รับไฟล์: 14 ส.ค. 2569 (Results draft + .do file วิเคราะห์ข้อมูล + สไลด์ pre-lim)<br>
+        สถานะ: กำลังเขียน manuscript ฉบับเต็ม จะส่งให้อาจารย์พี่เลี้ยงตรวจต่อ<br>
+        อาจารย์พี่เลี้ยงร่วม: โสภิต, nussara@bcnsp.ac.th, chaliya.w@gmail.com`,
+      reminderText: "เตือนทุก 3 วัน",
+      overviewSub: "รอ feedback ก่อนเขียน manuscript ฉบับเต็ม"
+    },
+  ];
+
+  function renderMiscTasks() {
+    ["todo", "read"].forEach(g => {
+      const wrap = document.getElementById("miscCards-" + g);
+      if (!wrap) return;
+      wrap.innerHTML = miscTasks.filter(t => t.group === g).map(t => `
+        <div class="card orange">
+          <div class="card-title">${t.icon} ${t.title}</div>
+          <div class="card-desc">
+            ${t.detail}<br>
+            <b>ตั้งเตือนอัตโนมัติแล้ว (${t.reminderText})</b> จนกว่าจะเสร็จ — แจ้ง Claude เมื่อเสร็จแล้วเพื่อปิดรายการนี้
+          </div>
+        </div>
+      `).join("");
+    });
+  }
+  renderMiscTasks();
+
+  // ===== งานจุกจิก: อบรม/ประชุมออนไลน์ที่ต้องเข้าร่วมตามวันเวลา (ตั้งเตือนจริงคู่กันแล้วผ่าน scheduled task) =====
+  const trainingEvents = [
+    {
+      title: "TBS 2026: The Future of Breast Care — Innovation, Integration and Inspiration (Zoom, วันสุดท้าย)",
+      date: "2026-08-21", time: "08:00",
+      detail: "Meeting ID: 663 6262 0524",
+      link: "https://thairen.zoom.us/w/66362620524"
+    },
+  ];
+
+  function renderTrainingCards() {
+    const wrap = document.getElementById("trainingCards");
+    if (!wrap) return;
+    wrap.innerHTML = trainingEvents.map(t => `
+      <div class="card blue">
+        <div class="card-title">🎥 ${t.title}</div>
+        <div class="card-desc">
+          ${t.date} เวลา ${t.time} น. · ${t.detail}<br>
+          <a href="${t.link}" style="color: var(--blue);">${t.link}</a><br>
+          <b>ตั้งเตือนอัตโนมัติตรงเวลาแล้ว</b>
+        </div>
+      </div>
+    `).join("");
+  }
+  renderTrainingCards();
+
+  // ===== งานบริหาร/กรรมการ: คัดลอกจาก committee-deadlines.html ด้วยมือ (sync ทุกครั้งที่ไฟล์นั้นมีการเปลี่ยนแปลง) =====
+  const committeeItems = [
+    { title: "พิธีมอบรางวัล Poster Presentation / พิธีปิดการประชุม", sub: "งานประชุมวิชาการด้านโรคมะเร็ง ครั้งที่ 1 ปี 2569 · 13.00-13.30 น. · ห้องทับทิมสยาม 3 ชั้น 5", deadline: "2026-08-21" },
+  ];
+
+  // ===== รวมงานค้างทั้งหมดสำหรับแท็บภาพรวม =====
+  function urgencyFromDays(days) {
+    if (days <= 2) return "red";
+    if (days <= 7) return "orange";
+    return "green";
+  }
+
+  function renderOverviewPending() {
+    const datedWrap = document.getElementById("pendingDated");
+    const recurWrap = document.getElementById("pendingRecurring");
+    const recurTitle = document.getElementById("pendingRecurringTitle");
+    const statRow = document.getElementById("statRow");
+    if (!datedWrap) return;
+
+    const dated = [];
+
+    committeeItems.forEach(c => {
+      const days = daysSince(c.deadline) * -1; // days until (positive = future)
+      dated.push({
+        tag: "🏛️ บริหาร/กรรมการ", title: c.title, sub: c.sub,
+        days, link: "./committee-deadlines.html"
+      });
+    });
+
+    trainingEvents.forEach(t => {
+      const days = daysSince(t.date) * -1;
+      if (days < 0) return; // ข้ามรายการที่ผ่านไปแล้ว
+      dated.push({
+        tag: "🎥 อบรม/ประชุม", title: t.title, sub: `${t.date} เวลา ${t.time} น. · ${t.detail}`,
+        days, link: t.link
+      });
+    });
+
+    submissions.forEach(s => {
+      const elapsed = daysSince(s.submitted);
+      const remaining = s.followUpDays - elapsed;
+      dated.push({
+        tag: "🔬 งานวิจัย", title: "รอบติดตาม: " + s.journal, sub: s.manuscriptId + " — " + s.status,
+        days: remaining, link: null
+      });
+    });
+
+    dated.sort((a, b) => a.days - b.days);
+
+    datedWrap.innerHTML = dated.map(d => {
+      const cls = urgencyFromDays(d.days);
+      const numText = d.days < 0 ? Math.abs(d.days) : d.days;
+      const labelText = d.days < 0 ? "วันเลยกำหนด" : (d.days === 0 ? "วันนี้" : "วันเหลือ");
+      const inner = `
+        <div class="pend-main">
+          <span class="pend-tag">${d.tag}</span>
+          <div class="pend-title">${d.title}</div>
+          <div class="pend-sub">${d.sub}</div>
+        </div>
+        <div class="pend-right ${cls}">
+          <div class="num">${numText}</div>
+          <div class="label">${labelText}</div>
+        </div>
+      `;
+      return d.link
+        ? `<a class="pend-item ${cls}" href="${d.link}">${inner}</a>`
+        : `<div class="pend-item ${cls}">${inner}</div>`;
+    }).join("");
+
+    const recurring = miscTasks.map(t => ({
+      tag: t.group === "todo" ? "📋 งานจุกจิก" : "📄 อ่านงานวิจัยผู้อื่น",
+      title: t.title, sub: t.overviewSub + " · " + t.reminderText
+    }));
+
+    if (recurring.length) {
+      recurTitle.style.display = "block";
+      recurWrap.innerHTML = recurring.map(r => `
+        <div class="pend-item blue">
+          <div class="pend-main">
+            <span class="pend-tag">${r.tag}</span>
+            <div class="pend-title">${r.title}</div>
+            <div class="pend-sub">${r.sub}</div>
+          </div>
+          <div class="pend-right blue"><div class="num">🔁</div><div class="label">ต่อเนื่อง</div></div>
+        </div>
+      `).join("");
+    } else {
+      recurTitle.style.display = "none";
+      recurWrap.innerHTML = "";
+    }
+
+    const total = dated.length + recurring.length;
+    const urgent = dated.filter(d => urgencyFromDays(d.days) === "red").length;
+    const soon = dated.filter(d => urgencyFromDays(d.days) === "orange").length;
+    statRow.innerHTML = `
+      <div class="stat-tile blue"><div class="n">${total}</div><div class="l">ทั้งหมด</div></div>
+      <div class="stat-tile red"><div class="n">${urgent}</div><div class="l">เร่งด่วน (≤2 วัน)</div></div>
+      <div class="stat-tile orange"><div class="n">${soon}</div><div class="l">ใกล้ถึง (≤7 วัน)</div></div>
+      <div class="stat-tile green"><div class="n">${recurring.length}</div><div class="l">ติดตามต่อเนื่อง</div></div>
+    `;
+  }
+  renderOverviewPending();
+
+  // ===== หลักการบริหาร: ห้องสมุดหลักการทั้งหมด (สกัดจาก "คิดถูกทาง ใช้ถูกวิธี บริหารถูกหลัก" 101 หน้า) =====
+const principles = [
+  {
+    "id": "p001",
+    "title_th": "หลักวงกลมทองคำ (Golden Circle)",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "หลักวงกลมทองคำเป็นกรอบแนวคิดที่พัฒนาโดยไซมอน ซิเน็ก เพื่อช่วยให้บุคคลและองค์กรค้นพบจุดมุ่งหมายที่แท้จริงของการดำเนินงาน แนวคิดนี้ประกอบด้วยวงกลมสามชั้นซ้อนกันจากในสู่นอก ได้แก่ ทำไปทำไม (Why) ทำอย่างไร (How) และทำอะไร (What) โดยเน้นว่าการคิดและสื่อสารที่ทรงพลังต้องเริ่มจากแก่นกลางคือเหตุผลและคุณค่าเบื้องหลังการกระทำ ก่อนจะขยายออกไปสู่วิธีการและผลลัพธ์ที่เป็นรูปธรรม คนส่วนใหญ่หยุดอยู่เพียงระดับ What ขณะที่ผู้นำและองค์กรที่โดดเด่นจะสื่อสารจาก Why ก่อนเสมอ",
+    "key_points": [
+      "วงในสุด (Why) คือแรงจูงใจและคุณค่าเบื้องหลังการกระทำ",
+      "วงกลาง (How) คือวิธีการและกลยุทธ์ในการบรรลุเป้าหมาย",
+      "วงนอกสุด (What) คือผลิตภัณฑ์หรือผลลัพธ์ที่จับต้องได้",
+      "การคิดและสื่อสารที่ทรงพลังต้องเริ่มจากในสู่นอก ไม่ใช่นอกสู่ใน",
+      "คนส่วนใหญ่รู้แค่ What ผู้นำที่แท้จริงเข้าใจ Why อย่างลึกซึ้ง"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถเปิดประชุมทีมหรือคณะกรรมการด้วยการอธิบาย 'ทำไม' ของนโยบายหรือแนวปฏิบัติใหม่ก่อนลงรายละเอียดขั้นตอนปฏิบัติ เพื่อสร้างความเข้าใจและแรงจูงใจร่วมในทีมแพทย์ พยาบาล และเจ้าหน้าที่"
+  },
+  {
+    "id": "p002",
+    "title_th": "เทคนิคหมวกความคิด 6 ใบ (Six Thinking Hats)",
+    "category": "การประชุมและการตัดสินใจ",
+    "summary": "เทคนิคหมวกความคิด 6 ใบ พัฒนาโดยเอ็ดเวิร์ด เดอ โบโน เป็นเครื่องมือช่วยให้กลุ่มคิดวิเคราะห์ปัญหาอย่างรอบด้านโดยแยกมุมมองการคิดออกเป็น 6 แบบ แทนด้วยหมวกสีต่าง ๆ ได้แก่ หมวกขาว (ข้อเท็จจริงและข้อมูล) หมวกแดง (ความรู้สึกและสัญชาตญาณ) หมวกดำ (การตั้งคำถามเชิงวิพากษ์และความเสี่ยง) หมวกเหลือง (ด้านบวกและโอกาส) หมวกเขียว (ความคิดสร้างสรรค์) และหมวกน้ำเงิน (การควบคุมกระบวนการคิดโดยรวม) การให้ทุกคนในทีมสวมหมวกสีเดียวกันพร้อมกันในแต่ละช่วง ช่วยลดความขัดแย้งจากการปะปนมุมมองที่ต่างกัน และทำให้การประชุมมีโครงสร้างชัดเจนขึ้น",
+    "key_points": [
+      "หมวกขาว = ข้อเท็จจริงและข้อมูลที่เป็นกลาง",
+      "หมวกแดง = ความรู้สึกและสัญชาตญาณส่วนบุคคล",
+      "หมวกดำ = การตั้งคำถามเชิงวิพากษ์และความเสี่ยง",
+      "หมวกเหลือง = มุมมองเชิงบวกและโอกาส",
+      "หมวกเขียว = ความคิดสร้างสรรค์และแนวทางใหม่",
+      "หมวกน้ำเงิน = การจัดระเบียบและควบคุมกระบวนการคิดทั้งหมด"
+    ],
+    "application_note": "ประธานคณะกรรมการสามารถใช้เทคนิคหมวก 6 ใบจัดโครงสร้างการประชุม M&M หรือทบทวนอุบัติการณ์ทางคลินิก ให้ทีมสลับพิจารณาข้อเท็จจริง ความรู้สึก ความเสี่ยง และแนวทางแก้ไขทีละด้านแทนการถกเถียงแบบไม่มีทิศทาง"
+  },
+  {
+    "id": "p003",
+    "title_th": "กระบวนการวิเคราะห์ปัญหา 7 ขั้นตอนของแมคคินซีย์",
+    "category": "การคิดวิเคราะห์",
+    "summary": "วิธี 7 ขั้นตอนสู่ทางออก เป็นโมเดลการแก้ปัญหาทางธุรกิจที่มีโครงสร้างชัดเจนของบริษัทที่ปรึกษาแมคคินซีย์ ประกอบด้วยการกำหนดปัญหาให้ชัดเจน การแยกย่อยปัญหาออกเป็นส่วนต่าง ๆ การจัดลำดับความสำคัญเพื่อโฟกัสประเด็นหลัก การวางแผนวิเคราะห์ การวิเคราะห์เชิงลึกเพื่อค้นหาสาเหตุราก การจัดระบบผลวิเคราะห์ให้เป็นข้อสรุปที่ชัดเจน และสุดท้ายคือการเสนอแนวทางแก้ไขที่นำไปปฏิบัติได้จริง",
+    "key_points": [
+      "ขั้นตอน 1-2: กำหนดปัญหาให้ชัดเจน แล้วแยกย่อยเป็นส่วนย่อย",
+      "ขั้นตอน 3-4: จัดลำดับความสำคัญ แล้ววางแผนการวิเคราะห์",
+      "ขั้นตอน 5-6: วิเคราะห์เชิงลึกหาสาเหตุราก แล้วจัดระบบผลสรุป",
+      "ขั้นตอน 7: เสนอแนวทางแก้ไขที่นำไปปฏิบัติได้จริงอย่างมีพลังโน้มน้าว",
+      "ช่วยยกระดับความเป็นเหตุเป็นผลและลดการตกหล่นข้อมูลสำคัญ"
+    ],
+    "application_note": "หัวหน้าแผนกใช้กระบวนการ 7 ขั้นตอนนี้วิเคราะห์ปัญหาเชิงระบบ เช่น อัตราการติดเชื้อหลังผ่าตัดที่สูงขึ้น เพื่อแตกปัญหา หาสาเหตุราก และเสนอแผนพัฒนาคุณภาพต่อคณะกรรมการโรงพยาบาลอย่างมีน้ำหนัก"
+  },
+  {
+    "id": "p004",
+    "title_th": "โมเดล GROW สำหรับการโค้ชและตั้งเป้าหมาย",
+    "category": "การบริหารทีม",
+    "summary": "โมเดล GROW เป็นเครื่องมือเชื่อมโยงเป้าหมายสู่การลงมือทำ ประกอบด้วย 4 ขั้นตอน ได้แก่ Goal กำหนดเป้าหมายที่ชัดเจนและวัดผลได้ Reality ทบทวนสถานการณ์จริงในปัจจุบันอย่างตรงไปตรงมา Options ระดมทางเลือกและกลยุทธ์ที่เป็นไปได้ และ Will สร้างความมุ่งมั่นและแผนลงมือทำที่ชัดเจนว่าใครทำอะไรเมื่อไร",
+    "key_points": [
+      "Goal: ตั้งเป้าหมายที่ชัดเจน วัดผลได้ และมีกรอบเวลา",
+      "Reality: ประเมินสถานการณ์ปัจจุบันอย่างตรงไปตรงมา",
+      "Options: ระดมทางเลือกและกลยุทธ์ที่เป็นไปได้หลายแนวทาง",
+      "Will: สรุปแผนลงมือทำ ผู้รับผิดชอบ และกำหนดเวลาที่ชัดเจน",
+      "เหมาะสำหรับใช้ในบทบาทโค้ชหรือผู้นำที่พัฒนาทีม"
+    ],
+    "application_note": "ใช้โมเดล GROW เมื่อโค้ชแพทย์ประจำบ้านหรือทีมงานเรื่องเป้าหมายงานวิจัยหรือพัฒนาทักษะผ่าตัด โดยพาไล่เรียงตั้งแต่เป้าหมาย สถานการณ์จริง ทางเลือก ไปจนถึงแผนลงมือทำที่มีกำหนดเวลาชัดเจน"
+  },
+  {
+    "id": "p005",
+    "title_th": "กระบวนการ 8 ขั้นตอนแบบโตโยต้า (Toyota 8-Step Problem Solving)",
+    "category": "การคิดวิเคราะห์",
+    "summary": "วิธีทำงาน 8 ขั้นตอนของโตโยต้าเป็นกระบวนการแก้ปัญหาอย่างเป็นระบบที่มีชื่อเสียงในงานบริหารแบบลีน ประกอบด้วยการทำให้ปัญหาชัดเจน แยกย่อยปัญหา กำหนดเป้าหมายเป็นตัวเลขที่ท้าทาย ระบุสาเหตุรากเหง้าด้วยเครื่องมือ เช่น ผังก้างปลาและ 5W2H กำหนดมาตรการรับมือ ดำเนินการปฏิบัติ ประเมินผลลัพธ์และกระบวนการ และสุดท้ายทำให้เป็นมาตรฐานพร้อมแบ่งปันความสำเร็จไปยังส่วนงานอื่น",
+    "key_points": [
+      "ขั้นตอน 1-3: ทำให้ปัญหาชัดเจน แยกย่อย และกำหนดเป้าหมายเป็นตัวเลข",
+      "ขั้นตอน 4-5: หาสาเหตุรากเหง้า แล้วกำหนดมาตรการรับมือ",
+      "ขั้นตอน 6-7: ลงมือปฏิบัติ แล้วประเมินผลลัพธ์และกระบวนการ",
+      "ขั้นตอน 8: ทำให้เป็นมาตรฐานและขยายผลความสำเร็จ",
+      "สะท้อนจิตวิญญาณวงจร PDCA คือปรับปรุงต่อเนื่องไม่ใช่ทำครั้งเดียวจบ"
+    ],
+    "application_note": "หัวหน้าแผนกใช้ 8 ขั้นตอนนี้แก้ปัญหาซ้ำซาก เช่น ความล่าช้าในห้องผ่าตัดหรือคิวตรวจผู้ป่วยนอก แล้วนำวิธีที่ได้ผลไปตั้งเป็นมาตรฐานปฏิบัติของแผนกทั้งหมด"
+  },
+  {
+    "id": "p006",
+    "title_th": "เครื่องมือวิเคราะห์ 5W2H",
+    "category": "การคิดวิเคราะห์",
+    "summary": "5W2H เป็นกรอบคำถามเพื่อวิเคราะห์ปัญหาหรือโครงการอย่างรอบด้าน ประกอบด้วย What (คืออะไร ทำอะไร) Why (จุดประสงค์คืออะไร) Who (ใครเป็นผู้ทำ) When (ทำเมื่อใด) Where (ทำที่ไหน) How (ทำอย่างไร) และ How much (ใช้ทรัพยากรหรืองบประมาณเท่าไร)",
+    "key_points": [
+      "What/Why: ปัญหาคืออะไร และทำไปเพื่อจุดประสงค์ใด",
+      "Who/When/Where: ใครรับผิดชอบ ทำเมื่อใด และที่ไหน",
+      "How/How much: ใช้วิธีการใด และต้นทุนหรือทรัพยากรเท่าไร",
+      "ช่วยลดการมองปัญหาด้านเดียวและตกหล่นข้อมูลสำคัญ",
+      "เหมาะใช้ก่อนตัดสินใจ วางแผนปฏิบัติ หรือสรุปทบทวนหลังเห็นผล"
+    ],
+    "application_note": "ใช้ 5W2H ร่างแผนปฏิบัติหรือมติที่ประชุมคณะกรรมการคุณภาพ ให้ระบุชัดว่าใครทำอะไร เมื่อไร ที่ไหน ด้วยวิธีใด และใช้งบเท่าไร เพื่อให้ทีมนำไปปฏิบัติได้จริงและติดตามผลได้"
+  },
+  {
+    "id": "p007",
+    "title_th": "กระบวนการคิดแบบ ORID (Focused Conversation)",
+    "category": "การประชุมและการตัดสินใจ",
+    "summary": "ORID เป็นกรอบการนำสนทนาเชิงลึกที่ไล่เรียงคำถาม 4 ระดับ ได้แก่ Objective นำเสนอข้อเท็จจริงอย่างเป็นกลาง Reflective อธิบายความรู้สึกและปฏิกิริยาที่แท้จริงต่อเหตุการณ์ Interpretive พิจารณาความหมาย คุณค่า และนัยสำคัญที่ซ่อนอยู่ และ Decisional สรุปเป็นความมุ่งมั่นและแผนลงมือทำขั้นต่อไป",
+    "key_points": [
+      "Objective: ข้อเท็จจริงของเหตุการณ์อย่างเป็นกลาง",
+      "Reflective: ความรู้สึกและปฏิกิริยาที่เกิดขึ้นจริง",
+      "Interpretive: ความหมาย คุณค่า และบทเรียนที่ได้",
+      "Decisional: ข้อสรุปและแผนลงมือทำขั้นต่อไป",
+      "ใช้ได้ทั้งในการทบทวนกิจกรรม การฝึกอบรม และการสัมภาษณ์เชิงลึก"
+    ],
+    "application_note": "ประธานคณะกรรมการใช้ ORID นำทีมทบทวนเหตุการณ์ไม่พึงประสงค์ทางคลินิก โดยเริ่มจากข้อเท็จจริง ให้ทีมสะท้อนความรู้สึก ตีความบทเรียน แล้วปิดท้ายด้วยมาตรการป้องกันที่ชัดเจน"
+  },
+  {
+    "id": "p008",
+    "title_th": "7 นิสัยที่บั่นทอนประสิทธิภาพการทำงาน",
+    "category": "การพัฒนาตนเอง",
+    "summary": "หนังสือรวบรวมนิสัยของคนทำงานที่ไม่มีประสิทธิภาพ 7 ประการ ซึ่งมักถูกเข้าใจผิดว่าเป็นความขยันหรือความทุ่มเท ได้แก่ การทำงานแบบเดิมซ้ำไปเรื่อย ๆ นานหลายปีโดยไม่พัฒนา การทำงานล่วงเวลาจนดึกและมองว่าความลำบากคือผลงาน การเรียนรู้แต่ไม่นำไปลงมือทำหรือแบ่งปัน การตั้งเป้าหมายใหญ่เกินไปจนผัดวันประกันพรุ่ง แผนงานที่คลุมเครือขาดความเฉพาะเจาะจง การใช้เวลากับความสัมพันธ์ที่ไม่ก่อประโยชน์มากเกินไป และการพักผ่อนไม่เป็นจนทั้งกายและใจเหนื่อยล้า",
+    "key_points": [
+      "ทำงานซ้ำแบบเดิมนานหลายปีโดยไม่สรุปทบทวนและพัฒนาตนเอง",
+      "หลงคิดว่าทำงานล่วงเวลามากเท่ากับมีผลงานมาก จนนำไปสู่ภาวะหมดไฟ",
+      "เรียนรู้แล้วไม่ลงมือทำหรือแบ่งปัน ความรู้จึงไม่ซึมซับเป็นของตนเอง",
+      "ตั้งเป้าหมายใหญ่เกินไปโดยไม่แบ่งเป็นขั้นตอนเล็ก ทำให้ผัดวันประกันพรุ่ง",
+      "ใช้เวลากับความสัมพันธ์ที่ไม่มีคุณค่าและพักผ่อนไม่ถูกวิธี"
+    ],
+    "application_note": "หัวหน้าแผนกควรหมั่นสำรวจตนเองว่ากำลังติดกับดักเหล่านี้หรือไม่ เช่น เลิกยกย่องการทำงานล่วงเวลาที่ไม่มีประสิทธิภาพในทีม แล้วส่งเสริมให้แพทย์และพยาบาลจัดจังหวะพักผ่อนและพัฒนาตนเองอย่างต่อเนื่องแทน"
+  },
+  {
+    "id": "p009",
+    "title_th": "7 อุปนิสัยของผู้ทรงประสิทธิผลยิ่ง (7 Habits of Highly Effective People)",
+    "category": "การพัฒนาตนเอง",
+    "summary": "แนวคิด 7 อุปนิสัยของสตีเฟน โควีย์ อธิบายพฤติกรรมของคนทำงานที่มีประสิทธิภาพสูง เริ่มจากการเป็นฝ่ายริเริ่มและลงมือทำเชิงรุกโดยรับผิดชอบต่อพฤติกรรมของตนเอง เริ่มต้นทุกสิ่งโดยมีเป้าหมายปลายทางที่ชัดเจน ให้ความสำคัญกับเรื่องสำคัญก่อนเรื่องเร่งด่วน ฝึกฝนและฟื้นฟูตนเองอย่างต่อเนื่องทั้งกาย ใจ และความคิด เข้าใจผู้อื่นก่อนแล้วจึงทำให้ผู้อื่นเข้าใจตน ผนึกกำลังและประสานความแตกต่างเพื่อค้นหาทางเลือกที่สามซึ่งดีกว่าผลรวมของแต่ละฝ่าย และคิดแบบชนะร่วมกันบนพื้นฐานความเคารพซึ่งกันและกัน",
+    "key_points": [
+      "เป็นฝ่ายริเริ่มและลงมือทำเชิงรุก รับผิดชอบต่อพฤติกรรมของตนเอง",
+      "เริ่มต้นด้วยเป้าหมายปลายทางที่ชัดเจนเสมอ",
+      "ให้ความสำคัญกับสิ่งสำคัญก่อนสิ่งเร่งด่วน",
+      "หมั่นฟื้นฟูและพัฒนาตนเองทั้งกาย ใจ และความคิดอย่างต่อเนื่อง",
+      "เข้าใจผู้อื่นก่อนแล้วจึงทำให้ผู้อื่นเข้าใจเรา และผนึกกำลังกับความแตกต่าง",
+      "คิดแบบชนะร่วมกันแทนการเอาชนะฝ่ายเดียว"
+    ],
+    "application_note": "ประธานคณะกรรมการหลายชุดควรฝึกใช้ 'เข้าใจผู้อื่นก่อน' และ 'ผนึกกำลัง' เมื่อไกล่เกลี่ยความเห็นต่างระหว่างสหสาขาวิชาชีพในที่ประชุม tumor board เพื่อหาทางออกที่ทุกฝ่ายยอมรับร่วมกัน"
+  },
+  {
+    "id": "p010",
+    "title_th": "วงจร PDCA เพื่อการปรับปรุงอย่างต่อเนื่อง",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "วงจร PDCA เป็นเครื่องมือบริหารจัดการที่ได้รับการยอมรับอย่างแพร่หลาย ประกอบด้วย 4 ขั้นตอนคือ วางแผน (Plan) กำหนดเป้าหมายและวิธีดำเนินการ ลงมือปฏิบัติ (Do) ตามแผนที่วางไว้ ตรวจสอบ (Check) เปรียบเทียบผลลัพธ์กับเป้าหมายเพื่อระบุความคลาดเคลื่อน และปรับปรุง (Act) นำสิ่งที่พบไปปรับวิธีการก่อนเข้าสู่วงจรใหม่",
+    "key_points": [
+      "Plan: วางแผนกำหนดเป้าหมายและวิธีดำเนินการ",
+      "Do: ลงมือปฏิบัติตามแผน",
+      "Check: ตรวจสอบเปรียบเทียบผลลัพธ์กับเป้าหมาย",
+      "Act: ปรับปรุงแก้ไขก่อนเข้าสู่วงจรใหม่",
+      "เป็นกระบวนการต่อเนื่องไม่สิ้นสุด ไม่ใช่การแก้ปัญหาครั้งเดียวจบ"
+    ],
+    "application_note": "หัวหน้าแผนกใช้วงจร PDCA ลดอัตราความคลาดเคลื่อนทางยาในหอผู้ป่วย โดยวางแผนมาตรการ ทดลองใช้ ตรวจสอบผลหลังผ่านไปหนึ่งไตรมาส แล้วปรับปรุงมาตรการซ้ำจนกว่าจะได้ผลลัพธ์ที่ยั่งยืน"
+  },
+  {
+    "id": "p011",
+    "title_th": "หลัก SMART สำหรับบริหารเป้าหมาย",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "หลัก SMART เป็นกรอบการตั้งเป้าหมายที่ประกอบด้วย 5 องค์ประกอบ ได้แก่ Specific ผลลัพธ์ที่ชัดเจนและเฉพาะเจาะจง Measurable สามารถวัดผลได้ Achievable มีความเป็นไปได้ในการปฏิบัติจริงตามทรัพยากรที่มี Relevant เกี่ยวข้องสอดคล้องกับตำแหน่งงาน หน้าที่ หรือทิศทางกลยุทธ์ขององค์กร และ Time-bound มีกรอบเวลาที่ชัดเจน",
+    "key_points": [
+      "Specific: เป้าหมายต้องชัดเจนและเฉพาะเจาะจง",
+      "Measurable: สามารถวัดผลและประเมินความสำเร็จได้",
+      "Achievable: มีความเป็นไปได้จริงตามทรัพยากรที่มี",
+      "Relevant: สอดคล้องกับหน้าที่หรือทิศทางกลยุทธ์ขององค์กร",
+      "Time-bound: มีกรอบเวลาสำเร็จที่ชัดเจน ป้องกันการผัดวันประกันพรุ่ง"
+    ],
+    "application_note": "ประธานคณะกรรมการคุณภาพตั้งเป้าหมายแบบ SMART เช่น 'ลดอัตราการติดเชื้อในแผลผ่าตัดให้ต่ำกว่าร้อยละ X ภายใน 6 เดือน' เพื่อให้ทีมทุกฝ่ายมีทิศทางร่วมกันและติดตามความคืบหน้าได้ในทุกการประชุม"
+  },
+  {
+    "id": "p012",
+    "title_th": "การวิเคราะห์ SWOT และกลยุทธ์ TOWS",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "การวิเคราะห์ SWOT เป็นเครื่องมือวางแผนกลยุทธ์ที่ช่วยให้ผู้บริหารเข้าใจสภาพแวดล้อมทั้งภายในและภายนอกองค์กรอย่างเป็นระบบ โดยแบ่งเป็นจุดแข็ง (Strengths) และจุดอ่อน (Weaknesses) ซึ่งเป็นปัจจัยภายใน กับโอกาส (Opportunities) และภัยคุกคาม (Threats) ซึ่งเป็นปัจจัยภายนอก จากนั้นนำปัจจัยทั้งสี่มาผสมผสานเป็นกลยุทธ์ 4 รูปแบบ ได้แก่ SO (ใช้จุดแข็งคว้าโอกาส) WO (ชดเชยจุดอ่อนเพื่อใช้โอกาส) ST (ใช้จุดแข็งลดความเสี่ยงจากภัยคุกคาม) และ WT (หลีกเลี่ยงจุดอ่อนและป้องกันภัยคุกคาม)",
+    "key_points": [
+      "S-Strengths: จุดแข็งภายในองค์กร",
+      "W-Weaknesses: จุดอ่อนภายในองค์กร",
+      "O-Opportunities: โอกาสจากสภาพแวดล้อมภายนอก",
+      "T-Threats: ภัยคุกคามจากสภาพแวดล้อมภายนอก",
+      "ผสานปัจจัยเป็นกลยุทธ์ SO / WO / ST / WT เพื่อกำหนดแนวทางปฏิบัติ"
+    ],
+    "application_note": "ประธานคณะกรรมการโรงพยาบาลสามารถใช้ SWOT วิเคราะห์จุดแข็งจุดอ่อนของแผนกศัลยกรรมเต้านมเทียบกับโอกาสและภัยคุกคามจากนโยบายสาธารณสุขหรือคู่แข่งโรงพยาบาลเอกชน เพื่อวางแผนพัฒนาศักยภาพการรักษา"
+  },
+  {
+    "id": "p013",
+    "title_th": "การวิเคราะห์ปัจจัยแวดล้อมมหภาค PEST(EL)",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "การวิเคราะห์ PEST เป็นเครื่องมือประเมินแนวโน้มตลาดและโอกาสเชิงกลยุทธ์โดยพิจารณาปัจจัยแวดล้อมมหภาคที่ควบคุมไม่ได้แต่ส่งผลต่อองค์กร แบ่งเป็นมิติด้านการเมือง (Political) เศรษฐกิจ (Economic) สังคม (Social) และเทคโนโลยี (Technological)",
+    "key_points": [
+      "Political: นโยบาย กฎหมาย และเสถียรภาพทางการเมือง",
+      "Economic: อัตราเงินเฟ้อ อัตราแลกเปลี่ยน ภาวะเศรษฐกิจ",
+      "Social: โครงสร้างประชากรและค่านิยมทางวัฒนธรรม",
+      "Technological: ความเร็วของนวัตกรรมและการลงทุน R&D",
+      "ใช้เพื่อป้องกันความเสี่ยงล่วงหน้าและมองเห็นโอกาสจากการเปลี่ยนแปลงมหภาค"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถใช้ PEST วิเคราะห์ผลกระทบของนโยบายประกันสุขภาพ งบประมาณสาธารณสุข และเทคโนโลยีการตรวจวินิจฉัยใหม่ ต่อทิศทางการพัฒนาแผนกในระยะยาว"
+  },
+  {
+    "id": "p014",
+    "title_th": "โมเดลการวิเคราะห์องค์กร McKinsey 7S",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "โมเดล 7S เป็นวิธีวิเคราะห์องค์กรที่กำหนดให้พิจารณาและประสานองค์ประกอบสำคัญ 7 ด้าน ได้แก่ โครงสร้างองค์กร ระบบ กลยุทธ์ รูปแบบภาวะผู้นำ บุคลากร ทักษะ และค่านิยมร่วม แบ่งเป็น 'ปัจจัยแข็ง' (กลยุทธ์ โครงสร้าง ระบบ) และ 'ปัจจัยอ่อน' (รูปแบบการบริหาร ทักษะ บุคลากร ค่านิยมร่วม)",
+    "key_points": [
+      "ปัจจัยแข็ง: กลยุทธ์ (Strategy) โครงสร้าง (Structure) ระบบ (Systems)",
+      "ปัจจัยอ่อน: รูปแบบการบริหาร (Style) บุคลากร (Staff) ทักษะ (Skills) ค่านิยมร่วม (Shared Values)",
+      "ต้องพิจารณาทั้ง 7 องค์ประกอบให้สอดคล้องกันไปพร้อมกัน",
+      "ใช้ประเมินความพร้อมขององค์กรก่อนการเปลี่ยนแปลงเชิงกลยุทธ์"
+    ],
+    "application_note": "ประธานกรรมการแพทย์สามารถใช้ 7S ประเมินว่าโครงสร้างแผนก ระบบงาน และวัฒนธรรมทีมสอดคล้องกับกลยุทธ์การพัฒนาศูนย์มะเร็งเต้านมหรือไม่ก่อนผลักดันการเปลี่ยนแปลง"
+  },
+  {
+    "id": "p015",
+    "title_th": "โมเดลวิเคราะห์ห่วงโซ่คุณค่า (Value Chain Analysis)",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "โมเดลวิเคราะห์ห่วงโซ่คุณค่าเป็นเครื่องมือสำคัญในการวิเคราะห์เชิงกลยุทธ์ขององค์กร โดยศึกษากระบวนการดำเนินงานทั้งหมดตั้งแต่ปัจจัยนำเข้า การแปรรูป ไปจนถึงผลผลิต ด้วยการแยกกิจกรรมทางธุรกิจออกเป็นส่วนย่อยอย่างเป็นขั้นตอน เพื่อระบุว่ากิจกรรมใดสร้างมูลค่าเพิ่มและควรได้รับการลงทุนหรือปรับปรุง",
+    "key_points": [
+      "แยกกิจกรรมทางธุรกิจเป็นกิจกรรมหลักและกิจกรรมสนับสนุน",
+      "วิเคราะห์ตั้งแต่ปัจจัยนำเข้า การแปรรูป จนถึงผลผลิต",
+      "ระบุกิจกรรมที่สร้างมูลค่าเพิ่มเพื่อลงทุนเพิ่มเติม",
+      "ใช้หาโอกาสลดต้นทุนและเพิ่มประสิทธิภาพในแต่ละขั้นตอน"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถไล่ตั้งแต่การรับส่งต่อผู้ป่วย การวินิจฉัย การผ่าตัด จนถึงการติดตามหลังรักษาตามแนวคิดห่วงโซ่คุณค่า เพื่อหาจุดที่ควรปรับปรุงประสิทธิภาพและลดความล่าช้าในเส้นทางการรักษา"
+  },
+  {
+    "id": "p016",
+    "title_th": "โมเดลภาพแทนผู้บริโภคและการแบ่งกลุ่มลูกค้าด้วยระบบแท็ก (User Persona)",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "โมเดลการวิเคราะห์ภาพแทนผู้บริโภคเป็นเครื่องมือที่ช่วยให้องค์กรเข้าใจกลุ่มลูกค้าเป้าหมายได้อย่างลึกซึ้ง โดยรวบรวมและวิเคราะห์ข้อมูลผู้ใช้หลายมิติ เช่น พฤติกรรม ความชอบ ความต้องการ และแรงจูงใจ ควบคู่กับระบบแท็กกำหนดคุณลักษณะเพื่อแบ่งกลุ่มลูกค้าตามเกณฑ์ต่าง ๆ",
+    "key_points": [
+      "รวบรวมข้อมูลพฤติกรรม ความชอบ และแรงจูงใจของผู้ใช้",
+      "สร้างภาพแทนผู้บริโภค (Persona) ที่สะท้อนกลุ่มเป้าหมายจริง",
+      "ใช้ระบบแท็ก (คุณลักษณะ/คาดการณ์/พฤติกรรม) จำแนกผู้ใช้หลายมิติ",
+      "แบ่งกลุ่มลูกค้าเพื่อทำการตลาดและปรับกลยุทธ์แบบเฉพาะกลุ่ม",
+      "ปรับปรุงภาพจำลองอย่างต่อเนื่องจากข้อมูลจริงและฟีดแบ็ก"
+    ],
+    "application_note": "แม้เป็นแนวคิดเชิงธุรกิจ แต่หัวหน้าแผนกสามารถประยุกต์จัดทำโปรไฟล์กลุ่มผู้ป่วยตามพฤติกรรมและความเสี่ยง เพื่อออกแบบโปรแกรมให้คำปรึกษาและติดตามการรักษาที่ตรงกับความต้องการของผู้ป่วยแต่ละกลุ่ม"
+  },
+  {
+    "id": "p017",
+    "title_th": "กลยุทธ์การแข่งขันพื้นฐานของพอร์เตอร์ (Porter's Generic Strategies)",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "กลยุทธ์พื้นฐานของพอร์เตอร์เสนอ 3 แนวทางหลักในการสร้างความได้เปรียบทางการแข่งขัน ได้แก่ กลยุทธ์ความเป็นผู้นำด้านต้นทุน (Cost Leadership) กลยุทธ์การสร้างความแตกต่าง (Differentiation) และกลยุทธ์การมุ่งเน้น (Focus)",
+    "key_points": [
+      "Cost Leadership: สร้างความได้เปรียบด้วยต้นทุนที่ต่ำกว่าคู่แข่ง",
+      "Differentiation: สร้างคุณค่าหรือเอกลักษณ์ที่แตกต่างจากคู่แข่ง",
+      "Focus: มุ่งเน้นทรัพยากรไปยังกลุ่มลูกค้าเฉพาะกลุ่ม",
+      "การเลือกกลยุทธ์ขึ้นอยู่กับแรงกดดันจากผู้ซื้อและผู้จัดหา",
+      "แต่ละกลยุทธ์มีความเสี่ยงเฉพาะที่ต้องบริหารจัดการ"
+    ],
+    "application_note": "ประธานคณะกรรมการสามารถเลือกกำหนดจุดยืนของศูนย์มะเร็งเต้านม เช่น เน้นความแตกต่างด้วยความเชี่ยวชาญเฉพาะทางและผลลัพธ์การรักษาที่เหนือกว่า แทนการแข่งขันด้านราคา เพื่อดึงดูดผู้ป่วยและบุคลากรคุณภาพ"
+  },
+  {
+    "id": "p018",
+    "title_th": "การบริหารงานแบบวงจรปิด (PDCA) และหลักการมอบอำนาจ",
+    "category": "การบริหารทีม",
+    "summary": "การบริหารงานให้สำเร็จถึงที่สุดต้องอาศัยกระบวนการแบบวงจรปิดตามหลัก PDCA คือ วางแผน ลงมือปฏิบัติ ตรวจสอบ และปรับปรุง วนซ้ำจนกลายเป็นวงจรพัฒนาที่ไม่หยุดนิ่ง ควบคู่กับหลักการนี้ ผู้บริหารควรรู้จักมอบหมายงานที่ไม่จำเป็นต้องลงมือทำเองให้ผู้ใต้บังคับบัญชาดำเนินการ",
+    "key_points": [
+      "PDCA: วางแผน-ลงมือปฏิบัติ-ตรวจสอบ-ปรับปรุง วนซ้ำต่อเนื่อง",
+      "มอบหมายงานที่ไม่จำเป็นต้องทำเองให้ผู้ใต้บังคับบัญชา",
+      "การมอบอำนาจช่วยลดภาระ พัฒนาลูกทีม และเห็นจุดอ่อนของทีม",
+      "กำหนดความรับผิดชอบและหน้าที่ให้ชัดเจนเป็นรูปธรรม",
+      "ติดตามงานเป็นรายวัน รายสัปดาห์ และให้ฟีดแบ็กอย่างทันท่วงที"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถใช้ PDCA ควบคุมคุณภาพแนวทางรักษา พร้อมมอบหมายงานประจำบางส่วนให้แพทย์ประจำบ้านอาวุโสดูแล เพื่อลดภาระและพัฒนาศักยภาพทีม"
+  },
+  {
+    "id": "p019",
+    "title_th": "เครื่องมือกำหนดเป้าหมายและผลลัพธ์หลัก (OKR)",
+    "category": "การบริหารทีม",
+    "summary": "OKR หรือ Objectives and Key Results เป็นเครื่องมือบริหารเป้าหมายที่ได้รับความนิยม แก่นสำคัญคือการกำหนด Objective ที่เป็นเป้าหมายในภาพอนาคตที่ชัดเจนและสร้างแรงบันดาลใจ ควบคู่กับ Key Results ที่ต้องมีตัวชี้วัดเชิงปริมาณเพื่อวัดความก้าวหน้าได้จริง",
+    "key_points": [
+      "Objective: เป้าหมายเชิงคุณภาพที่ชัดเจนและสร้างแรงบันดาลใจ",
+      "Key Results: ผลลัพธ์หลักที่วัดผลได้เชิงปริมาณ",
+      "OKR เป็นเครื่องมือสื่อสารทิศทางร่วมกันของทีม",
+      "ทบทวนความคืบหน้าทุกเดือน และปรับ OKR ทุกไตรมาส"
+    ],
+    "application_note": "ประธานคณะกรรมการสามารถใช้ OKR กำหนด Objective เชิงคุณภาพของแผนก เช่น ยกระดับการดูแลผู้ป่วยมะเร็งเต้านมแบบครบวงจร พร้อม Key Results ที่วัดได้ เช่น อัตราการตรวจพบระยะต้นเพิ่มขึ้น แล้วทบทวนความคืบหน้าในที่ประชุมทีมทุกเดือน"
+  },
+  {
+    "id": "p020",
+    "title_th": "กลยุทธ์ 3 ขั้นตอนขับเคลื่อนงานให้เกิดผลจริง",
+    "category": "การคิดวิเคราะห์",
+    "summary": "กรอบคิดนี้แบ่งการทำงานให้เกิดผลสำเร็จออกเป็น 3 ขั้นตอนหลัก คิดให้รอบคอบก่อนลงมือ จัดวางและดำเนินการ และประเมินผลและถอดบทเรียน โดยอ้างอิงหลักการคิดเชิงระบบอย่าง MECE และโมเดล SCQA",
+    "key_points": [
+      "ขั้นตอน 1: คิดให้รอบคอบ ระบุแก่นปัญหาและตรวจสอบสมมติฐาน",
+      "ขั้นตอน 2: จัดวางและดำเนินการ แบ่งงานและควบคุมความเสี่ยงเชิงรุก",
+      "ขั้นตอน 3: ประเมินผลและถอดบทเรียนเพื่อปรับปรุงระบบต่อเนื่อง",
+      "อาศัยหลักคิดเชิงระบบ เช่น MECE และ SCQA ประกอบการวิเคราะห์"
+    ],
+    "application_note": "ก่อนผลักดันโครงการปรับปรุงคุณภาพในแผนก หัวหน้าแผนกควรคิดวิเคราะห์ปัญหาหลักให้รอบคอบ วางแผนแบ่งงานและควบคุมความเสี่ยงก่อนลงมือ แล้วถอดบทเรียนหลังโครงการเสร็จสิ้นเพื่อปรับปรุงรอบต่อไป"
+  },
+  {
+    "id": "p021",
+    "title_th": "โมเดลการนำเสนออย่างเป็นระบบ SCQA",
+    "category": "การสื่อสาร",
+    "summary": "โมเดล SCQA เป็นเครื่องมือสำหรับการสื่อสารและนำเสนอเนื้อหาอย่างเป็นระบบ ประกอบด้วย Situation (บริบท) Complication (ความขัดแย้ง) Question (คำถาม) และ Answer (คำตอบ) กรอบแนวคิดนี้ช่วยจัดระเบียบเนื้อหาให้ชัดเจน น่าสนใจ และมีลำดับเรื่องราว",
+    "key_points": [
+      "Situation: นำเสนอบริบทที่ทุกฝ่ายยอมรับร่วมกัน",
+      "Complication: ชี้ให้เห็นความขัดแย้งหรือปัญหาที่แท้จริง",
+      "Question: ตั้งคำถามปลายเปิดเพื่อนำไปสู่การวิเคราะห์",
+      "Answer: เสนอแนวทางแก้ไขที่เป็นรูปธรรมและลงมือได้ทันที",
+      "เหมาะกับการรายงาน การพูดฉับพลัน และการนำเสนอเชิงธุรกิจ"
+    ],
+    "application_note": "ประธานการประชุมกรรมการแพทย์สามารถใช้โครงสร้าง SCQA รายงานปัญหา เช่น อัตราการติดเชื้อหลังผ่าตัด ต่อที่ประชุมอย่างกระชับ ชี้ให้เห็นสถานการณ์ ความขัดแย้งของข้อมูล คำถามสำคัญ และข้อเสนอแนวทางแก้ไขได้ชัดเจนในเวลาสั้น"
+  },
+  {
+    "id": "p022",
+    "title_th": "หลักการชมเชยแบบ FFC (ความรู้สึก-ข้อเท็จจริง-เปรียบเทียบ)",
+    "category": "การสื่อสาร",
+    "summary": "หลักการชมเชยแบบ FFC เป็นเทคนิคการสื่อสารที่เรียบง่ายและนำไปใช้ได้ง่าย ประกอบด้วย 3 ขั้นตอน แสดงความรู้สึกของตนเองอย่างจริงใจ (Feeling) ยกข้อเท็จจริงหรือเหตุการณ์ที่ชัดเจนมาเป็นเหตุผลสนับสนุน (Fact) และเปรียบเทียบให้เห็นความแตกต่างหรือระดับความประทับใจ (Comparison)",
+    "key_points": [
+      "Feeling: แสดงความรู้สึกของตนเองอย่างจริงใจก่อน",
+      "Fact: ยกข้อเท็จจริงหรือตัวเลขที่ชัดเจนมาสนับสนุน",
+      "Comparison: เปรียบเทียบเพื่อเพิ่มน้ำหนักและพลังของคำชม",
+      "คำชมที่มีประสิทธิภาพต้องมาจากความจริงใจและมองเห็นคุณค่าของอีกฝ่าย"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถใช้หลัก FFC ชมเชยแพทย์ประจำบ้านหลังผ่าตัดสำเร็จ โดยบอกความรู้สึกชื่นชม ยกตัวเลขผลลัพธ์ที่ทำได้ดีกว่ามาตรฐาน และเปรียบเทียบพัฒนาการจากอดีต เพื่อสร้างแรงจูงใจอย่างแท้จริง"
+  },
+  {
+    "id": "p023",
+    "title_th": "เทคนิคบริหารเวลาแบบ GTD (Getting Things Done)",
+    "category": "การบริหารเวลา",
+    "summary": "เทคนิค GTD มีที่มาจากหนังสือขายดี Getting Things Done ของ David Allen แนวคิดหลักคือการนำงานและไอเดียทั้งหมดออกจากสมองแล้วถ่ายโอนไปไว้ในระบบภายนอก จากนั้นใช้กระบวนการ 5 ขั้นตอน: Capture, Clarify, Organize, Do, Review",
+    "key_points": [
+      "Capture: รวบรวมงานและไอเดียทั้งหมดออกจากสมอง",
+      "Clarify: ประเมินและจำแนกประเภทของแต่ละงาน",
+      "Organize: จัดงานเป็นหมวดหมู่และโครงการอย่างเป็นระบบ",
+      "Do: จดจ่อทำทีละงานอย่างแน่วแน่ ไม่ทำหลายงานพร้อมกัน",
+      "Review: ทบทวนตรวจสอบและอัปเดตระบบอย่างสม่ำเสมอ"
+    ],
+    "application_note": "หัวหน้าแผนกที่ต้องดูแลทั้งงานผ่าตัด งานสอน และงานประชุมคณะกรรมการหลายชุด สามารถใช้ GTD รวบรวมภารกิจทั้งหมดไว้ในระบบเดียว จัดหมวดหมู่ตามความเร่งด่วน แล้วทบทวนทุกสัปดาห์เพื่อไม่ให้งานสำคัญตกหล่น"
+  },
+  {
+    "id": "p024",
+    "title_th": "หน้าต่างโจฮารี (Johari Window)",
+    "category": "การสื่อสาร",
+    "summary": "หน้าต่างโจฮารีเป็นกรอบแนวคิดที่พัฒนาโดยนักจิตวิทยา Joseph Luft และ Harry Ingham เพื่อวิเคราะห์การสื่อสารระหว่างบุคคลจากมุมมองการตระหนักรู้ในตนเอง จนเกิดเป็นพื้นที่การสื่อสาร 4 ส่วน ได้แก่ พื้นที่เปิดเผย พื้นที่จุดบอด พื้นที่ซ่อนเร้น และพื้นที่ปิดหรือยังไม่รู้",
+    "key_points": [
+      "พื้นที่เปิดเผย: สิ่งที่ทั้งตนเองและผู้อื่นรู้ร่วมกัน",
+      "พื้นที่จุดบอด: ผู้อื่นรู้แต่ตนเองไม่รู้",
+      "พื้นที่ซ่อนเร้น: ตนเองรู้แต่ไม่เปิดเผยให้ผู้อื่นรู้",
+      "พื้นที่ปิด/ยังไม่รู้: ทั้งสองฝ่ายยังไม่รู้ ต้องสำรวจร่วมกัน",
+      "ใช้เพิ่มการตระหนักรู้ในตนเองและพัฒนาความสัมพันธ์ในทีม"
+    ],
+    "application_note": "ประธานคณะกรรมการสามารถใช้แนวคิดหน้าต่างโจฮารีส่งเสริมวัฒนธรรมการให้และรับฟีดแบ็กในทีม เพื่อลดจุดบอดในการบริหารและเปิดเผยเป้าหมายการทำงานให้ทีมเข้าใจตรงกันมากขึ้น"
+  },
+  {
+    "id": "p025",
+    "title_th": "เทคนิคโพโมโดโร (Pomodoro Technique)",
+    "category": "การบริหารเวลา",
+    "summary": "อธิบายเทคนิคบริหารเวลาที่แบ่งการทำงานเป็นรอบละ 25 นาที (เรียกว่า 1 โพโมโดโร) สลับกับการพักสั้นๆ 5 นาที โดยระหว่างแต่ละรอบต้องจดจ่อกับงานเดียวอย่างเต็มที่และปิดสิ่งรบกวนต่างๆ หากมีความคิดหรือเรื่องด่วนแทรกเข้ามาระหว่างรอบให้จดบันทึกไว้ก่อนแล้วกลับมาจัดการภายหลัง ก่อนเริ่มควรคัดกรองงานและประเมินระดับความยากเพื่อเตรียมพร้อม",
+    "key_points": [
+      "ทำงานตามหลัก 25 นาทีทำ + 5 นาทีพัก 1 รอบ",
+      "จดจ่อกับงานเดียวอย่างเต็มที่ในแต่ละรอบ ปิดสิ่งรบกวน",
+      "บันทึกความคิดที่แทรกเข้ามาไว้ก่อน ไม่หยุดรอบกลางคัน",
+      "หากถูกขัดจังหวะให้ยุติรอบและเริ่มใหม่",
+      "ก่อนเริ่มควรคัดกรองงานและประเมินความยาก"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถใช้เทคนิคโพโมโดโรจัดสรรเวลาช่วงเช้าที่ไม่มีนัดผ่าตัดสำหรับทบทวนพยาธิวิทยา เขียนสรุปเคส หรือเตรียมวาระประชุมกรรมการโดยไม่ถูกขัดจังหวะด้วยเรื่องเร่งด่วนที่ไม่จำเป็น"
+  },
+  {
+    "id": "p026",
+    "title_th": "การวิเคราะห์ 5M1E",
+    "category": "การคิดวิเคราะห์",
+    "summary": "เป็นกรอบวิเคราะห์ปัจจัยที่ส่งผลต่อคุณภาพและประสิทธิภาพของกระบวนการผลิตหรือกระบวนการทำงาน ประกอบด้วย 5 ปัจจัยหลักคือ Man (บุคลากร) Machine (เครื่องจักร/อุปกรณ์) Material (วัตถุดิบและวัสดุ) Method (วิธีการ) Environment (สภาพแวดล้อม) และเพิ่มมิติที่ 6 คือ Measurement (การวัด)",
+    "key_points": [
+      "5M1E คือ Man, Machine, Material, Method, Environment, Measurement",
+      "แต่ละปัจจัยมีจุดเน้นบริหารเฉพาะของตนเอง",
+      "บุคลากร: พัฒนาทักษะและแรงจูงใจ เครื่องจักร: บำรุงรักษาเชิงป้องกัน",
+      "วัสดุ: ควบคุมคุณภาพนำเข้า วิธีการ: มาตรฐานปฏิบัติงานชัดเจน",
+      "ใช้วิเคราะห์หาสาเหตุรากของปัญหาคุณภาพหรือความล่าช้าอย่างรอบด้าน"
+    ],
+    "application_note": "หัวหน้าแผนกศัลยกรรมสามารถใช้กรอบ 5M1E วิเคราะห์สาเหตุของอุบัติการณ์ไม่พึงประสงค์ในห้องผ่าตัด ครอบคลุมทั้งทีมงาน เครื่องมือแพทย์ วัสดุปลอดเชื้อ ขั้นตอนปฏิบัติ สภาพแวดล้อม และความแม่นยำของอุปกรณ์วัด เพื่อวางมาตรการป้องกันอย่างครบถ้วน"
+  },
+  {
+    "id": "p027",
+    "title_th": "แนวคิด MVP (Minimum Viable Product)",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "MVP คือแนวคิดการพัฒนาผลิตภัณฑ์หรือบริการเวอร์ชันที่มีฟังก์ชันขั้นต่ำที่ใช้งานได้จริง เพื่อทดสอบคุณค่าหลักของแนวคิดโดยใช้ทรัพยากรและต้นทุนน้อยที่สุด แนวคิดนี้เน้นการนำผลิตภัณฑ์ออกสู่ตลาดหรือผู้ใช้จริงโดยเร็ว เก็บข้อมูลป้อนกลับแล้วนำมาปรับปรุงผลิตภัณฑ์อย่างต่อเนื่องเป็นวงจร",
+    "key_points": [
+      "สร้างเวอร์ชันขั้นต่ำที่ใช้งานได้จริงก่อน ไม่ต้องสมบูรณ์แบบ",
+      "มุ่งทดสอบคุณค่าหลักด้วยทรัพยากรน้อยที่สุด",
+      "ปล่อยออกสู่ผู้ใช้จริงโดยเร็วเพื่อเก็บ feedback",
+      "นำข้อมูลย้อนกลับมาปรับปรุงผลิตภัณฑ์อย่างต่อเนื่อง",
+      "ช่วยลดความเสี่ยงและระยะเวลาในการพัฒนา"
+    ],
+    "application_note": "เมื่อริเริ่มโครงการใหม่ เช่น คลินิกให้คำปรึกษามะเร็งเต้านมแบบ one-stop หัวหน้าแผนกอาจเริ่มจากรูปแบบบริการขั้นต่ำในกลุ่มผู้ป่วยเล็กๆ ก่อน แล้วปรับปรุงตามข้อเสนอแนะของผู้ป่วยและทีมก่อนขยายผลเต็มรูปแบบ"
+  },
+  {
+    "id": "p028",
+    "title_th": "ขั้นตอนการมอบหมายงานของผู้นำ",
+    "category": "การบริหารทีม",
+    "summary": "นำเสนอขั้นตอนที่ผู้นำควรปฏิบัติเมื่อมอบหมายงาน เริ่มจากกำหนดผู้รับผิดชอบให้ชัดเจนและกำหนดมาตรฐานงานก่อนเริ่มงาน จากนั้นกำหนดกรอบเวลาที่ชัดเจน ระหว่างดำเนินงานผู้นำต้องติดตามกระบวนการอย่างใกล้ชิด และเมื่องานเสร็จสิ้นต้องมีการตรวจสอบและประเมินผล พร้อมกำหนดกลไกการให้รางวัลและการปรับปรุง",
+    "key_points": [
+      "กำหนดผู้รับผิดชอบและมาตรฐานงานให้ชัดเจนก่อนเริ่ม",
+      "กำหนดกรอบเวลาที่ชัดเจน ทั้งจุดเริ่มต้น สิ้นสุด และหมุดหมาย",
+      "ติดตามกระบวนการดำเนินงานอย่างใกล้ชิดตลอดทาง",
+      "ขอการสนับสนุนจากผู้บังคับบัญชาเมื่อพบปัญหาที่แก้เองไม่ได้",
+      "ตรวจสอบประเมินผลและให้รางวัล/ข้อเสนอแนะปรับปรุงเมื่องานเสร็จ"
+    ],
+    "application_note": "เมื่อมอบหมายให้แพทย์ประจำบ้านรับผิดชอบเคสหรือโครงการวิจัย หัวหน้าแผนกควรกำหนดขอบเขตงานและกำหนดเวลาส่งงานให้ชัดเจนตั้งแต่แรก พร้อมติดตามความคืบหน้าเป็นระยะและให้ข้อเสนอแนะเมื่อเสร็จสิ้น"
+  },
+  {
+    "id": "p029",
+    "title_th": "หลักการคิดจากพื้นฐานแรก (First Principles Thinking)",
+    "category": "การคิดวิเคราะห์",
+    "summary": "หลักการคิดจากพื้นฐานแรกมีรากฐานจากปรัชญากรีกโบราณ เป็นแนวทางวิเคราะห์และแก้ปัญหาเชิงลึกโดยไม่หยุดอยู่เพียงสิ่งที่ปรากฏบนพื้นผิวของปัญหา แต่ต้องตั้งคำถาม 'ทำไม' อย่างต่อเนื่องเพื่อค้นหาสาเหตุที่แท้จริง กระบวนการประกอบด้วยการแยกโครงสร้างปัญหาออกเป็นส่วนย่อย การจัดโครงสร้างใหม่ และการตรวจสอบยืนยันแนวทางแก้ไข",
+    "key_points": [
+      "ไม่หยุดที่อาการผิวเผิน แต่ตั้งคำถาม 'ทำไม' ซ้ำๆ จนถึงรากของปัญหา",
+      "แยกโครงสร้างปัญหาเป็นส่วนย่อยเพื่อวิเคราะห์สาเหตุทีละชั้น",
+      "จัดระเบียบและสร้างองค์ความรู้ขึ้นใหม่จากสิ่งที่พบ",
+      "ตรวจสอบยืนยันแนวทางแก้ไขก่อนนำไปปฏิบัติ",
+      "ช่วยให้หลุดพ้นจากกรอบความคิดเดิมและหาทางแก้ที่ตรงจุดกว่าเดิม"
+    ],
+    "application_note": "เมื่อเกิดปัญหาซ้ำซากในแผนก เช่น อัตราการติดเชื้อหลังผ่าตัดสูงผิดปกติ หัวหน้าแผนกควรใช้การตั้งคำถาม 'ทำไม' ต่อเนื่องหลายชั้นแทนการแก้ปัญหาที่อาการผิวเผิน เพื่อค้นหาสาเหตุรากแท้จริงของระบบ"
+  },
+  {
+    "id": "p030",
+    "title_th": "เทคนิคการเรียนรู้แบบไฟน์แมน (Feynman Technique)",
+    "category": "การพัฒนาตนเอง",
+    "summary": "เทคนิคการเรียนรู้แบบไฟน์แมน มีแนวคิดหลักว่า 'หากคุณไม่สามารถอธิบายเรื่องหนึ่งด้วยภาษาที่เรียบง่ายได้ แสดงว่าคุณยังไม่เข้าใจเรื่องนั้นอย่างแท้จริง' วิธีนี้ประกอบด้วยการกำหนดเป้าหมายการเรียนรู้ ถ่ายทอดความรู้ออกมาโดยอธิบายให้ผู้อื่นฟังด้วยภาษาที่เรียบง่าย เมื่อพบส่วนที่อธิบายไม่ได้ให้ย้อนกลับไปทบทวนเรียนรู้ส่วนนั้นใหม่",
+    "key_points": [
+      "หลักการ: ถ้าอธิบายให้คนอื่นเข้าใจง่ายไม่ได้ แสดงว่ายังไม่เข้าใจจริง",
+      "กำหนดเป้าหมายการเรียนรู้ชัดเจนก่อนเริ่ม",
+      "ถ่ายทอด/สอนความรู้นั้นให้ผู้อื่นด้วยภาษาเรียบง่าย",
+      "ทบทวนซ้ำในจุดที่อธิบายไม่ได้ แล้วเรียนรู้ใหม่",
+      "จัดระเบียบสรุปเป็นองค์ความรู้ของตนเองในที่สุด"
+    ],
+    "application_note": "หัวหน้าแผนกที่ต้องสอนแพทย์ประจำบ้านหรือบรรยายในที่ประชุมวิชาการ สามารถใช้เทคนิคไฟน์แมนตรวจสอบความเข้าใจของตนเองในหัวข้อที่ซับซ้อน โดยลองอธิบายเรื่องนั้นด้วยภาษาง่ายๆ ให้ทีมฟังก่อนนำไปสอนจริง"
+  },
+  {
+    "id": "p031",
+    "title_th": "โมเดล RASA แก้ไขความขัดแย้ง",
+    "category": "การสื่อสาร",
+    "summary": "โมเดล RASA เป็นแนวทางแก้ไขความขัดแย้งและสื่อสารอย่างมีประสิทธิภาพ ประกอบด้วย 4 ขั้นตอนคือ Receive (การฟัง) Appreciate (การเอาใจเขามาใส่ใจเรา) Summarize (การสรุป) และ Ask (การตั้งคำถาม)",
+    "key_points": [
+      "R (Receive): ตั้งใจฟังอย่างจริงจังเพื่อเข้าใจความต้องการที่แท้จริง",
+      "A (Appreciate): เอาใจเขามาใส่ใจเรา มองจากมุมของอีกฝ่าย ใช้คำถามปลายเปิด",
+      "S (Summarize): กล่าวทวนด้วยคำพูดตนเองเพื่อยืนยันความเข้าใจตรงกัน",
+      "A (Ask): ตั้งคำถามเพื่อความชัดเจนและกระตุ้นบทสนทนาต่อ",
+      "ปิดท้ายด้วยการสรุปประเด็นร่วมกันของทั้งสองฝ่าย"
+    ],
+    "application_note": "ในการไกล่เกลี่ยความขัดแย้งระหว่างทีมพยาบาลกับแพทย์ประจำบ้าน หัวหน้าแผนกสามารถใช้โมเดล RASA รับฟัง เอาใจใส่ สรุปทวนคำพูด และตั้งคำถามปลายเปิด เพื่อคลี่คลายความเข้าใจผิดก่อนตัดสินใจแก้ปัญหา"
+  },
+  {
+    "id": "p032",
+    "title_th": "เทคนิคการอ่านแบบ SQ3R",
+    "category": "การพัฒนาตนเอง",
+    "summary": "เทคนิคการอ่านแบบ SQ3R เป็นวิธีจับประเด็นสำคัญจากเนื้อหาการอ่านได้อย่างรวดเร็วและเข้าใจลึกซึ้ง ประกอบด้วย 5 ขั้นตอน ได้แก่ Survey (สำรวจ) Question (ตั้งคำถาม) Read (อ่าน) Recite (ทบทวน) และ Review (เชื่อมโยง)",
+    "key_points": [
+      "Survey: กวาดสายตาดูโครงสร้างคร่าวๆ ก่อนอ่านจริง",
+      "Question: ตั้งคำถามเพื่อกำหนดเป้าหมายการอ่าน",
+      "Read: อ่านลึกเพื่อเข้าใจตรรกะและเหตุผลของผู้เขียน",
+      "Recite: สรุปสกัดแนวคิดหลักด้วยคำพูดของตนเอง",
+      "Review: เชื่อมโยงกับประสบการณ์และนำไปใช้จริง"
+    ],
+    "application_note": "เมื่อต้องอ่านแนวทางเวชปฏิบัติหรืองานวิจัยใหม่จำนวนมากในเวลาจำกัด หัวหน้าแผนกสามารถใช้ SQ3R สำรวจโครงสร้างก่อน ตั้งคำถามที่ต้องการคำตอบ แล้วอ่านลึกเฉพาะส่วนที่เกี่ยวข้องกับการปรับ protocol ของแผนก"
+  },
+  {
+    "id": "p033",
+    "title_th": "วงจร PDCA สำหรับเขียนรายงานสรุปประจำปี",
+    "category": "การสื่อสาร",
+    "summary": "นำเสนอการใช้วงจร PDCA เป็นโครงสร้างในการเขียนรายงานสรุปผลการปฏิบัติงานส่วนบุคคลประจำปีให้มีประสิทธิภาพ Plan ทบทวนแผนงานและเป้าหมาย Do สรุปกระบวนการดำเนินงานสำคัญ Check ตรวจสอบระดับความสำเร็จเทียบกับแผน และ Act สรุปสิ่งที่ทำได้ดี ถอดบทเรียน และเสนอแนวทางปรับปรุง",
+    "key_points": [
+      "ใช้โครงสร้าง Plan-Do-Check-Act เขียนรายงานสรุปประจำปี",
+      "Plan: ทบทวนเป้าหมายและความคืบหน้าเทียบแผนต้นปี",
+      "Do: สรุปกระบวนการและผลงานสำคัญที่ทำได้ตลอดปี",
+      "Check: ตรวจสอบระดับความสำเร็จและวิเคราะห์อุปสรรค/สาเหตุ",
+      "Act: ถอดบทเรียนและกำหนดแนวทางปรับปรุงสำหรับปีถัดไป"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถใช้โครงสร้าง PDCA เขียนรายงานผลการดำเนินงานประจำปีของแผนกเสนอต่อผู้บริหารโรงพยาบาล โดยระบุเป้าหมาย ผลงาน อุปสรรค และแผนพัฒนาปีถัดไปอย่างเป็นระบบ"
+  },
+  {
+    "id": "p034",
+    "title_th": "พีระมิดการเรียนรู้ (Learning Pyramid)",
+    "category": "การพัฒนาตนเอง",
+    "summary": "พีระมิดการเรียนรู้อธิบายว่าการเรียนรู้แบบตั้งรับ (passive learning) มีอัตราการจดจำเนื้อหาเฉลี่ยต่ำ ตั้งแต่ประมาณ 10% (อ่าน) ถึง 30% (ดูภาพประกอบ) ในขณะที่การเรียนรู้เชิงรุก (active learning) ซึ่งรวมถึงการอภิปราย การลงมือปฏิบัติจริง และการสอนหรืออธิบายให้ผู้อื่นฟัง มีอัตราการจดจำสูงขึ้นมากถึง 50-90%",
+    "key_points": [
+      "การเรียนรู้แบบตั้งรับ (ฟัง อ่าน ดูภาพ) มีอัตราจดจำต่ำ ราว 10-30%",
+      "การเรียนรู้เชิงรุก (อภิปราย ปฏิบัติจริง สอนผู้อื่น) มีอัตราจดจำสูงถึง 50-90%",
+      "การสอนหรืออธิบายให้ผู้อื่นฟังเป็นวิธีเรียนรู้ที่ทรงประสิทธิภาพที่สุด",
+      "ควรออกแบบการเรียนรู้ให้มีการลงมือปฏิบัติและถ่ายทอดความรู้ ไม่ใช่รับข้อมูลฝ่ายเดียว"
+    ],
+    "application_note": "ในการจัดอบรมหรือ conference วิชาการให้แพทย์ประจำบ้าน หัวหน้าแผนกควรออกแบบให้มีการอภิปรายเคสและให้ผู้เรียนนำเสนอสอนกันเอง แทนการบรรยายอย่างเดียว เพื่อเพิ่มอัตราการจดจำและความเข้าใจ"
+  },
+  {
+    "id": "p035",
+    "title_th": "วิธีคิดเชิงสมมติฐาน (Hypothesis-driven Thinking)",
+    "category": "การคิดวิเคราะห์",
+    "summary": "วิธีคิดเชิงสมมติฐานเป็นแนวทางที่ช่วยให้ก้าวข้ามกรอบความคิดเดิม โดยเริ่มจากการตั้งสมมติฐานหรือคำตอบที่เป็นไปได้ไว้ล่วงหน้าก่อนลงมือรวบรวมข้อมูลทั้งหมด การพัฒนาความสามารถด้านนี้มี 3 ขั้นตอน คือ ตั้งสมมติฐานก่อนลงมือปฏิบัติ รวบรวมเนื้อหาข้อมูลอย่างต่อเนื่อง และใช้แนวทางที่เหมาะสมที่สุดในการสร้างสมมติฐานหลายแนวทาง",
+    "key_points": [
+      "ตั้งสมมติฐาน/คำตอบที่เป็นไปได้ไว้ก่อนเริ่มรวบรวมข้อมูลทั้งหมด",
+      "ต่างจากการคิดทั่วไปที่ไม่คัดกรองประเด็นหลัก ทำให้วกวนไร้ทิศทาง",
+      "รวบรวมข้อมูลอย่างต่อเนื่องเพื่อทดสอบและปรับสมมติฐานให้ใกล้ความจริง",
+      "คิดย้อนกลับจากเป้าหมาย (สมมติฐาน) เพื่อกำหนดขั้นตอนปฏิบัติ",
+      "ช่วยเพิ่มความเร็วในการตัดสินใจและลดอคติส่วนตัว"
+    ],
+    "application_note": "เมื่อพบผลตรวจทางพยาธิวิทยาที่ผิดปกติ หัวหน้าแผนกอาจตั้งสมมติฐานการวินิจฉัยที่เป็นไปได้ล่วงหน้าก่อนสั่งตรวจเพิ่มเติม แล้วรวบรวมข้อมูลมายืนยันหรือคัดค้านสมมติฐานนั้นอย่างเป็นระบบ แทนการตรวจแบบไม่มีทิศทาง"
+  },
+  {
+    "id": "p036",
+    "title_th": "วิธีเขียนรายงานประจำวัน สัปดาห์ และเดือน",
+    "category": "การสื่อสาร",
+    "summary": "อธิบายหลักการเขียนรายงานประจำวัน ประจำสัปดาห์ และประจำเดือนให้มีประสิทธิภาพ รายงานประจำวันควรระบุงานที่เสร็จแล้ว ผลลัพธ์ ความคืบหน้า และระยะเวลาที่ใช้ รายงานประจำสัปดาห์ควรทบทวนงานทั้งสัปดาห์และกำหนดเป้าหมายสัปดาห์ถัดไป รายงานประจำเดือนควรสรุปงานที่เสร็จและกำหนดเป้าหมายเดือนถัดไปตามหลัก SMART",
+    "key_points": [
+      "รายงานวัน: งานที่เสร็จ+ผลลัพธ์, งานค้าง+สาเหตุ+แนวทางแก้, แผนวันถัดไป",
+      "รายงานสัปดาห์: ทบทวนทั้งสัปดาห์ ประเมินเป้าหมาย ตั้งเป้าหมายสัปดาห์ถัดไปแบบแตกเป็นงานรายวัน",
+      "รายงานเดือน: สรุปผล วิเคราะห์สาเหตุที่ไม่บรรลุ ตั้งเป้าหมายเดือนถัดไปตามหลัก SMART",
+      "ทุกระดับควรมีการบันทึกบทเรียนและข้อคิดทบทวนตนเองประกอบ"
+    ],
+    "application_note": "หัวหน้าแผนกอาจกำหนดให้ทีมเขียนรายงานประจำสัปดาห์แบบสั้นระบุงานที่เสร็จ อุปสรรค และเป้าหมายสัปดาห์ถัดไปตามหลัก SMART เพื่อติดตามความคืบหน้าโครงการคุณภาพของแผนกอย่างเป็นระบบ"
+  },
+  {
+    "id": "p037",
+    "title_th": "การสร้างระบบและมาตรฐานบริหารองค์กร 4 มิติ",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "นำเสนอแนวทางสร้างระบบและมาตรฐานการบริหารองค์กรให้เป็นรูปธรรม โดยแบ่งเป็น 4 มิติหลัก ได้แก่ คน (การจัดสรรบุคลากร) เงินทุน (การควบคุมการดำเนินงาน) งาน (การวางแผนธุรกิจ) และลูกค้า",
+    "key_points": [
+      "แบ่งการบริหารองค์กรออกเป็น 4 มิติ: คน เงินทุน งาน ลูกค้า",
+      "ด้านคน: กำหนดขอบเขตงานชัดเจน สรรหา ฝึกอบรม ประเมิน ค่าตอบแทน เส้นทางอาชีพ",
+      "ด้านงาน: วางระบบผลิตภัณฑ์ แบรนด์ การตลาด และช่องทางขาย",
+      "เป้าหมายคือลดการสูญเปล่าทรัพยากรและสร้างความมั่นคงในการพัฒนาองค์กร"
+    ],
+    "application_note": "หัวหน้าแผนกที่ดูแลทั้งบุคลากร งบประมาณ และบริการผู้ป่วย สามารถใช้กรอบ 4 มิตินี้ทบทวนความชัดเจนของบทบาทหน้าที่ทีม การจัดสรรงบ กระบวนการให้บริการ และประสบการณ์ผู้ป่วยไปพร้อมกันอย่างเป็นระบบ"
+  },
+  {
+    "id": "p038",
+    "title_th": "แก่นแท้ของการบริหาร 3 เสาหลัก",
+    "category": "การบริหารทีม",
+    "summary": "อธิบายแก่นแท้ของการบริหารว่าประกอบด้วย 3 เสาหลัก คือการบริหารคน (แรงขับเคลื่อนและความสามารถ) การบริหารงาน (กลยุทธ์ มาตรฐาน กระบวนการ กลไกรางวัล/บทลงโทษ) และการกระตุ้นศักยภาพของทีมและยกระดับประสิทธิภาพองค์กร",
+    "key_points": [
+      "เสาหลักที่ 1 บริหารคน: แรงขับเคลื่อน (อยากทำ) + ความสามารถ (ทำได้)",
+      "เสาหลักที่ 2 บริหารงาน: กลยุทธ์ มาตรฐาน กระบวนการ กลไกรางวัล/บทลงโทษ",
+      "เสาหลักที่ 3 กระตุ้นศักยภาพทีม: มอบอำนาจ พัฒนาผู้สืบทอด",
+      "ทั้ง 3 เสาต้องดำเนินไปพร้อมกันเพื่อยกระดับประสิทธิภาพองค์กรอย่างยั่งยืน"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถใช้กรอบ 3 เสาหลักนี้ตรวจสอบว่าทีมมีทั้งแรงจูงใจและทักษะที่เพียงพอ มีมาตรฐานและกระบวนการทำงานที่ชัดเจน และมีการมอบอำนาจพัฒนาแพทย์รุ่นใหม่ให้เป็นผู้นำในอนาคตหรือไม่"
+  },
+  {
+    "id": "p039",
+    "title_th": "10 ขั้นตอนที่ผู้นำใช้จัดการปัญหา",
+    "category": "การคิดวิเคราะห์",
+    "summary": "นำเสนอ 10 ขั้นตอนที่ผู้นำใช้ในการจัดการปัญหาอย่างเป็นระบบ ตั้งสติ ทำให้ปัญหาชัดเจน กำหนดเป้าหมาย บูรณาการทรัพยากร แยกย่อยปัญหา กำหนดแนวทางแก้ไข ลงมือทำทันที ปรับแก้ตามผลตอบรับ สรุปประสบการณ์ และถอดบทเรียน",
+    "key_points": [
+      "ตั้งสติให้มั่นคงก่อนลงมือแก้ปัญหา ไม่ตื่นตระหนก",
+      "ทำให้ปัญหาชัดเจนและกำหนดเป้าหมายที่ต้องการก่อนดำเนินการ",
+      "แยกย่อยปัญหาเป็นส่วนย่อยและบูรณาการทรัพยากรที่จำเป็น",
+      "ลงมือทำทันทีเมื่อยืนยันแนวทางแล้ว หลีกเลี่ยงการผัดวัน",
+      "ปรับปรุงต่อเนื่องตามผลตอบรับ แล้วสรุปและถอดบทเรียนเพื่อป้องกันปัญหาซ้ำ"
+    ],
+    "application_note": "เมื่อเกิดเหตุการณ์ไม่พึงประสงค์ทางคลินิก หัวหน้าแผนกสามารถใช้ 10 ขั้นตอนนี้นำทีมตั้งแต่การตั้งสติจัดการสถานการณ์เฉพาะหน้า ไปจนถึงการถอดบทเรียนในที่ประชุม M&M เพื่อป้องกันไม่ให้เกิดซ้ำ"
+  },
+  {
+    "id": "p040",
+    "title_th": "ความแตกต่างระหว่าง \"การจัดการ\" กับ \"การนำพา\"",
+    "category": "การบริหารทีม",
+    "summary": "เปรียบเทียบความแตกต่างระหว่าง 'การจัดการ' (Management) กับ 'การนำพา' (Leadership) ในหลายมิติ การจัดการยึดตนเองเป็นศูนย์กลาง เน้นควบคุม ระยะสั้น และคิดเชิงเส้นตรง ส่วนการนำพายึดทีมเป็นศูนย์กลาง เน้นความผูกพัน ระยะยาว และคิดเชิงระบบ ในยุคใหม่ 'การนำพา' มีความสำคัญมากกว่า 'การควบคุมสั่งการ'",
+    "key_points": [
+      "การจัดการเน้นตนเองและควบคุมสั่งการ ส่วนการนำพาเน้นทีมและความผูกพัน",
+      "การจัดการมองระยะสั้นและคิดเชิงเส้นตรง ส่วนการนำพามองระยะยาวและคิดเชิงระบบ",
+      "การจัดการคือการออกคำสั่ง ส่วนการนำพาคือการร่วมลงมือทำไปด้วยกัน",
+      "ยุคใหม่ 'การนำพา' สำคัญกว่า 'การควบคุมสั่งการ'",
+      "บทบาทผู้จัดการ 3 ประการ: นำทีมสู่เป้าหมาย ถ่ายทอดวัฒนธรรมองค์กร พัฒนาผู้สืบทอด"
+    ],
+    "application_note": "ในฐานะประธานกรรมการ หัวหน้าแผนกควรปรับบทบาทจาก 'สั่งการ' มาเป็น 'นำพา' มากขึ้น โดยรับฟังความรู้สึกของทีมและร่วมลงมือแก้ปัญหาไปด้วยกัน แทนที่จะออกคำสั่งควบคุมเพียงอย่างเดียว"
+  },
+  {
+    "id": "p041",
+    "title_th": "การหลีกเลี่ยงการบริหารเกินบทบาท",
+    "category": "การบริหารทีม",
+    "summary": "ชี้ให้เห็นว่าการทำงานบริหารต้องหลีกเลี่ยงการบริหารเกินบทบาท ซึ่งมี 2 รูปแบบหลัก คือการก้าวก่ายเกินอำนาจหน้าที่ และการลดบทบาทตนเองไปทำงานแทนผู้ใต้บังคับบัญชา วิธีหลีกเลี่ยงคือกำหนดหน้าที่ อำนาจ และขอบเขตงานให้ชัดเจน พัฒนาบุคลากรอย่างต่อเนื่อง",
+    "key_points": [
+      "รูปแบบที่ 1: ก้าวก่ายเกินอำนาจหน้าที่ แทรกแซง/สั่งการข้ามลำดับชั้น",
+      "รูปแบบที่ 2: ลดบทบาทตนเองไปทำงานแทนลูกน้อง จนลูกน้องไม่พัฒนา",
+      "วิธีแก้: กำหนดหน้าที่ อำนาจ ขอบเขตงานให้ชัดเจนในแต่ละตำแหน่ง",
+      "พัฒนาบุคลากรอย่างต่อเนื่องจนสามารถรับผิดชอบงานได้เอง",
+      "ข้ามลำดับชั้นได้เฉพาะเมื่อจำเป็นต้องเข้าใจสถานการณ์จริงเท่านั้น"
+    ],
+    "application_note": "หัวหน้าแผนกควรระวังไม่ลงมือทำหัตถการหรือเขียนรายงานแทนแพทย์ประจำบ้านเป็นประจำ แต่ควรมอบหมายงานตามขอบเขตความรับผิดชอบที่ชัดเจนและพัฒนาศักยภาพของทีมแทน"
+  },
+  {
+    "id": "p042",
+    "title_th": "หลัก \"3 ไม่ 4 ตรวจ 5 ระดับ\" ในการนำทีม",
+    "category": "การบริหารทีม",
+    "summary": "นำเสนอหลักการนำทีมให้มีประสิทธิภาพผ่านแนวคิด '3 ไม่ 4 ตรวจ 5 ระดับ' เน้นว่าผู้นำต้องกำกับให้สมาชิกในทีมเลิกหาข้ออ้างและไม่ผัดวันประกันพรุ่ง ทีมต้องมีมาตรฐานและระเบียบชัดเจน งานต้องมีแนวทางและแผนที่เป็นระบบ ผู้นำต้องติดตามภาพรวม และท้ายที่สุดงานต้องยึดผลลัพธ์เป็นหลัก",
+    "key_points": [
+      "ไม่หาข้ออ้าง ไม่ผัดวันประกันพรุ่ง ผู้นำต้องเป็นแบบอย่างในการตัดสินใจเด็ดขาด",
+      "ทีมต้องมีมาตรฐานและระเบียบชัดเจนเพื่อลดความขัดแย้ง",
+      "งานต้องมีแนวทางและแผนที่เป็นระบบให้ทุกคนเข้าใจบทบาทตน",
+      "ผู้นำต้องติดตามภาพรวมและกำกับดูแลอย่างจริงจัง",
+      "ยึดผลลัพธ์และคุณภาพงานเป็นเกณฑ์สำคัญที่สุด พร้อมทัศนคติที่ถูกต้องของทีม"
+    ],
+    "application_note": "หัวหน้าแผนกควรเป็นแบบอย่างในการตัดสินใจอย่างเด็ดขาดและไม่ปล่อยให้ทีมหาข้ออ้างผัดวันในการส่งรายงานหรือเอกสารคุณภาพ พร้อมทั้งกำกับติดตามภาพรวมของงานอย่างสม่ำเสมอ"
+  },
+  {
+    "id": "p043",
+    "title_th": "หัวใจของการบริหารลูกน้อง",
+    "category": "การบริหารทีม",
+    "summary": "อธิบายว่าหัวใจของการบริหารลูกน้องคือการเข้าใจธรรมชาติของมนุษย์และเข้าถึงจิตใจของผู้คน ต้นตอของปัญหาหลายอย่างมักไม่ได้อยู่ที่ตัวเนื้องานเอง แต่อยู่ที่ความขัดแย้งและความเข้าใจที่แตกต่างกันระหว่างคนกับคน สิ่งที่ต้องบริหารอย่างแท้จริงคือความเข้าใจและอารมณ์ของตัวผู้จัดการเอง",
+    "key_points": [
+      "หัวใจการบริหารลูกน้องคือเข้าใจธรรมชาติมนุษย์ ไม่ใช่มองเป็นเพียงเครื่องมือ",
+      "ปัญหาส่วนใหญ่เกิดจากความเข้าใจต่างกันระหว่างคน ไม่ใช่ตัวงานเอง",
+      "ผู้จัดการต้องบริหารความเข้าใจและอารมณ์ของตนเองก่อน",
+      "เป็นแบบอย่าง เปลี่ยนจาก 'ฉันทำได้' เป็น 'พวกเราทำได้'",
+      "บริหารคนควบคู่กับบริหารงาน และคิดเชิงระบบจากจุดสู่ภาพรวม"
+    ],
+    "application_note": "หัวหน้าแผนกควรทำความเข้าใจว่าความขัดแย้งในทีมมักมาจากความรู้สึกไม่ใช่แค่เนื้องาน จึงควรใส่ใจสภาพจิตใจของแพทย์ประจำบ้านและพยาบาลในทีมควบคู่ไปกับการติดตามผลงาน"
+  },
+  {
+    "id": "p044",
+    "title_th": "3 ความต้องการพื้นฐานของมนุษย์: เคารพ ยอมรับ ให้กำลังใจ",
+    "category": "การบริหารทีม",
+    "summary": "กล่าวถึงความต้องการสำคัญ 3 ประการของมนุษย์ในบริบทการบริหารคน ได้แก่ การเคารพ (มองแต่ละคนเป็นปัจเจกบุคคล) การยอมรับ (ให้ความสำคัญกับความพยายามและกระบวนการ) และการให้กำลังใจ (ปลุกพลังแรงจูงใจ)",
+    "key_points": [
+      "การเคารพ: มองพนักงานเป็นปัจเจกบุคคล ไม่บังคับให้เหมือนกันทุกคน",
+      "ความเป็นธรรมคือหัวใจของความเท่าเทียม ไม่ใช่การทำให้ทุกคนเหมือนกัน",
+      "การยอมรับ: ให้ความสำคัญกับความพยายามและกระบวนการ ไม่ใช่แค่ผลลัพธ์",
+      "การให้กำลังใจ: ค้นหาแรงผลักดันที่แท้จริงของพนักงานแต่ละคน",
+      "เป้าหมายคือสร้างความสอดประสานระหว่างความรู้สึกกับเป้าหมายองค์กร"
+    ],
+    "application_note": "หัวหน้าแผนกควรให้ feedback เชิงบวกที่เห็นคุณค่าความพยายามของแพทย์ประจำบ้านแต่ละคนอย่างสม่ำเสมอ ไม่ใช่ประเมินจากผลลัพธ์เพียงอย่างเดียว เพื่อสร้างแรงจูงใจในการเรียนรู้ระยะยาว"
+  },
+  {
+    "id": "p045",
+    "title_th": "วิธีทำงานที่ผู้นำมอบหมายให้สำเร็จ",
+    "category": "การสื่อสาร",
+    "summary": "นำเสนอวิธีทำงานที่ผู้นำมอบหมายให้สำเร็จอย่างเป็นระบบ แบ่งเป็น 3 ช่วง ก่อนลงมือปฏิบัติต้องยืนยันความเข้าใจเป้าหมายก่อน ระหว่างดำเนินงานต้องรายงานความคืบหน้าและขอคำแนะนำอย่างทันเวลา และหลังเสร็จงานต้องรายงานผลงาน วิเคราะห์ปัญหา และเสนอแผนขั้นต่อไป",
+    "key_points": [
+      "ก่อนเริ่ม: ยืนยันความเข้าใจเป้าหมายและประเด็นสำคัญกับหัวหน้าก่อนลงมือ",
+      "ระหว่างทำ: รายงานความคืบหน้าและปัญหาที่แก้ไม่ได้อย่างทันเวลา",
+      "ระหว่างทำ: ขอคำแนะนำจากหัวหน้าเพื่อทราบจุดที่ต้องระวัง",
+      "หลังเสร็จ: รายงานผลงาน วิเคราะห์ปัญหา และเสนอแผนขั้นต่อไป"
+    ],
+    "application_note": "เมื่อได้รับมอบหมายจากผู้อำนวยการโรงพยาบาลให้ดำเนินโครงการปรับปรุงคุณภาพ หัวหน้าแผนกควรยืนยันความเข้าใจเป้าหมายก่อนเริ่ม รายงานความคืบหน้าเป็นระยะ และสรุปผลพร้อมแผนต่อยอดเมื่อเสร็จสิ้นโครงการ"
+  },
+  {
+    "id": "p046",
+    "title_th": "ศิลปะการตำหนิและการวิจารณ์เชิงสร้างสรรค์",
+    "category": "การบริหารทีม",
+    "summary": "การตำหนิพนักงานเป็นทักษะที่ต้องอาศัยศิลปะ ไม่ใช่การระบายอารมณ์ ผู้นำต้องเข้าใจหลัก \"รู้จักคน ใช้คนให้เหมาะสม\" ควบคู่กับหลัก \"ก้าวหน้าไปด้วยกัน\" เมื่อวิจารณ์ต้องอดทนรับฟังและทำความเข้าใจสาเหตุรากเหง้าก่อน แล้วจึงชี้จุดที่ต้องแก้ไขอย่างตรงประเด็นพร้อมเสนอแนวทางปรับปรุงที่เป็นรูปธรรม",
+    "key_points": [
+      "รู้จักจุดแข็งของแต่ละคนแล้วมอบหมายงานให้เหมาะสม",
+      "ไม่ใช่แค่ชี้ปัญหา แต่ต้องช่วยพัฒนาและสนับสนุนให้ก้าวหน้าไปด้วยกัน",
+      "ฟังและเข้าใจสาเหตุรากเหง้าก่อนตำหนิ",
+      "วิจารณ์ให้ตรงจุด หลีกเลี่ยงการพูดกว้าง ๆ",
+      "ให้คำแนะนำเชิงสร้างสรรค์ควบคู่กับการชี้ข้อผิดพลาดเสมอ"
+    ],
+    "application_note": "เมื่อให้ฟีดแบ็กแพทย์ประจำบ้านหรือทีมพยาบาลที่ทำงานผิดพลาดในห้องผ่าตัดหรือการดูแลผู้ป่วย หัวหน้าแผนกควรรับฟังสาเหตุก่อน ชี้จุดที่ต้องแก้ไขอย่างเจาะจง และเสนอแนวทางปรับปรุงที่นำไปปฏิบัติได้จริงแทนการตำหนิลอย ๆ"
+  },
+  {
+    "id": "p047",
+    "title_th": "การเป็นผู้นำมือใหม่: จัดระบบงานประจำและ 6 ความสามารถที่ต้องพัฒนา",
+    "category": "การบริหารทีม",
+    "summary": "ผู้ที่ก้าวขึ้นเป็นผู้นำครั้งแรกจำเป็นต้องรู้จักจัดสรรงานให้เป็นระบบ เช่น การจัดประชุมประจำสัปดาห์ เดือน และไตรมาส พร้อมทั้งพัฒนา 6 ความสามารถหลัก ได้แก่ การทบทวนหลังจบโครงการ การคิดอย่างมีเหตุผล การให้ข้อมูลย้อนกลับเชิงลึก การทำน้อยแต่แก้ปัญหาให้ตรงจุด การจับประเด็นสำคัญ และการรู้จักแสวงหาทรัพยากรจากหัวหน้า",
+    "key_points": [
+      "จัดวงจรประชุม/ทบทวนงานประจำสัปดาห์ เดือน ไตรมาส อย่างเป็นระบบ",
+      "ทบทวนหลังจบโครงการเพื่อสรุปบทเรียนอย่างละเอียด",
+      "คิดอย่างมีเหตุผล แยกแยะข้อมูลจริงจากข้อมูลผิดพลาด",
+      "รายงานตามความจริง ไม่เสียเวลาตกแต่งรายงาน",
+      "ทำน้อยแต่แก้ปัญหาให้ตรงจุด และจับประเด็นสำคัญก่อนเสมอ",
+      "ขอทรัพยากรจากหัวหน้าอย่างมีเหตุผลหลังวิเคราะห์อย่างเป็นระบบ"
+    ],
+    "application_note": "หัวหน้าแผนกศัลยกรรมเต้านมควรจัดวงรอบการประชุม morbidity & mortality หรือ tumor board ประจำสัปดาห์/เดือนอย่างเป็นระบบ พร้อมฝึกทบทวนเคสอย่างมีเหตุผลและรายงานตามข้อเท็จจริงเพื่อพัฒนาแผนกอย่างต่อเนื่อง"
+  },
+  {
+    "id": "p048",
+    "title_th": "คุณสมบัติสำคัญของผู้นำ: สุขุม รับผิดชอบ มั่นใจ สังเกตลึกซึ้ง",
+    "category": "การพัฒนาตนเอง",
+    "summary": "คุณสมบัติสำคัญของผู้บริหารคือความสุขุมเมื่อพบเหตุการณ์ไม่คาดคิด ตำแหน่งบริหารต้องมีความรับผิดชอบสอดคล้องกับอำนาจ ความมั่นใจเป็นพลังจากภายในและเป็นเสน่ห์ของผู้นำ และผู้บริหารที่ยอดเยี่ยมต้องมีการสังเกตที่ลึกซึ้งกว่าสิ่งที่ปรากฏภายนอก",
+    "key_points": [
+      "สุขุม ไม่สับสนเมื่อเจอวิกฤต ประเมินสถานการณ์อย่างรวดเร็ว",
+      "อำนาจต้องมาพร้อมความรับผิดชอบเสมอ",
+      "กล้ารับผิดชอบทั้งความสำเร็จและความล้มเหลว",
+      "ความมั่นใจในตนเองเป็นพลังขับเคลื่อนและเสน่ห์ของผู้นำ",
+      "สังเกตให้ลึกซึ้งกว่าสิ่งที่ปรากฏภายนอก จัดระบบข้อมูลที่ซับซ้อนได้"
+    ],
+    "application_note": "ในฐานะประธานคณะกรรมการหลายชุด แพทย์ควรฝึกความสุขุมเมื่อเกิดภาวะแทรกซ้อนหรือข้อร้องเรียนเฉียบพลัน และยอมรับความรับผิดชอบต่อผลการตัดสินใจของคณะกรรมการอย่างเต็มที่แทนการโยนความผิดให้ผู้อื่น"
+  },
+  {
+    "id": "p049",
+    "title_th": "6 หลักการบริหารทีมอย่างมีประสิทธิภาพ",
+    "category": "การบริหารทีม",
+    "summary": "กรอบนี้เสนอ 6 หลักสำหรับผู้นำในการบริหารทีมให้มีประสิทธิภาพ ได้แก่ การแข่งขันอย่างพอเหมาะ การสร้างสมดุลของอำนาจ การให้รางวัลและลงโทษอย่างชัดเจน การรักษาระยะห่างที่เหมาะสม การบริหารอย่างสมดุลระหว่างการผลักดันทีมกับการเป็นแบบอย่าง และการสื่อสารอย่างอ่อนโยนและมีเหตุผล",
+    "key_points": [
+      "ใช้การแข่งขันในระดับพอเหมาะเพื่อกระตุ้นการเติบโต",
+      "กระจายอำนาจอย่างสมดุล ไม่ให้กระจุกตัว",
+      "ให้รางวัลและบทลงโทษอย่างชัดเจนและเป็นธรรม",
+      "รักษาระยะห่างที่เหมาะสมกับลูกทีม",
+      "สมดุลระหว่างผลักดันทีมกับการเป็นแบบอย่างที่ดี",
+      "สื่อสารอย่างอ่อนโยนแต่มีเหตุผล และตรวจสอบงานผ่านการประชุมสม่ำเสมอ"
+    ],
+    "application_note": "หัวหน้าแผนกควรกำหนดเกณฑ์ประเมินผลงานและข้อเสนอแนะที่ชัดเจนเป็นธรรมสำหรับแพทย์ประจำบ้านทุกคน พร้อมรักษาความเป็นกันเองในระดับที่ไม่กระทบมาตรฐานทางวิชาชีพและวินัยของทีม"
+  },
+  {
+    "id": "p050",
+    "title_th": "7 วิธีสร้างแรงจูงใจ: ให้ปลากับให้คันเบ็ด",
+    "category": "การบริหารทีม",
+    "summary": "กรอบนี้อิงหลักการ \"ให้ปลาย่อมไม่เท่าสอนวิธีตกปลา\" ประกอบด้วยการให้ \"ปลา\" (ค่าตอบแทนที่เป็นธรรม) การให้ \"คันเบ็ด\" (สอนวิธีทำงานแล้วปล่อยให้ลงมือทำเอง) การจุดประกายความปรารถนา การสอนให้ถ่อมตนและยึดความจริง การมอบการยอมรับ และการมอบโอกาสด้วยเส้นทางความก้าวหน้า",
+    "key_points": [
+      "จ่ายค่าตอบแทนอย่างเป็นธรรมตามความสามารถ (\"ให้ปลา\")",
+      "สอนวิธีทำงานแล้วปล่อยให้ลงมือทำเอง (\"ให้คันเบ็ด\")",
+      "สร้างวิสัยทัศน์ที่จุดประกายแรงบันดาลใจแต่ต้องทำได้จริง",
+      "สอนให้ถ่อมตนและยึดความจริงเสมอ",
+      "ชื่นชมและมอบการยอมรับเพื่อสร้างความภาคภูมิใจ",
+      "เปิดเส้นทางความก้าวหน้าในอาชีพให้ชัดเจน"
+    ],
+    "application_note": "หัวหน้าแผนกควรสอนเทคนิคผ่าตัดและกระบวนการคิดทางคลินิกให้แพทย์ประจำบ้าน (ให้คันเบ็ด) ควบคู่กับการเปิดเส้นทางความก้าวหน้าทางวิชาการที่ชัดเจน เช่น โอกาสทำวิจัยหรือนำเสนอในที่ประชุมวิชาการ"
+  },
+  {
+    "id": "p051",
+    "title_th": "10 คุณลักษณะของผู้ที่เหมาะกับงานบริหาร",
+    "category": "การพัฒนาตนเอง",
+    "summary": "กรอบนี้สรุปคุณลักษณะ 10 ประการที่บ่งชี้ว่าบุคคลเหมาะกับงานบริหาร ได้แก่ คุณธรรม ความเป็นมิตร ทักษะมนุษยสัมพันธ์ การบริหารอารมณ์ ความคิดเป็นของตนเอง การมองคนและสถานการณ์แม่นยำ ความสุขุม ความกล้าตัดสินใจ การเรียนรู้ต่อเนื่อง และการมองภาพรวม",
+    "key_points": [
+      "คุณธรรมและมนุษยสัมพันธ์เป็นพื้นฐานของภาวะผู้นำ",
+      "บริหารอารมณ์ได้ดีแม้เผชิญแรงกดดัน",
+      "มีความคิดเป็นของตนเอง ไม่คล้อยตามกระแสง่าย ๆ",
+      "มองคนและสถานการณ์แม่นยำ ไม่ถูกภาพลวงตาหลอก",
+      "สุขุม กล้าตัดสินใจ และเรียนรู้อย่างต่อเนื่อง",
+      "มองภาพรวมและวางแผนระยะยาวได้ดี"
+    ],
+    "application_note": "ก่อนรับตำแหน่งประธานคณะกรรมการใหม่ ควรประเมินตนเองตามคุณลักษณะทั้ง 10 ข้อนี้ โดยเฉพาะการบริหารอารมณ์และการมองภาพรวมขององค์กร เพื่อเตรียมพร้อมสำหรับบทบาทผู้นำที่ต้องตัดสินใจภายใต้แรงกดดัน"
+  },
+  {
+    "id": "p052",
+    "title_th": "10 วิธีตอบอย่างมีชั้นเชิงเมื่อสื่อสารกับหัวหน้า",
+    "category": "การสื่อสาร",
+    "summary": "กรอบนี้เปรียบเทียบคำตอบแบบ EQ ต่ำกับ EQ สูงใน 10 สถานการณ์ที่พบบ่อยเมื่อพนักงานต้องสื่อสารกับหัวหน้า หลักสำคัญคือการตอบด้วยทัศนคติเชิงรุก แสดงความรับผิดชอบ เสนอทางแก้ และรายงานความคืบหน้าอย่างทันท่วงที",
+    "key_points": [
+      "ตอบด้วยทัศนคติเชิงรุกและแสดงความรับผิดชอบเสมอ",
+      "เมื่อถูกวิจารณ์ ให้ขอบคุณและเสนอแผนปรับปรุงแทนการแก้ตัว",
+      "เมื่อได้รับงานด่วน ให้จัดลำดับความสำคัญและรายงานหากขัดแย้งกับงานอื่น",
+      "เสนอแนวทางแก้ไขควบคู่กับการรายงานปัญหาเสมอ",
+      "หลีกเลี่ยงคำตอบปฏิเสธห้วน ๆ เช่น \"ทำไม่ได้\" หรือ \"ไม่ว่าง\""
+    ],
+    "application_note": "เมื่อผู้อำนวยการโรงพยาบาลหรือประธานแพทยสภาซักถามเกี่ยวกับความล่าช้าของโครงการปรับปรุงคุณภาพ ควรตอบด้วยการยอมรับสถานการณ์จริงพร้อมเสนอแผนเร่งรัดที่เป็นรูปธรรมแทนการอ้างข้อจำกัด"
+  },
+  {
+    "id": "p053",
+    "title_th": "วิธีประสานงานกับผู้บังคับบัญชาอย่างมีประสิทธิภาพ",
+    "category": "การสื่อสาร",
+    "summary": "การทำงานร่วมกับผู้บังคับบัญชาอย่างมีประสิทธิภาพเริ่มจากการรายงานความคืบหน้าเชิงรุก พร้อมคำอธิบายสั้น ๆ ให้เข้าใจประเด็นสำคัญได้เร็ว เสนอ 5 ประโยคที่ไม่ควรพูดกับหัวหน้า พร้อมแนะประโยคทดแทนที่แสดงความร่วมมือ",
+    "key_points": [
+      "รายงานความคืบหน้าเชิงรุกพร้อมคำอธิบายสั้น ๆ ที่เข้าใจง่าย",
+      "เมื่อพบอุปสรรค เตรียมแนวทางแก้ไขก่อนแล้วจึงขอคำแนะนำ",
+      "หลีกเลี่ยง 5 ประโยคเชิงลบ เช่น \"ไม่ใช่งานของฉัน\" \"ทำไม่ได้\"",
+      "แทนที่ด้วยประโยคที่แสดงความร่วมมือและเสนอทางออก",
+      "การรายงานเชิงรุกช่วยสร้างความไว้วางใจจากหัวหน้า"
+    ],
+    "application_note": "เมื่อรายงานผลการดำเนินงานต่อผู้บริหารโรงพยาบาล ควรสรุปประเด็นสำคัญสั้น ๆ พร้อมข้อเสนอแนะเชิงรุกแทนการส่งเพียงรายงานดิบ และหลีกเลี่ยงการปฏิเสธงานที่ได้รับมอบหมายแบบไม่มีทางออก"
+  },
+  {
+    "id": "p054",
+    "title_th": "การมอบอำนาจ 3 ประการ: ปลุกศักยภาพของทีม",
+    "category": "การบริหารทีม",
+    "summary": "กรอบนี้เสนอ 3 ขั้นตอนของการมอบอำนาจ คือการไว้วางใจอย่างมั่นใจ การมอบอำนาจจริง (พร้อมกำหนดขอบเขตความรับผิดชอบ) และการปล่อยให้พนักงานลงมือทำด้วยตนเอง",
+    "key_points": [
+      "ไว้วางใจสมาชิกในทีมอย่างมั่นใจก่อนมอบหมายงาน",
+      "มอบอำนาจตัดสินใจจริง พร้อมกำหนดขอบเขตความรับผิดชอบชัดเจน",
+      "ปล่อยให้พนักงานลงมือทำเอง ลดการแทรกแซงที่ไม่จำเป็น",
+      "การมอบอำนาจช่วยบ่มเพาะผู้นำรุ่นต่อไป",
+      "ลดขั้นตอนอนุมัติที่ซับซ้อนเพื่อเพิ่มความคล่องตัว"
+    ],
+    "application_note": "หัวหน้าแผนกควรมอบอำนาจให้แพทย์ประจำบ้านอาวุโสตัดสินใจเบื้องต้นในเคสที่ไม่ซับซ้อนภายในขอบเขตที่กำหนดไว้ชัดเจน เพื่อฝึกภาวะผู้นำและลดภาระการตัดสินใจทุกเรื่องด้วยตนเอง"
+  },
+  {
+    "id": "p055",
+    "title_th": "การชี้นำ 3 ประการ: ความคิด ความสามารถ รูปแบบการทำงาน",
+    "category": "การบริหารทีม",
+    "summary": "กรอบนี้เสนอ 3 มิติที่ผู้จัดการต้องชี้นำทีม คือชี้นำด้านความคิด (บ่มเพาะค่านิยม) ชี้นำด้านความสามารถ (ถ่ายทอดประสบการณ์) และชี้นำด้านรูปแบบการทำงาน (เป็นแบบอย่าง)",
+    "key_points": [
+      "ชี้นำด้านความคิด: ปลูกฝังค่านิยมและทัศนคติแบบมืออาชีพ",
+      "ชี้นำด้านความสามารถ: ถ่ายทอดประสบการณ์และวิธีแก้ปัญหา",
+      "ชี้นำด้านรูปแบบการทำงาน: เป็นแบบอย่างที่สุขุมรอบคอบ",
+      "การชี้นำทั้งสามด้านช่วยสร้างความไว้วางใจและภาพลักษณ์ของทีม",
+      "กระตุ้นบรรยากาศแห่งนวัตกรรมและความคิดสร้างสรรค์ในทีม"
+    ],
+    "application_note": "หัวหน้าแผนกควรเป็นแบบอย่างด้านจริยธรรมทางการแพทย์และความรอบคอบในการตัดสินใจทางคลินิก พร้อมถ่ายทอดองค์ความรู้และประสบการณ์ผ่าตัดให้แพทย์ประจำบ้านอย่างเป็นระบบ"
+  },
+  {
+    "id": "p056",
+    "title_th": "โมเดลสมรรถนะผู้นำ 5 ด้าน",
+    "category": "การพัฒนาตนเอง",
+    "summary": "กรอบนี้เสนอโมเดลสมรรถนะผู้นำ 5 ด้าน ได้แก่ ความสามารถในการสร้างแรงบันดาลใจ การมองการณ์ไกล การสร้างอิทธิพล การตัดสินใจอย่างเด็ดขาด และการควบคุมและกำกับทิศทาง",
+    "key_points": [
+      "สร้างแรงบันดาลใจด้วยวิสัยทัศน์และความเชื่อมั่นในตนเอง",
+      "มองการณ์ไกล ติดตามแนวโน้มเพื่อวางแผนล่วงหน้า",
+      "สร้างอิทธิพลผ่านความสัมพันธ์เพื่อรวมพลังคน",
+      "ตัดสินใจอย่างเด็ดขาดและกล้ารับผิดชอบ",
+      "ควบคุมกำกับทิศทางให้องค์กรมุ่งสู่เป้าหมายเดียวกัน"
+    ],
+    "application_note": "ประธานคณะกรรมการควรฝึกทั้ง 5 สมรรถนะนี้ควบคู่กัน โดยเฉพาะการมองการณ์ไกลด้านแนวโน้มการรักษามะเร็งเต้านมและการตัดสินใจเชิงนโยบายอย่างเด็ดขาดเมื่อคณะกรรมการมีความเห็นแตกต่างกัน"
+  },
+  {
+    "id": "p057",
+    "title_th": "หลักการมอบหมายงานอย่างมีประสิทธิภาพ",
+    "category": "การบริหารทีม",
+    "summary": "ผู้นำมืออาชีพต้องรู้จักจัดสรรงานอย่างมีหลักการ งานเฉพาะทางต้องมอบให้คนที่เหมาะสมและไว้ใจได้ที่สุด ก่อนมอบหมายงานทุกครั้งควรตั้งคำถาม 4 กลุ่ม ครอบคลุมเป้าหมาย บริบท มาตรฐาน และกรอบเวลา",
+    "key_points": [
+      "มอบงานเฉพาะทางให้คนที่เหมาะสมและไว้ใจได้ที่สุด",
+      "ใช้งานเล็กฝึกคนใหม่ ใช้งานที่เห็นผลง่ายกระตุ้นคนเก่ง",
+      "งานยากและสำคัญต้องรู้จักคนก่อนมอบหมาย",
+      "ความรับผิดชอบสุดท้ายเป็นของผู้มอบหมายงานเสมอ",
+      "ตั้งคำถาม 4 กลุ่มก่อนมอบหมาย: เป้าหมาย บริบท มาตรฐาน และเวลา"
+    ],
+    "application_note": "ก่อนมอบหมายให้แพทย์ประจำบ้านรับผิดชอบเคสผ่าตัดหรือโครงการวิจัย ควรตรวจสอบว่าพวกเขาเข้าใจเป้าหมาย บริบท มาตรฐานการประเมิน และกรอบเวลาชัดเจนก่อนเริ่มงานเสมอ"
+  },
+  {
+    "id": "p058",
+    "title_th": "หลักการบริหารทีม 4 ประการที่ผู้บริหารควรทำให้ดี",
+    "category": "การบริหารทีม",
+    "summary": "กรอบนี้เน้นย้ำหลักการพื้นฐานที่ผู้บริหารต้องทำให้ดีเพื่อขับเคลื่อนทีม ได้แก่ ความไว้วางใจ การเป็นแบบอย่าง การกำหนดทิศทางที่ถูกต้อง และการมุ่งเน้นผลลัพธ์",
+    "key_points": [
+      "ความไว้วางใจคือหัวใจของการบริหารทีม",
+      "เป็นแบบอย่างด้วยมาตรฐานสูงทั้งทัศนคติและผลลัพธ์",
+      "กำหนดทิศทางที่ถูกต้องด้วยมุมมองภาพรวมของสถานการณ์",
+      "มุ่งเน้นผลลัพธ์และให้ฟีดแบ็กอย่างทันท่วงที",
+      "ดึงจุดแข็งของสมาชิกแต่ละคนออกมาใช้และสร้างบรรยากาศเปิดกว้าง"
+    ],
+    "application_note": "หัวหน้าแผนกควรสร้างระบบประเมินแพทย์ประจำบ้านที่โปร่งใสและเป็นธรรม พร้อมเป็นแบบอย่างด้านมาตรฐานวิชาชีพเพื่อสร้างความไว้วางใจในทีมสหวิชาชีพ"
+  },
+  {
+    "id": "p059",
+    "title_th": "5 เคล็ดลับของผู้บริหารที่ยอดเยี่ยม",
+    "category": "การบริหารทีม",
+    "summary": "กรอบนี้สรุปเคล็ดลับ 5 ประการของผู้บริหารที่ยอดเยี่ยม ได้แก่ การกระตุ้นความต้องการด้วยระบบรางวัล การให้ข้อเสนอแนะเชิงบวกทันท่วงที การใช้การแข่งขันภายในอย่างเหมาะสม การสร้างโอกาสในการเติบโต และการกำหนดมาตรฐานการทำงานที่ชัดเจน",
+    "key_points": [
+      "ระบบรางวัลและบทลงโทษที่ชัดเจนกระตุ้นความทุ่มเท",
+      "ฟีดแบ็กเชิงบวกทันเวลาช่วยให้พนักงานฟื้นความมั่นใจ",
+      "ใช้การแข่งขันภายในอย่างเหมาะสมเพื่อกระตุ้นการพัฒนา",
+      "สร้างเส้นทางความก้าวหน้าที่ชัดเจนและโปร่งใส",
+      "กำหนดมาตรฐานงานและติดตามกระบวนการอย่างใกล้ชิด พร้อมถ่ายทอดประสบการณ์"
+    ],
+    "application_note": "หัวหน้าแผนกควรให้ฟีดแบ็กเชิงบวกทันทีเมื่อแพทย์ประจำบ้านผ่านเคสยากได้สำเร็จ และวางระบบพี่เลี้ยงให้รุ่นพี่ถ่ายทอดประสบการณ์ผ่าตัดแก่รุ่นน้องอย่างต่อเนื่อง"
+  },
+  {
+    "id": "p060",
+    "title_th": "4 ความสามารถที่ตำแหน่งบริหารควรมี",
+    "category": "การพัฒนาตนเอง",
+    "summary": "กรอบนี้ระบุ 4 ความสามารถพื้นฐานที่ผู้ดำรงตำแหน่งบริหารต้องมี ได้แก่ การสื่อสารเป็น การอดทนเป็น การให้กำลังใจเป็น และการคิดเป็น",
+    "key_points": [
+      "สื่อสารเป็น: สื่อสารถูกต้องชัดเจนเพื่อผลักดันงาน",
+      "อดทนเป็น: มีวุฒิภาวะ ไม่ตื่นตระหนกเมื่อเจอปัญหา",
+      "ให้กำลังใจเป็น: สร้างทีมที่มั่นคงด้วยการให้กำลังใจ",
+      "คิดเป็น: มีความมั่นคงทางความคิด",
+      "ขาดวุฒิภาวะแม้ผลงานดีก็ยากจะก้าวหน้าในตำแหน่งบริหาร"
+    ],
+    "application_note": "แพทย์ที่ดำรงตำแหน่งประธานคณะกรรมการควรฝึกความอดทนและการสื่อสารที่ชัดเจนเป็นพิเศษ เพราะต้องประสานความเห็นต่างระหว่างสหวิชาชีพภายใต้ความกดดันของสถานการณ์ผู้ป่วยวิกฤต"
+  },
+  {
+    "id": "p061",
+    "title_th": "8 ประเภทพนักงานที่ไม่ควรเป็น",
+    "category": "การพัฒนาตนเอง",
+    "summary": "กรอบนี้เตือนถึงพฤติกรรมเชิงลบ 8 ประเภทที่พนักงานไม่ควรมี เช่น การรอให้หัวหน้าเข้าหาก่อน การทำงานเฉื่อยชา การไม่พัฒนาตนเองแต่โทษบรรยากาศ และการหาเหตุผลสารพัดเมื่อทำงานไม่สำเร็จ",
+    "key_points": [
+      "อย่ารอให้หัวหน้าเข้าหาก่อนจึงจะสื่อสาร",
+      "อย่าเฉื่อยชาเมื่อรู้สึกว่าไม่ได้รับการยอมรับ",
+      "อย่าโทษบรรยากาศองค์กรแทนการพัฒนาตนเอง",
+      "อย่าหาข้ออ้างเมื่อทำงานไม่สำเร็จ ยิ่งมีข้ออ้างมากยิ่งห่างจากความสำเร็จ",
+      "อย่าโทษบริษัทเมื่อขาดทักษะ ควรขวนขวายพัฒนาตนเอง"
+    ],
+    "application_note": "แพทย์ประจำบ้านควรได้รับการปลูกฝังให้สื่อสารเชิงรุกกับอาจารย์แพทย์และยอมรับผิดชอบต่อผลการเรียนรู้ของตนเองแทนการโทษระบบหรือภาระงานที่หนัก"
+  },
+  {
+    "id": "p062",
+    "title_th": "หลักบริหารทีมด้วย 3 แนวคิดใหญ่และการเคารพ",
+    "category": "การบริหารทีม",
+    "summary": "กรอบนี้เสนอหลักการบริหารทีมผ่าน 3 แนวคิด \"ใหญ่\" (วิสัยทัศน์กว้างไกล มองภาพใหญ่ เป้าหมายใหญ่) ควบคู่กับ 3 เรื่องที่ต้องระมัดระวัง (คำพูด การกระทำ รายละเอียดเล็ก) และ 3 สิ่งที่ต้องเคารพ (งาน เพื่อนร่วมงาน ตนเอง)",
+    "key_points": [
+      "วิสัยทัศน์กว้างไกล มองภาพใหญ่ ตั้งเป้าหมายที่ยิ่งใหญ่",
+      "ระมัดระวังคำพูดและการกระทำก่อนตัดสินใจเสมอ",
+      "ใส่ใจรายละเอียดเล็ก ๆ เพราะมักตัดสินความสำเร็จ",
+      "เคารพงาน เพื่อนร่วมงาน และตนเอง",
+      "ใจกว้างให้อภัย สุขุมมั่นคง และเปิดใจรับฟังความเห็นต่าง"
+    ],
+    "application_note": "เมื่อประชุมคณะกรรมการที่มีความเห็นขัดแย้งกัน ประธานควรระมัดระวังคำพูดและใส่ใจรายละเอียดของแต่ละข้อเสนอ พร้อมเปิดใจรับฟังความเห็นต่างเพื่อหาข้อสรุปที่เป็นประโยชน์ต่อผู้ป่วยโดยรวม"
+  },
+  {
+    "id": "p063",
+    "title_th": "ผู้บริหารที่ยอดเยี่ยมบริหารคนและงานอย่างไร",
+    "category": "การบริหารทีม",
+    "summary": "กรอบนี้เสนอแนวทางปรับรูปแบบการบริหารให้เหมาะกับพนักงานแต่ละประเภท ให้กำลังใจกับพนักงานใหม่ ชี้แนะกับพนักงานอาวุโส มอบอำนาจกับพนักงานความสามารถสูง บริหารแบบละเอียดกับพนักงานทั่วไป และแบบโค้ชกับพนักงานที่ขาดความกระตือรือร้น",
+    "key_points": [
+      "พนักงานใหม่: บริหารแบบให้กำลังใจ",
+      "พนักงานอาวุโส: บริหารแบบชี้แนะ ดึงจุดแข็งจากประสบการณ์",
+      "พนักงานความสามารถสูง: บริหารแบบมอบอำนาจ",
+      "พนักงานทั่วไป/ขาดกระตือรือร้น: บริหารแบบละเอียด/โค้ช",
+      "สร้างมาตรฐานงาน เสริมการสื่อสาร และให้ฟีดแบ็กทันท่วงที"
+    ],
+    "application_note": "หัวหน้าแผนกควรปรับวิธีดูแลแพทย์ประจำบ้านตามชั้นปี เช่น ให้กำลังใจและสอนละเอียดแก่ปี 1 แต่มอบอำนาจตัดสินใจมากขึ้นแก่แพทย์ประจำบ้านปีสุดท้ายที่มีความสามารถสูง"
+  },
+  {
+    "id": "p064",
+    "title_th": "โครงสร้างการรายงานงานที่ทรงพลัง",
+    "category": "การสื่อสาร",
+    "summary": "กรอบนี้เสนอวิธีรายงานงานให้ได้รับความสำคัญจากผู้บังคับบัญชา เนื้อหาต้องกระชับ ตรงประเด็น แสดงผลงานด้วยข้อมูลที่วัดผลได้ วางแผนอนาคตอย่างเป็นรูปธรรม และวิเคราะห์ปัญหาถึงสาเหตุที่แท้จริง",
+    "key_points": [
+      "เนื้อหารายงานต้องกระชับ ชัดเจน และตรงประเด็น",
+      "แสดงผลงานด้วยข้อมูลและแผนภาพที่วัดผลได้ ไม่ใช่ความรู้สึก",
+      "วางแผนและทิศทางอนาคตอย่างเป็นรูปธรรม",
+      "วิเคราะห์ปัญหาถึงสาเหตุที่แท้จริงและเสนอทางแก้ที่ตรงจุด",
+      "ปิดท้ายด้วยแผนงานระยะสั้นและเป้าหมายระยะยาวที่ชัดเจน"
+    ],
+    "application_note": "เมื่อรายงานผลการดำเนินงานของคณะกรรมการต่อผู้บริหารโรงพยาบาล ควรนำเสนอข้อมูลตัวชี้วัดคุณภาพเป็นกราฟที่วัดผลได้ พร้อมระบุสาเหตุของปัญหาและแผนพัฒนาต่อไปอย่างชัดเจนแทนการรายงานเชิงบรรยายทั่วไป"
+  },
+  {
+    "id": "p065",
+    "title_th": "หลักการสื่อสารที่มีประสิทธิภาพ: ฟัง อธิบาย และเคารพ",
+    "category": "การสื่อสาร",
+    "summary": "การสื่อสารที่มีประสิทธิภาพเริ่มต้นจากการรับฟังความคิดเห็นของเพื่อนร่วมงานหรือผู้บังคับบัญชาอย่างตั้งใจ เพราะการฟังช่วยให้เข้าใจความคิดและปัญหาของอีกฝ่ายได้ชัดเจนขึ้น นอกจากนี้ต้องถ่ายทอดจุดยืนและข้อกำหนดของตนอย่างชัดเจนและแม่นยำ และไม่ว่าความคิดเห็นจะแตกต่างกันเพียงใด ผู้สื่อสารต้องเคารพมุมมองของอีกฝ่ายเสมอ",
+    "key_points": [
+      "เริ่มจากการรับฟังความคิดเห็นของอีกฝ่ายอย่างตั้งใจก่อนพูด",
+      "การฟังช่วยให้เข้าใจความคิดและปัญหาของอีกฝ่ายได้ชัดเจนขึ้น",
+      "อธิบายจุดยืนและข้อกำหนดให้ชัดเจนเพื่อลดความเข้าใจผิด",
+      "การสื่อสารที่ชัดเจนช่วยลดต้นทุนการสื่อสารที่ไม่จำเป็น",
+      "เคารพมุมมองของผู้อื่นเสมอไม่ว่าจะเห็นต่างกันแค่ไหน"
+    ],
+    "application_note": "ในการประชุมคณะกรรมการที่มีความเห็นขัดแย้งเรื่องแนวทางการรักษา หัวหน้าแผนกควรเริ่มด้วยการรับฟังทุกฝ่ายอย่างตั้งใจก่อนอธิบายจุดยืนของตนอย่างชัดเจนและให้เกียรติความเห็นต่าง"
+  },
+  {
+    "id": "p066",
+    "title_th": "การให้ข้อมูลย้อนกลับเชิงบวกและเพื่อการปรับปรุง",
+    "category": "การสื่อสาร",
+    "summary": "อธิบายหลักการให้ฟีดแบ็กแก่พนักงาน 2 รูปแบบ คือข้อมูลย้อนกลับเชิงบวกซึ่งควรให้ทันทีเมื่อพนักงานทำงานได้ดีพร้อมระบุเหตุผลที่ชัดเจน และข้อมูลย้อนกลับเพื่อการปรับปรุงซึ่งใช้เมื่อพนักงานทำผิดซ้ำในเรื่องเดิม ต้องเตือนให้ชัดเจนและเสนอแนวทางแก้ไขเชิงสร้างสรรค์ควบคู่กันเสมอ",
+    "key_points": [
+      "ให้ฟีดแบ็กเชิงบวกทันทีพร้อมเหตุผลที่ชัดเจน ไม่ชมอย่างกว้างๆ",
+      "ประกาศคำชมให้ทีมรับรู้เพื่อสร้างความภาคภูมิใจและแรงจูงใจ",
+      "เมื่อพบข้อผิดพลาดซ้ำ ต้องเตือนอย่างชัดเจนพร้อมแนวทางแก้ไข",
+      "ค้นหาปัญหาหลักก่อนให้ฟีดแบ็กเพื่อการปรับปรุงอย่างตรงจุด"
+    ],
+    "application_note": "หัวหน้าแผนกควรให้ฟีดแบ็กเชิงบวกทันทีเมื่อทีมผ่าตัดทำเคสยากได้สำเร็จ และให้ฟีดแบ็กเชิงปรับปรุงอย่างสร้างสรรค์เมื่อพบข้อผิดพลาดซ้ำในกระบวนการดูแลผู้ป่วย เพื่อสร้างวัฒนธรรมการเรียนรู้ที่ปลอดภัย"
+  },
+  {
+    "id": "p067",
+    "title_th": "10 ปัญหาพฤติกรรมที่ควรหลีกเลี่ยงในที่ทำงาน",
+    "category": "การพัฒนาตนเอง",
+    "summary": "รวบรวมพฤติกรรมที่บั่นทอนประสิทธิภาพการทำงานซึ่งควรหลีกเลี่ยง เช่น การหาข้ออ้าง การไม่รู้วิธีเรียนรู้ การขาดตรรกะ การยึดติดกับวิธีเดิม การไม่แสดงความคิดเห็น การไม่รู้จักรับฟัง และการมีอารมณ์ด้านลบมากเกินไป",
+    "key_points": [
+      "หลีกเลี่ยงการหาข้ออ้างและควรลงมือแก้ปัญหาด้วยตนเอง",
+      "พัฒนาวิธีการเรียนรู้ที่มีประสิทธิภาพอย่างต่อเนื่อง",
+      "ปรับวิธีคิดและกลยุทธ์ให้ยืดหยุ่นตามสถานการณ์ที่เปลี่ยนแปลง",
+      "กล้าแสดงความคิดเห็นและรับฟังฟีดแบ็กจากผู้อื่นอย่างเปิดใจ",
+      "มีเป้าหมายและแผนพัฒนาตนเองที่ชัดเจน ไม่ปล่อยให้ทำงานไร้ทิศทาง",
+      "ควบคุมอารมณ์ด้านลบไม่ให้เข้ามาครอบงำการตัดสินใจในการทำงาน"
+    ],
+    "application_note": "ใช้รายการนี้เป็นเครื่องมือสะท้อนตนเองก่อนการประเมินผลประจำปีของแพทย์ประจำบ้านและเจ้าหน้าที่ในทีม เพื่อชี้จุดที่ควรพัฒนาอย่างตรงประเด็น"
+  },
+  {
+    "id": "p068",
+    "title_th": "หัวใจของการบริหาร: บริหาร 5 เรื่อง และบริหารคน 5 กลุ่ม",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "เสนอกรอบบริหารสองมิติที่ผู้นำต้องดูแลควบคู่กัน คือการบริหาร 5 เรื่อง (มาตรฐานงาน แผนงาน การบริหารตนเองของทีม ความร่วมมือ ทรัพยากร) และการบริหารคน 5 กลุ่มตามลักษณะ (ใหม่ อาวุโส ความสามารถสูง ทั่วไป ศักยภาพสูง)",
+    "key_points": [
+      "สร้างมาตรฐานงาน (SOP) และแผนงานที่มีตารางเวลาชัดเจน",
+      "พัฒนาความสามารถบริหารตนเองของทีมและส่งเสริมความร่วมมือ",
+      "จัดสรรทรัพยากรสนับสนุนให้เพียงพอต่อการบรรลุเป้าหมาย",
+      "พนักงานใหม่ใช้การให้กำลังใจ พนักงานอาวุโสใช้การชี้แนะ",
+      "พนักงานความสามารถสูงใช้การมอบอำนาจ พนักงานศักยภาพสูงใช้การโค้ช"
+    ],
+    "application_note": "หัวหน้าแผนกควรวางมาตรฐานการดูแลผู้ป่วย (protocol) ให้ชัดเจนเป็นเรื่องแรก แล้วเลือกวิธีดูแลแพทย์ประจำบ้านแต่ละชั้นปีให้ต่างกัน เช่น ให้กำลังใจปีต้น มอบอำนาจตัดสินใจมากขึ้นในปีท้าย"
+  },
+  {
+    "id": "p069",
+    "title_th": "3 คุณสมบัติสำคัญที่ผู้นำควรพัฒนา: ความกล้า ความเที่ยงตรง ภูมิรู้และความสุขุม",
+    "category": "การพัฒนาตนเอง",
+    "summary": "ระบุคุณสมบัติหลัก 3 ประการที่ผู้นำต้องพัฒนา คือความกล้า (แสดงความคิดเห็นตรงไปตรงมา กล้าตัดสินใจ) ความเที่ยงตรง (พูดถูกต้อง ปฏิบัติยุติธรรม) และภูมิรู้และความสุขุม (เพิ่มเหตุผลในการตัดสินใจและกระตุ้นความคิดสร้างสรรค์)",
+    "key_points": [
+      "ความกล้า: กล้าพูดความจริง กล้าปฏิเสธ กล้าตัดสินใจเด็ดขาด กล้ารับแรงกดดัน",
+      "ความเที่ยงตรง: พูดถูกต้อง ทำอย่างยุติธรรม คิดอย่างมีกลยุทธ์และมั่นคงในวิกฤต",
+      "ภูมิรู้และความสุขุม: ใช้ความรู้รอบด้านเพิ่มเหตุผลในการตัดสินใจ",
+      "ความรู้ที่หลากหลายช่วยเพิ่มพลังดึงดูดและกระตุ้นความคิดสร้างสรรค์ในทีม"
+    ],
+    "application_note": "ในฐานะประธานคณะกรรมการ ควรฝึกความกล้าตัดสินใจเด็ดขาดในสถานการณ์วิกฤตทางคลินิก ควบคู่กับการรักษาความเที่ยงตรงเมื่อประเมินผลงานหรือคัดเลือกบุคลากรในแผนก"
+  },
+  {
+    "id": "p070",
+    "title_th": "หลัก 6 มี 5 ไม่ 4 กรอบ ในการจัดประชุมของผู้นำ",
+    "category": "การประชุมและการตัดสินใจ",
+    "summary": "เสนอกรอบการจัดประชุมอย่างมีประสิทธิภาพผ่าน 3 องค์ประกอบ คือ 6 สิ่งที่การประชุมต้องมี 5 สิ่งที่ไม่ควรทำ และ 4 วลีสำคัญในการเปิดประเด็น (\"ฉันพบว่า\" \"ฉันรู้สึกว่า\" \"ฉันเสนอว่า\" \"ฉันหวังว่า\")",
+    "key_points": [
+      "6 สิ่งที่ต้องมี: เตรียมพร้อม หัวข้อชัด วินัย วาระ ผลลัพธ์ การติดตาม",
+      "5 สิ่งที่ไม่ควรทำ: ประชุมตามกิจวัตร เสียเวลาเรื่องเล็ก ระบายอารมณ์ ผูกขาดการพูด นอกประเด็น",
+      "ใช้ 4 วลี: ฉันพบว่า-ฉันรู้สึกว่า-ฉันเสนอว่า-ฉันหวังว่า เพื่อดำเนินการประชุมอย่างสร้างสรรค์",
+      "ปรับจุดเริ่มการประชุมตามระดับผู้ฟัง: เริ่มจากเป้าหมายสำหรับทีมปฏิบัติการ เริ่มจากปัญหาปัจจุบันสำหรับผู้บริหารระดับสูง"
+    ],
+    "application_note": "ก่อนประชุมคณะกรรมการมะเร็งเต้านมทุกครั้ง ควรเตรียมข้อมูลเคสให้ครบ กำหนดวาระชัดเจน และใช้ 4 วลี \"พบว่า-รู้สึกว่า-เสนอว่า-หวังว่า\" นำการอภิปรายเพื่อให้ได้ข้อสรุปที่นำไปปฏิบัติได้จริงทุกครั้ง"
+  },
+  {
+    "id": "p071",
+    "title_th": "หลัก 369 สำหรับการจัดประชุมอย่างมีประสิทธิภาพ",
+    "category": "การประชุมและการตัดสินใจ",
+    "summary": "นำเสนอกรอบ \"3-6-9\" เพื่อให้การประชุมนำไปสู่ผลลัพธ์จริง ประกอบด้วย 3 สูตรสำคัญ (\"ประชุมแต่ไม่ลงมือทำ = ศูนย์\") 6 ขั้นตอนของการจัดประชุม และ 9 กฎสำคัญที่ต้องมีทุกครั้ง",
+    "key_points": [
+      "3 สูตร: ประชุมไม่ลงมือทำ = 0, มอบหมายไม่ติดตาม = 0",
+      "6 ขั้นตอน: เตรียมเอกสาร กำหนดหัวข้อ กำหนดกติกา วางลำดับ ติดตามผล ตรวจสอบงาน",
+      "9 กฎ: ต้องมีเอกสาร หัวข้อ วินัย วาระ ผลลัพธ์ การพัฒนา และบันทึกเป็นลายลักษณ์อักษรทุกครั้ง",
+      "หลังประชุมต้องกำหนดผู้รับผิดชอบและระยะเวลาที่ชัดเจนเพื่อให้เกิดผลจริง"
+    ],
+    "application_note": "หลังการประชุมคณะกรรมการทุกครั้ง หัวหน้าแผนกควรบันทึกมติเป็นลายลักษณ์อักษรพร้อมมอบหมายผู้รับผิดชอบและกำหนดเวลาติดตามผล เพื่อไม่ให้การประชุมจบแล้วไม่มีผลลัพธ์ตามมา"
+  },
+  {
+    "id": "p072",
+    "title_th": "ผู้นำต้องรู้จักชื่นชมพนักงานอย่างมีประสิทธิภาพ",
+    "category": "การสื่อสาร",
+    "summary": "อธิบายวิธีการชื่นชมพนักงานอย่างได้ผล เริ่มจากการชมอย่างตรงไปตรงมาแม้เป็นความสำเร็จเล็กๆ ควรเปรียบเทียบผลงานก่อนและหลัง และเปิดเผยผลงานที่ดีให้ทีมรับรู้ในเวลาที่เหมาะสม ควบคู่ไปกับการติดตามงานที่ยังไม่เสร็จเสมอ",
+    "key_points": [
+      "ชมอย่างตรงไปตรงมาและชัดเจนต่อหน้า แม้เป็นความสำเร็จเล็กๆ",
+      "เปรียบเทียบผลงานก่อน-หลังเพื่อให้เห็นพัฒนาการที่ชัดเจน",
+      "ชื่นชมผลงานสำคัญอย่างเป็นทางการเพื่อกระตุ้นการพัฒนาต่อเนื่อง",
+      "เผยแพร่ผลงานดีให้ทีมรับรู้ในเวลาที่เหมาะสมเพื่อสร้างแรงบันดาลใจร่วมกัน",
+      "ควบคู่กับการติดตามงานที่ยังไม่เสร็จเพื่อไม่ให้การชมกลายเป็นการละเลย"
+    ],
+    "application_note": "หัวหน้าแผนกควรชื่นชมทีมอย่างเจาะจงต่อหน้าที่ประชุมกรมเมื่อทีมดูแลผู้ป่วยได้ผลลัพธ์ดี และจัดพิธีการเล็กๆ เพื่อยกย่องผลงานวิจัยหรือเคสที่ประสบความสำเร็จอย่างเป็นทางการ เพื่อสร้างวัฒนธรรมการยอมรับในทีม"
+  },
+  {
+    "id": "p073",
+    "title_th": "8 พฤติกรรมของผู้บริหารที่ไร้ประสิทธิภาพที่ควรหลีกเลี่ยง",
+    "category": "การบริหารทีม",
+    "summary": "ชี้ให้เห็นพฤติกรรมของผู้บริหารที่ไร้ประสิทธิภาพซึ่งบั่นทอนความไว้วางใจของทีม เช่น การสั่งการอย่างไร้ทิศทาง การใช้ความรู้สึกตัดสินใจ การปกปิดปัญหา การแย่งผลงาน และการเรียกร้องผลงานโดยไม่จัดสรรทรัพยากร",
+    "key_points": [
+      "หลีกเลี่ยงการสั่งการโดยไม่เข้าใจงานอย่างแท้จริง",
+      "ตัดสินใจด้วยเหตุผลและข้อมูล ไม่ใช้อารมณ์ความรู้สึกเป็นหลัก",
+      "ไม่ปกปิดปัญหา ต้องเผชิญและแก้ไขอย่างจริงจัง",
+      "ไม่แย่งผลงานหรือหลบเลี่ยงความรับผิดชอบของทีม",
+      "จัดสรรทรัพยากรให้เพียงพอก่อนเรียกร้องผลงานจากทีม"
+    ],
+    "application_note": "หัวหน้าแผนกควรทบทวนตนเองเป็นระยะว่าได้เข้าใจรายละเอียดงานของทีมจริงหรือไม่ และจัดสรรทรัพยากร (เวลา บุคลากร งบประมาณ) ให้เพียงพอ ก่อนเรียกร้องผลงานหรือ KPI จากทีมแพทย์และพยาบาล"
+  },
+  {
+    "id": "p074",
+    "title_th": "คน 3 กลุ่มที่ควรพัฒนา และคน 3 กลุ่มที่ควรคัดออกในองค์กร",
+    "category": "การบริหารทีม",
+    "summary": "จัดประเภทบุคลากรที่องค์กรควรให้ความสำคัญในการพัฒนา (ทัศนคติดี ลงมือทำเร็ว มีวิสัยทัศน์) และกลุ่มที่ควรพิจารณาคัดออก (ทำลายบรรยากาศ ไม่พยายาม ไม่พัฒนาตนเอง)",
+    "key_points": [
+      "ควรพัฒนา: ผู้มีทัศนคติดี มุ่งผลลัพธ์และรับผิดชอบ",
+      "ควรพัฒนา: ผู้ลงมือทำเร็ว รักษาคำพูด มีประสิทธิภาพสูง",
+      "ควรพัฒนา: ผู้มีวิสัยทัศน์ กล้ารับแรงกดดันและความรับผิดชอบ",
+      "ควรคัดออก: ผู้ทำลายบรรยากาศทีมด้วยผลงานต่ำและอารมณ์ลบ",
+      "ควรคัดออก: ผู้ไม่พยายามและผัดวันประกันพรุ่ง",
+      "ควรคัดออก: ผู้ไม่มีเป้าหมายหรือแผนพัฒนาตนเองที่ชัดเจน"
+    ],
+    "application_note": "ในการประเมินผลประจำปีของทีม หัวหน้าแผนกควรจัดสรรเวลาพัฒนาแพทย์ประจำบ้านและเจ้าหน้าที่ที่มีทัศนคติดีและมีวิสัยทัศน์เป็นพิเศษ และพิจารณาปรับปรุงหรือโยกย้ายผู้ที่บั่นทอนบรรยากาศทีมอย่างต่อเนื่อง"
+  },
+  {
+    "id": "p075",
+    "title_th": "ตัวเลข KPI สำคัญที่ผู้บริหารธุรกิจควรรู้",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "รวบรวมตัวเลขทางการเงินที่ผู้ประกอบการควรใช้ติดตามสุขภาพของธุรกิจ เช่น อัตรากำไร ค่าแรง ต้นทุนวัตถุดิบ ระยะเวลาคืนทุน และงบลงทุนซ้ำประจำปี",
+    "key_points": [
+      "อัตรากำไรควรอยู่ที่ 15-20% ต่ำกว่า 15% ถือว่าลงทุนขาดทุน",
+      "ค่าแรงควรควบคุมที่ 17-22% ของรายได้",
+      "ต้นทุนวัตถุดิบควรอยู่ระหว่าง 60-80%",
+      "ระยะเวลาคืนทุนที่ดีคือ 2-4 ปี เกิน 4 ปีถือว่าการลงทุนไม่สำเร็จ",
+      "งบลงทุนซ้ำประจำปีควรอยู่ที่ประมาณ 10% ของกำไร"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถประยุกต์แนวคิดการตั้งเกณฑ์ตัวเลขอ้างอิงนี้มาใช้กำหนด KPI ทางการเงินและทรัพยากรของแผนก เช่น สัดส่วนงบบุคลากรต่องบดำเนินงาน หรือระยะเวลาคืนทุนของอุปกรณ์ทางการแพทย์ใหม่"
+  },
+  {
+    "id": "p076",
+    "title_th": "หลักการบริหารองค์กรเมื่อธุรกิจเริ่มมีกำไร",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "แนะนำแนวทางบริหารองค์กรเมื่อกิจการเริ่มทำกำไรได้อย่างมั่นคง โดยเน้นการดูแลพนักงานอย่างเป็นธรรม จัดสวัสดิการที่สร้างคุณค่าจริง และผู้บริหารควรลงมือทำเป็นแบบอย่างและใช้จ่ายอย่างรอบคอบ",
+    "key_points": [
+      "จ่ายเงินเดือนตรงเวลาและพิจารณาการลาอย่างเป็นธรรม",
+      "จัดสวัสดิการที่สร้างคุณค่าจริงแทนกิจกรรมฟุ่มเฟือย",
+      "ผู้บริหารควรลงมือทำเป็นแบบอย่าง ลดลำดับชั้นที่ไม่จำเป็น",
+      "ใช้จ่ายอย่างรอบคอบและควบคุมต้นทุนอย่างมีประสิทธิภาพ",
+      "หลีกเลี่ยงการรับญาติหรือคนใกล้ชิดเข้าทำงานโดยไม่มีระบบชัดเจน"
+    ],
+    "application_note": "เมื่อแผนกได้รับงบประมาณเพิ่มขึ้นจากผลงานที่ดี หัวหน้าแผนกควรจัดสรรสวัสดิการที่มีคุณค่าจริงแก่ทีม เช่น งบอบรมหรือประชุมวิชาการ มากกว่ากิจกรรมสังสรรค์ และวางระบบที่ชัดเจนหากต้องรับบุคลากรที่รู้จักส่วนตัวเข้าทำงาน"
+  },
+  {
+    "id": "p077",
+    "title_th": "คนที่มี EQ สูงพูดอย่างไร: การสื่อสารเชิงบวกแบบ Reframe",
+    "category": "การสื่อสาร",
+    "summary": "เปรียบเทียบวิธีพูดของคนทั่วไปกับคนที่มีความฉลาดทางอารมณ์ (EQ) สูงในสถานการณ์เดียวกัน แสดงให้เห็นว่าการสื่อสารที่มี EQ สูงคือการเลือกใช้ถ้อยคำที่สร้างสรรค์ มุ่งแก้ปัญหา และรักษาความสัมพันธ์ไปพร้อมกัน",
+    "key_points": [
+      "เปลี่ยน \"ฉันไม่อยากทำ\" เป็น \"ฉันยินดีลองทำให้ดีที่สุด\"",
+      "เปลี่ยน \"เป็นไปไม่ได้\" เป็น \"เราลองใช้วิธีอื่นได้\"",
+      "เปลี่ยนคำตำหนิเชิงลบเป็นการชี้พื้นที่ให้พัฒนา เช่น \"คุณยังมีพื้นที่พัฒนาได้อีกมาก\"",
+      "EQ สูงไม่ใช่การเอาใจทุกคน แต่คือการสื่อสารอย่างสร้างสรรค์และจริงใจ"
+    ],
+    "application_note": "เมื่อต้องให้ฟีดแบ็กแพทย์ประจำบ้านที่ทำผิดพลาดในการดูแลผู้ป่วย หัวหน้าแผนกควรเลือกใช้คำพูดแบบ Reframe เช่น \"คุณยังมีพื้นที่พัฒนาได้อีกมาก\" แทนการตำหนิตรงๆ เพื่อรักษาแรงจูงใจและความสัมพันธ์ในทีม"
+  },
+  {
+    "id": "p078",
+    "title_th": "7 มารยาทในการทำงานร่วมกับหัวหน้า",
+    "category": "การสื่อสาร",
+    "summary": "แนะนำมารยาทที่ช่วยให้ผู้ใต้บังคับบัญชาวางตัวได้เหมาะสมและได้รับความไว้วางใจจากหัวหน้า เช่น การแสดงความคิดเห็นอย่างมีเหตุผล ไม่เอาใจหัวหน้าจนเกินพอดี ไม่แย่งแสดงผลงาน และไม่ปล่อยให้อารมณ์ครอบงำ",
+    "key_points": [
+      "แสดงความคิดเห็นอย่างมีเหตุผล ไม่เยาะเย้ยผู้ที่เห็นต่าง",
+      "ไม่เอาใจหรือประจบหัวหน้าจนขาดความจริงใจ",
+      "ไม่แย่งแสดงผลงานตลอดเวลาและไม่หลบหน้าหัวหน้า",
+      "ทวนความเข้าใจให้แน่ใจก่อนตอบว่า \"เข้าใจแล้ว\"",
+      "หลีกเลี่ยงคำกำกวมและไม่ใช้อารมณ์นำการทำงาน"
+    ],
+    "application_note": "แพทย์ประจำบ้านและเจ้าหน้าที่ในทีมควรฝึกทวนความเข้าใจงานที่ได้รับมอบหมายจากหัวหน้าแผนกให้ชัดเจนก่อนตอบรับ และรายงานปัญหาด้วยเหตุผลแทนอารมณ์เพื่อสร้างความไว้วางใจในระยะยาว"
+  },
+  {
+    "id": "p079",
+    "title_th": "หลักการบริหารทีมขนาดเล็กของผู้นำ",
+    "category": "การบริหารทีม",
+    "summary": "เสนอแนวทางบริหารทีมขนาดเล็กให้มีประสิทธิภาพผ่าน 4 องค์ประกอบ: กำหนดเป้าหมายที่ท้าทายแต่สอดคล้องกับสภาพจริง ติดตามอย่างสม่ำเสมอ ให้วิธีการที่ชัดเจน และให้พนักงานมีส่วนร่วม",
+    "key_points": [
+      "กำหนดเป้าหมายที่ท้าทายแต่สอดคล้องกับสภาพจริงของทีม",
+      "ติดตามผลอย่างสม่ำเสมอด้วยระบบตรวจสอบและข้อมูลย้อนกลับ",
+      "ให้วิธีการที่ชัดเจนเพื่อลดความยากในการปฏิบัติงาน",
+      "ให้พนักงานมีส่วนร่วมและรู้สึกเป็นเจ้าของความสำเร็จ"
+    ],
+    "application_note": "หัวหน้าแผนกที่ดูแลทีมผ่าตัดขนาดเล็กควรตั้งเป้าหมายจำนวนเคสหรือคุณภาพการดูแลที่ท้าทายแต่ทำได้จริง พร้อมให้แนวทางปฏิบัติที่ชัดเจนและให้ทีมมีส่วนร่วมในการวางแผนเพื่อสร้างความรู้สึกเป็นเจ้าของงาน"
+  },
+  {
+    "id": "p080",
+    "title_th": "7 ความสามารถพื้นฐานด้านภาวะผู้นำตามแนวคิดของปีเตอร์ ดรักเกอร์",
+    "category": "การพัฒนาตนเอง",
+    "summary": "อ้างอิงแนวคิดของปีเตอร์ ดรักเกอร์ที่ว่าความสามารถของผู้บริหารไม่ได้อยู่ที่การสั่งการผู้อื่น แต่อยู่ที่การนำตนเองให้สร้างผลงานได้อย่างยอดเยี่ยม สรุปความสามารถพื้นฐาน 7 ประการ ได้แก่ วิธีคิดเป็นระบบ การสร้างแรงจูงใจ ความสามารถด้านวิชาชีพ การปฏิบัติ การประเมิน และการสื่อสาร",
+    "key_points": [
+      "ปีเตอร์ ดรักเกอร์: ความสามารถของผู้บริหารอยู่ที่การนำตนเองสร้างผลงานยอดเยี่ยม",
+      "ต้องคิดรอบด้านเป็นระบบ ทั้งภาพรวมและรายละเอียด",
+      "สร้างแรงจูงใจด้วยการยอมรับและกำลังใจ ไม่ใช่เพียงรางวัลทางวัตถุ",
+      "มีความสามารถด้านวิชาชีพ การปฏิบัติ การประเมิน และการสื่อสารครบทุกด้าน"
+    ],
+    "application_note": "ในฐานะผู้นำทีมสหวิชาชีพ หัวหน้าแผนกควรพัฒนาตนเองให้ครบทั้ง 7 ด้านตามแนวคิดดรักเกอร์ โดยเฉพาะความสามารถด้านวิชาชีพทางคลินิกควบคู่กับทักษะการสื่อสารและการประเมินผลงานทีมอย่างเป็นกลาง"
+  },
+  {
+    "id": "p081",
+    "title_th": "4 สาเหตุที่ลูกน้องทำงานไม่ได้ดังที่หัวหน้าคาดหวัง",
+    "category": "การบริหารทีม",
+    "summary": "วิเคราะห์สาเหตุ 4 ประการที่ทำให้ผู้ใต้บังคับบัญชาทำงานได้ไม่ตรงตามที่หัวหน้าคาดหวัง ชี้ให้เห็นว่าปัญหามักเกิดจากการสื่อสารที่ไม่ชัดเจนมากกว่าความสามารถของลูกน้อง",
+    "key_points": [
+      "ลูกน้องอาจไม่เข้าใจว่าต้องทำอะไรจริงๆ แม้คิดว่าเข้าใจแล้ว",
+      "ลูกน้องอาจให้ความสำคัญกับเรื่องอื่นที่คิดว่าเร่งด่วนกว่า",
+      "ลูกน้องอาจเชื่อว่าวิธีของตนเองดีกว่าวิธีที่หัวหน้าสั่ง",
+      "สัญญาณที่บ่งชี้ความไม่เข้าใจ: ไม่รู้รายละเอียดงาน ไม่รู้เวลาเริ่ม ไม่รู้เวลาขอความช่วยเหลือ ไม่เข้าใจมาตรฐานงาน"
+    ],
+    "application_note": "เมื่อแพทย์ประจำบ้านทำงานไม่ตรงตามที่คาดหวัง หัวหน้าแผนกควรตรวจสอบก่อนว่าคำสั่งหรือมาตรฐานการส่งมอบงานที่มอบหมายชัดเจนเพียงพอหรือไม่ แทนที่จะสรุปว่าเป็นปัญหาความสามารถของลูกน้องทันที"
+  },
+  {
+    "id": "p082",
+    "title_th": "7 วิธีบริหารพนักงานอย่างมีประสิทธิภาพ",
+    "category": "การบริหารทีม",
+    "summary": "เสนอ 7 แนวทางบริหารพนักงานอย่างเป็นระบบ ตั้งแต่กำหนดหน้าที่ให้ชัดเจน สร้างกลไกจูงใจ ฝึกอบรมพัฒนา แก้ไขปัญหาที่ซ่อนอยู่ ไปจนถึงจัดคนให้เหมาะกับงาน",
+    "key_points": [
+      "กำหนดหน้าที่และขอบเขตอำนาจให้ชัดเจนเพื่อลดความสับสน",
+      "สร้างกลไกจูงใจและจัดฝึกอบรมพัฒนาอย่างต่อเนื่อง",
+      "เข้าไปช่วยแก้ปัญหาที่ซ่อนอยู่เชิงรุกเมื่อพนักงานได้รับผลกระทบจากปัจจัยภายนอก",
+      "จัดคนให้เหมาะกับงานเพื่อใช้จุดแข็งของแต่ละคนอย่างเต็มที่"
+    ],
+    "application_note": "หัวหน้าแผนกควรกำหนดขอบเขตความรับผิดชอบของแพทย์ประจำบ้านแต่ละชั้นปีให้ชัดเจน พร้อมจัดสรรงานตามความถนัดและเข้าไปช่วยเหลือเชิงรุกเมื่อพบว่าปัญหาส่วนตัวกระทบต่อการปฏิบัติงาน"
+  },
+  {
+    "id": "p083",
+    "title_th": "เทคนิคการรายงานงานต่อหัวหน้าอย่างมีประสิทธิภาพ",
+    "category": "การสื่อสาร",
+    "summary": "แนะนำวิธีนำเสนอรายงานผลงานอย่างมืออาชีพโดยครอบคลุมผลสำเร็จ มาตรการที่ได้ผล ปัญหาและแนวทางแก้ไข และแผนขั้นต่อไป พร้อมเสนอหลัก 3 ข้อในการรายงานต่อผู้บังคับบัญชาอย่างต่อเนื่องและสม่ำเสมอ",
+    "key_points": [
+      "รายงาน 4 ประเด็นหลัก: ผลสำเร็จ มาตรการที่ได้ผล ปัญหาและแนวทางแก้ไข แผนต่อไป",
+      "รายงานเป็นชุดต่อเนื่องและสม่ำเสมอเพื่อสร้างความไว้วางใจ",
+      "งานที่ซับซ้อนควรรายงานความคืบหน้าเป็นระยะ ไม่รอจนเสร็จจึงอธิบาย",
+      "เตรียมแนวทางแก้ไขล่วงหน้าก่อนนำเสนอให้หัวหน้าตัดสินใจ"
+    ],
+    "application_note": "เมื่อรายงานผลการดำเนินงานของแผนกต่อผู้บริหารโรงพยาบาล หัวหน้าแผนกควรนำเสนอทั้งผลสำเร็จ อุปสรรคที่พบ และแนวทางแก้ไขที่เตรียมไว้ล่วงหน้า แทนที่จะรอให้ถูกถามจึงตอบ"
+  },
+  {
+    "id": "p084",
+    "title_th": "หลักการคัดเลือก ใช้งาน พัฒนา และรักษาคนเก่ง",
+    "category": "การบริหารทีม",
+    "summary": "เสนอหลักการบริหารบุคลากรที่เน้นว่าไม่จำเป็นต้องเลือกคนที่เก่งที่สุดเสมอไป แต่ควรเลือกคนที่เหมาะสมกับตำแหน่งที่สุด การประเมินบุคลากรควรเน้นเห็นการเติบโต ไม่ใช่เพียงการให้คะแนน",
+    "key_points": [
+      "เลือกคนที่เหมาะสมกับตำแหน่งมากกว่าคนที่เก่งที่สุด",
+      "จัดคนผิดตำแหน่งอาจสร้างต้นทุนแฝงในระยะยาวจากการปรับตัวที่ผิดพลาด",
+      "การประเมินบุคลากรควรเน้นเห็นการเติบโต ไม่ใช่แค่การให้คะแนน",
+      "รักษาคนเก่งด้วยการสื่อสาร ข้อเสนอแนะ และการสนับสนุนอย่างต่อเนื่อง"
+    ],
+    "application_note": "เมื่อคัดเลือกแพทย์ประจำบ้านหรือทีมงานเข้าคณะกรรมการเฉพาะทาง หัวหน้าแผนกควรพิจารณาความเหมาะสมกับบทบาทและวัฒนธรรมทีมมากกว่าดูเพียงผลการเรียนหรือความสามารถทางวิชาการสูงสุด"
+  },
+  {
+    "id": "p085",
+    "title_th": "หลักการบริหารสำหรับผู้จัดการระดับกลาง",
+    "category": "การบริหารทีม",
+    "summary": "เสนอแนวทาง 4 ข้อสำหรับผู้จัดการระดับกลางที่ต้องเชื่อมโยงระหว่างผู้บริหารระดับสูงและทีมปฏิบัติการ ลงพื้นที่ใกล้ชิดหน้างาน สื่อสารและมอบอำนาจให้มากขึ้น ใส่ใจทั้งผลลัพธ์และกระบวนการ",
+    "key_points": [
+      "ลงพื้นที่ใกล้ชิดหน้างานเพื่อมองเห็นปัญหาที่แท้จริง",
+      "สื่อสารและมอบอำนาจให้มากขึ้น อย่าแทรกแซงในรายละเอียดทุกเรื่อง",
+      "ให้ความสำคัญทั้งผลลัพธ์และกระบวนการที่นำไปสู่ผลลัพธ์นั้น",
+      "เป้าหมายของการจูงใจคือช่วยให้พนักงานเติบโตด้วยตนเอง ไม่ใช่เอาใจเพื่อรักษาคนไว้เพียงอย่างเดียว"
+    ],
+    "application_note": "ในฐานะหัวหน้าแผนกที่เชื่อมต่อระหว่างผู้บริหารโรงพยาบาลกับทีมปฏิบัติงาน ควรลงพื้นที่ตรวจเยี่ยมหอผู้ป่วยหรือห้องผ่าตัดอย่างสม่ำเสมอ และมอบอำนาจตัดสินใจบางส่วนให้แพทย์ประจำบ้านเพื่อฝึกความรับผิดชอบ"
+  },
+  {
+    "id": "p086",
+    "title_th": "หัวใจของการบริหาร: 3 สิ่งที่ต้องจับ 3 สิ่งที่ต้องปล่อย",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "เสนอกรอบคิดสำหรับผู้นำในการบริหารด้วยการแยกแยะสิ่งที่ต้อง \"จับ\" ไว้แน่น (ทิศทาง ความเสี่ยง ประสิทธิภาพ) กับสิ่งที่ต้อง \"ปล่อย\" ออกไป (อำนาจ เส้นทางอาชีพ ทิฐิ)",
+    "key_points": [
+      "จับทิศทาง: กำหนดทิศทางให้แม่นยำเพื่อทุ่มพลังสร้างคุณค่า",
+      "จับความเสี่ยง: เปลี่ยนปัญหาให้เป็นโอกาสเติบโตภายใต้การควบคุม",
+      "จับประสิทธิภาพ: ความเร็วคือความสามารถในการแข่งขัน",
+      "ปล่อยอำนาจ ปล่อยเส้นทางให้เลือก และปล่อยทิฐิ เพื่อเปิดพื้นที่ให้ทีมเติบโต"
+    ],
+    "application_note": "หัวหน้าแผนกควรยึดทิศทางคุณภาพการรักษาและความปลอดภัยของผู้ป่วยไว้แน่น แต่ปล่อยให้แพทย์ประจำบ้านและพยาบาลมีอำนาจตัดสินใจในรายละเอียดการปฏิบัติงานประจำวันมากขึ้น"
+  },
+  {
+    "id": "p087",
+    "title_th": "4 พันธกิจสำคัญของการบริหาร",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "สรุปพันธกิจหลัก 4 ประการที่ผู้บริหารต้องรับผิดชอบ ได้แก่ การรวบรวมข้อมูลและกำหนดกลยุทธ์ การบูรณาการทรัพยากร การกำหนดมาตรฐานและติดตามผล และการกระตุ้นศักยภาพของพนักงาน",
+    "key_points": [
+      "รวบรวมข้อมูลวิเคราะห์แนวโน้มเพื่อกำหนดเป้าหมายและกลยุทธ์",
+      "บูรณาการบุคลากร ทรัพยากร และเงินทุนให้งานสำเร็จอย่างมีประสิทธิภาพ",
+      "กำหนดมาตรฐานชัดเจนและติดตามผลอย่างต่อเนื่อง",
+      "กระตุ้นศักยภาพพนักงานและประสานความสัมพันธ์เพื่อบรรลุเป้าหมายร่วมกัน"
+    ],
+    "application_note": "ในการวางแผนยุทธศาสตร์ของแผนก หัวหน้าแผนกควรวิเคราะห์ข้อมูลผลการรักษาและแนวโน้มผู้ป่วยเพื่อกำหนดเป้าหมายเชิงกลยุทธ์ พร้อมประสานทรัพยากรบุคคลและงบประมาณให้สอดคล้องกับเป้าหมายนั้น"
+  },
+  {
+    "id": "p088",
+    "title_th": "เคล็ดลับผู้บริหารที่ยอดเยี่ยม: ไม่ใช่...แต่ต้อง...",
+    "category": "การพัฒนาตนเอง",
+    "summary": "นำเสนอชุดแนวคิดเปรียบเทียบที่ตอกย้ำมาตรฐานการทำงานระดับสูงของผู้บริหารที่ยอดเยี่ยม เช่น ไม่ใช่เพียงมองเห็นแต่ต้องสังเกตอย่างลึกซึ้ง ไม่ใช่รวบอำนาจไว้คนเดียวแต่ต้องรู้จักมอบอำนาจ ไม่ใช่มุ่งเพียงภาพลักษณ์แต่ต้องเกิดผลจริง",
+    "key_points": [
+      "สังเกตอย่างลึกซึ้ง ไม่ใช่แค่มองเห็นผิวเผิน",
+      "อธิบายให้เข้าใจอย่างแท้จริง ไม่ใช่แค่พูดให้ชัด",
+      "เป็นแบบอย่างด้วยการลงมือทำ ไม่ใช่เพียงสั่งสอน",
+      "รู้จักมอบอำนาจ ไม่ยึดอำนาจไว้คนเดียว และมุ่งผลจริงมากกว่าภาพลักษณ์"
+    ],
+    "application_note": "หัวหน้าแผนกควรเป็นแบบอย่างในห้องผ่าตัดและการดูแลผู้ป่วยจริง ไม่ใช่เพียงกำหนดแนวปฏิบัติด้วยวาจา และควรมอบอำนาจตัดสินใจบางส่วนให้ทีมแทนที่จะควบคุมทุกอย่างด้วยตนเอง"
+  },
+  {
+    "id": "p089",
+    "title_th": "กฎแห่งความสำเร็จในการทำงาน: ความสามารถในการลงมือทำสำคัญที่สุด",
+    "category": "การพัฒนาตนเอง",
+    "summary": "เน้นย้ำว่าความสามารถในการลงมือปฏิบัติคือปัจจัยที่สำคัญที่สุดต่อความสำเร็จในการทำงาน โดยเสนอหลักปฏิบัติ 5 ข้อ เริ่มจากทัศนคติที่จริงจัง ระบบต้องเป็นกลาง เป้าหมายชัดเจนบวกลงมือทันที และตัดสินใจอย่างเด็ดขาด",
+    "key_points": [
+      "ทัศนคติจริงจังและรับผิดชอบคือรากฐานของความไว้วางใจ",
+      "ความสามารถในการปฏิบัติ = เป้าหมายชัดเจน + ลงมือทันที",
+      "ไม่หาข้ออ้าง งานที่ยังไม่สำเร็จก็คือยังไม่สำเร็จ",
+      "ตัดสินใจอย่างเด็ดขาดและลงมือทำเพื่อเอาชนะความกลัวและพิสูจน์ผลลัพธ์"
+    ],
+    "application_note": "เมื่อวางแผนโครงการปรับปรุงคุณภาพในแผนก หัวหน้าควรกำหนดเป้าหมายที่ชัดเจนแล้วลงมือดำเนินการทันทีโดยไม่ผัดวันประกันพรุ่งด้วยข้ออ้างเรื่องทรัพยากรหรือเวลาที่ไม่พร้อม"
+  },
+  {
+    "id": "p090",
+    "title_th": "6 กฎเหล็กที่คนทำงานใหม่ควรรู้",
+    "category": "การพัฒนาตนเอง",
+    "summary": "แนะนำหลักปฏิบัติ 6 ข้อสำหรับคนที่เพิ่งเริ่มทำงาน รักษาความกระตือรือร้น พัฒนา EQ เชื่อมั่นในตนเอง อดทนไม่เปลี่ยนงานบ่อย ริเริ่มหางานทำเอง และไม่คิดเล็กคิดน้อยเรื่องได้เสีย",
+    "key_points": [
+      "รักษาความกระตือรือร้นและพลังบวกตั้งแต่วันแรกของการทำงาน",
+      "พัฒนา EQ โดยถ่อมตนแต่ยังมีความคิดเห็นของตนเอง",
+      "เชื่อมั่นในตนเองและมองความกังวลเบื้องต้นเป็นเรื่องปกติ",
+      "อดทนไม่เปลี่ยนงานบ่อยเกินไปเมื่อความกระตือรือร้นเริ่มลดลง",
+      "ริเริ่มหางานทำด้วยตนเอง ไม่รอให้มีคนสั่ง",
+      "ไม่คิดเล็กคิดน้อยเรื่องได้เสีย ให้ความสำคัญกับโอกาสและประสบการณ์"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถใช้ 6 ข้อนี้เป็นแนวทางปฐมนิเทศแพทย์ประจำบ้านปีที่ 1 หรือเจ้าหน้าที่ใหม่ในทีม เพื่อช่วยให้ปรับตัวเข้ากับวัฒนธรรมการทำงานของแผนกได้เร็วขึ้น"
+  },
+  {
+    "id": "p091",
+    "title_th": "6 กฎเหล็กการบริหารเพื่อสร้างทีมที่แข็งแกร่ง",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "รวบรวมหลักการบริหารทีมคลาสสิก 6 ข้อ ได้แก่ กฎถังไม้ กฎการเพิ่มและลด กฎเตาร้อน กฎตู้ปลา กฎการติดป้าย และหลักการปีเตอร์",
+    "key_points": [
+      "กฎถังไม้: แก้จุดอ่อนก่อน ไม่ใช่เพียงเสริมจุดแข็ง",
+      "กฎการเพิ่ม-ลด: เพิ่มความพึงพอใจลูกค้า และใช้เป้าหมายระยะสั้นจูงใจพนักงาน",
+      "กฎเตาร้อน: กฎต้องเตือนล่วงหน้า โปร่งใส และลงโทษผู้ฝ่าฝืนอย่างรวดเร็วเป็นธรรม",
+      "กฎตู้ปลา: กระบวนการบริหารและมาตรฐานประเมินต้องโปร่งใส",
+      "กฎการติดป้าย: ป้ายเชิงบวกช่วยเสริมคุณค่าในตนเอง ป้ายเชิงลบตอกย้ำพฤติกรรมแย่",
+      "หลักการปีเตอร์: อย่าเลื่อนตำแหน่งคนไปในตำแหน่งที่ไม่เหมาะสมเพียงเพราะทำงานเดิมได้ดี"
+    ],
+    "application_note": "หัวหน้าแผนกควรใช้กฎถังไม้ตรวจสอบจุดอ่อนของทีม เช่น ทักษะเฉพาะที่ยังขาด และระวังหลักการปีเตอร์เมื่อพิจารณาเลื่อนตำแหน่งแพทย์ที่เก่งด้านคลินิกให้ไปทำงานบริหารที่อาจไม่ถนัด"
+  },
+  {
+    "id": "p092",
+    "title_th": "5 องค์ประกอบของการขับเคลื่อนเป้าหมายอย่างมีประสิทธิภาพ",
+    "category": "กลยุทธ์องค์กร",
+    "summary": "ทุกความสำเร็จของงานหรือโครงการเริ่มต้นจากการกำหนดเป้าหมายที่ชัดเจนและวัดผลได้ เมื่อมีเป้าหมายแล้วจึงต้องจัดทำแผนงาน กำหนดแนวทางหรือวิธีดำเนินงาน ตรวจสอบเป็นระยะระหว่างดำเนินงาน และมีตัวชี้วัดผลลัพธ์ที่ชัดเจนสำหรับประเมินความสำเร็จ",
+    "key_points": [
+      "เป้าหมาย: ต้องชัดเจนและวัดผลได้ เป็นตัวกำหนดทิศทางของการดำเนินงานทั้งหมด",
+      "แผนงาน: แตกเป้าหมายออกเป็นขั้นตอนที่ปฏิบัติได้จริง มีจังหวะเวลาชัดเจน",
+      "แนวทาง: กำหนดวิธีการดำเนินงานที่นำไปปฏิบัติได้จริง ระบุว่าใครรับผิดชอบสิ่งใด",
+      "การตรวจสอบ: ติดตามเป็นระยะระหว่างการดำเนินงาน เพื่อพบปัญหาและแก้ไขได้ทันเวลา",
+      "ตัวชี้วัดผลลัพธ์: ประเมินผลลัพธ์ที่วัดได้ชัดเจน ผลดีให้สรุปต่อยอด ผลที่ยังไม่ดีให้วิเคราะห์และปรับปรุงต่อเนื่อง"
+    ],
+    "application_note": "เมื่อเริ่มโครงการใหม่ของแผนก ควรตรวจสอบว่ามีครบทั้ง 5 องค์ประกอบ คือเป้าหมาย แผนงาน แนวทาง การตรวจสอบ และตัวชี้วัดผลลัพธ์ที่ชัดเจน"
+  },
+  {
+    "id": "p093",
+    "title_th": "มาตรฐานการคัดเลือกและใช้บุคลากรของผู้นำ",
+    "category": "การบริหารทีม",
+    "summary": "อธิบายหลักเกณฑ์สำคัญที่ผู้นำควรใช้ในการคัดเลือกและมอบหมายบุคลากร โดยเน้นว่าความสามารถในการลงมือปฏิบัติจริงต้องมาก่อนเสมอ ไม่ใช่ความลำเอียงส่วนตัว การยอมรับที่แท้จริงมาจากความสามารถที่พิสูจน์ได้ ไม่ใช่อำนาจ",
+    "key_points": [
+      "ให้ความสำคัญกับความสามารถในการลงมือปฏิบัติจริงมากที่สุด",
+      "ตำแหน่งยิ่งสูง ยิ่งต้องการคนที่ไว้วางใจได้ในช่วงเวลาสำคัญ",
+      "ต้องมองภาพรวมและควบคุมความซับซ้อนของสถานการณ์ได้",
+      "การยอมรับที่แท้จริงมาจากความสามารถที่พิสูจน์ได้ ไม่ใช่อำนาจ",
+      "แก่นแท้ของภาวะผู้นำคือการเป็นตัวดูดซับแรงกดดันให้ทีม"
+    ],
+    "application_note": "เมื่อคัดเลือกหัวหน้าทีมย่อยในแผนก ควรพิจารณาจากความสามารถในการลงมือทำงานจริงและความไว้วางใจได้ในสถานการณ์วิกฤต มากกว่าความอาวุโสเพียงอย่างเดียว"
+  },
+  {
+    "id": "p094",
+    "title_th": "4 ขั้นตอนกระตุ้นพนักงานที่ขาดแรงจูงใจ",
+    "category": "การบริหารทีม",
+    "summary": "เสนอกระบวนการ 4 ขั้นตอนเพื่อแก้ปัญหาพนักงานที่ทำงานแบบเฉื่อยชาและขาดแรงจูงใจ โดยชี้ว่าสาเหตุหลักมักมาจากการที่ผู้จัดการกำหนดขอบเขตตำแหน่งงานไม่ชัดเจน ทำให้ตำแหน่งงานชัดเจน กำหนดความรับผิดชอบเป็นรูปธรรม ติดตามใกล้ชิด และใช้กลไกรางวัล/บทลงโทษที่เป็นธรรม",
+    "key_points": [
+      "ทำให้ขอบเขตตำแหน่งงานของแต่ละคนชัดเจนก่อน",
+      "กำหนดความรับผิดชอบเป็นรูปธรรม ระบุมาตรฐานและกำหนดเวลา",
+      "ติดตามกระบวนการอย่างใกล้ชิดและให้ฟีดแบ็กทันเวลา",
+      "ใช้กลไกรางวัลและบทลงโทษที่เป็นธรรมและโปร่งใส"
+    ],
+    "application_note": "หากพยาบาลในทีมเริ่มทำงานแบบขอไปที ควรทบทวนว่าขอบเขตหน้าที่และมาตรฐานงานของแต่ละตำแหน่งชัดเจนเพียงพอหรือยัง ก่อนจะสรุปว่าเป็นปัญหาเรื่องแรงจูงใจส่วนบุคคล"
+  },
+  {
+    "id": "p095",
+    "title_th": "6 หลักการสื่อสารและ 8 กลยุทธ์บริหารงานอย่างเบาแรง",
+    "category": "การบริหารทีม",
+    "summary": "รวมแนวทางสื่อสารและบริหารทีมเพื่อให้ผู้นำทำงานได้อย่างมีประสิทธิภาพโดยไม่ต้องออกแรงมาก เสนอโมเดล 6 ขั้นตอนในการสอนงาน (ฉันพูดคุณฟัง คุณพูดฉันฟัง ฉันทำคุณดู คุณทำฉันดู ฯลฯ) และ 8 กลยุทธ์บริหารทีมเพื่อยกระดับความสามารถในการปฏิบัติ",
+    "key_points": [
+      "ใช้โมเดลสอนงาน 6 ขั้นตอนเพื่อให้พนักงานเข้าใจงานก่อนลงมือทำ",
+      "กำหนดมาตรฐานและกระบวนการปฏิบัติงานให้ชัดเจน",
+      "มอบหมายงานตามจุดแข็งของแต่ละคน",
+      "จับจุดสำคัญและติดตามใกล้ชิดเพื่อป้องกันความผิดพลาด",
+      "มอบอำนาจให้พนักงานที่มีความสามารถและผลักดันผลงานด้วยระบบประเมินผล"
+    ],
+    "application_note": "ก่อนให้แพทย์ประจำบ้านลงมือทำหัตถการเอง ควรใช้ลำดับสอนฉันทำให้ดู-คุณลงมือทำให้ฉันดู-ฉันชี้แนะปรับแก้ เพื่อให้มั่นใจว่าปลอดภัยและได้มาตรฐานก่อนปล่อยให้ทำเองอย่างอิสระ"
+  },
+  {
+    "id": "p096",
+    "title_th": "ยิ่งแข็งแกร่งภายใน ยิ่งได้รับความเคารพ",
+    "category": "การพัฒนาตนเอง",
+    "summary": "นำเสนอคุณสมบัติภายในที่ช่วยให้บุคคลได้รับความเคารพจากผู้อื่นมากขึ้น เช่น ความกล้าแสดงออก การรู้จักปฏิเสธอย่างชัดเจน การไม่ประจบเอาใจผู้อื่นจนละทิ้งหลักการ การควบคุมอารมณ์ และการตัดสินใจอย่างเด็ดขาด",
+    "key_points": [
+      "กล้าแสดงออก ไม่คาดหวังพึ่งพาผู้อื่นง่ายๆ",
+      "รู้จักปฏิเสธอย่างชัดเจนเมื่อไม่เห็นด้วย",
+      "ไม่ประจบเอาใจผู้อื่นจนละทิ้งหลักการ",
+      "ควบคุมอารมณ์ ไม่ปล่อยให้ความโกรธนำทาง",
+      "พัฒนาความสามารถจริงอย่างต่อเนื่องและรู้จักอดทนในช่วงเวลาสำคัญ"
+    ],
+    "application_note": "เมื่อถูกขอให้ผ่อนปรนมาตรฐานความปลอดภัยของผู้ป่วยเพื่อความสะดวกของบางฝ่าย ควรกล้าปฏิเสธอย่างชัดเจนโดยยึดหลักการเป็นที่ตั้งแทนการยอมตามเพื่อรักษาความสัมพันธ์"
+  },
+  {
+    "id": "p097",
+    "title_th": "3 การเปลี่ยนผ่านที่ผู้บริหารยอดเยี่ยมต้องเผชิญ",
+    "category": "การพัฒนาตนเอง",
+    "summary": "อธิบาย 3 การเปลี่ยนผ่านสำคัญที่ผู้ที่ก้าวขึ้นเป็นผู้บริหารต้องปรับตัว เปลี่ยนจากลงมือทำเองเป็นสอนและพัฒนาคนอื่น เปลี่ยนมุมมองเรื่องเวลาโดยแบ่งระดับความสำคัญและเร่งด่วน และยกระดับความสามารถในการบริหารด้วยการรู้ว่าเรื่องใดต้องตัดสินใจเองและเรื่องใดควรมอบอำนาจ",
+    "key_points": [
+      "เปลี่ยนจากลงมือทำเองเป็นสอนและพัฒนาคนอื่นด้วยหลัก 16 คำ",
+      "เปลี่ยนมุมมองเรื่องเวลา แบ่งระดับความสำคัญและความเร่งด่วนของงาน",
+      "รู้ชัดว่าเรื่องใดต้องตัดสินใจเองและเรื่องใดควรมอบอำนาจ",
+      "มอบหมายงานพร้อมกำหนดเป้าหมายและกำหนดเวลาที่ชัดเจน",
+      "วางกลไกติดตามหลังมอบหมายงานและสร้างความไว้วางใจกับทีม"
+    ],
+    "application_note": "เมื่อขึ้นเป็นหัวหน้าแผนก ควรฝึกปล่อยงานประจำที่เคยทำเองให้แพทย์ประจำบ้านรับผิดชอบมากขึ้น แล้วหันไปทุ่มเวลาให้กับภารกิจเชิงกลยุทธ์ของแผนกที่สำคัญและเร่งด่วนจริงๆ"
+  },
+  {
+    "id": "p098",
+    "title_th": "ตารางบริหารเวลาแบบไอเซนฮาวร์",
+    "category": "การบริหารเวลา",
+    "summary": "นำเสนอเครื่องมือจัดลำดับความสำคัญของงานโดยแบ่งตามสองมิติคือความสำคัญและความเร่งด่วน งานสำคัญและเร่งด่วนต้องทำทันที งานสำคัญแต่ไม่เร่งด่วนควรวางแผนล่วงหน้า งานไม่สำคัญแต่เร่งด่วนจัดการเมื่อมีเวลาว่าง และงานไม่สำคัญไม่เร่งด่วนควรมอบหมายให้ผู้อื่นทำแทน",
+    "key_points": [
+      "สำคัญและเร่งด่วน: ทำให้เสร็จทันที",
+      "สำคัญแต่ไม่เร่งด่วน: วางแผนดำเนินการล่วงหน้า",
+      "ไม่สำคัญแต่เร่งด่วน: จัดการเมื่อมีเวลาว่าง",
+      "ไม่สำคัญและไม่เร่งด่วน: มอบหมายให้ผู้อื่นทำแทน",
+      "ช่วยป้องกันไม่ให้งานจุกจิกลากเวลาของงานสำคัญไป"
+    ],
+    "application_note": "หัวหน้าแผนกควรจัดสรรเวลาสำหรับการวางแผนกลยุทธ์แผนกและการพัฒนาทีม (สำคัญแต่ไม่เร่งด่วน) ไว้ล่วงหน้าในตารางงาน แทนที่จะปล่อยให้ถูกงานเร่งด่วนเฉพาะหน้าแทรกจนไม่มีเวลาเหลือ"
+  },
+  {
+    "id": "p099",
+    "title_th": "คุณสมบัติของพนักงานที่ผู้นำไม่อยากสูญเสีย",
+    "category": "การพัฒนาตนเอง",
+    "summary": "รวบรวมคุณสมบัติของพนักงานที่มีคุณค่าสูงในสายตาผู้นำ ได้แก่ ความกระตือรือร้นและความคิดริเริ่ม ความซื่อสัตย์และภักดี วินัยในตนเอง การมุ่งเน้นผลลัพธ์ ความเป็นมืออาชีพ ความสามารถในการปรับตัว และการมีไหวพริบกับวิจารณญาณ",
+    "key_points": [
+      "ความกระตือรือร้น: เปลี่ยนจากถูกสั่งให้ทำเป็นฉันลงมือทำเอง",
+      "ความซื่อสัตย์ภักดี: ยึดผลประโยชน์ขององค์กรเป็นพื้นฐานของการตัดสินใจ",
+      "วินัยและความรับผิดชอบ: ไม่หาข้ออ้างเมื่อพบปัญหา",
+      "มุ่งเน้นผลลัพธ์: การทำเกินเป้าหมายเป็นความตั้งใจไม่ใช่เรื่องบังเอิญ",
+      "ปรับตัวได้ดีและมีไหวพริบ เข้าใจสิ่งที่หัวหน้าต้องการ"
+    ],
+    "application_note": "เมื่อพิจารณาคัดเลือกแพทย์ประจำบ้านหรือพยาบาลให้รับผิดชอบโครงการสำคัญของแผนกเพิ่มเติม ควรสังเกตคุณสมบัติเหล่านี้ เช่น ความกระตือรือร้นที่ริเริ่มเองและความรับผิดชอบที่ไม่หาข้ออ้าง มากกว่าพิจารณาจากอาวุโสเพียงอย่างเดียว"
+  },
+  {
+    "id": "p100",
+    "title_th": "สาเหตุที่ลูกน้องชอบโต้แย้งและวิธีรับมือ",
+    "category": "การบริหารทีม",
+    "summary": "อธิบายสาเหตุหลักที่ทำให้ผู้ใต้บังคับบัญชามักโต้แย้งหรือคัดค้านหัวหน้า พร้อมแนวทางแก้ไข 4 ประการ ได้แก่ สนิทสนมกับลูกน้องมากเกินไป จัดการงานอ่อนเกินไป ใจกว้างเกินไป และไม่สามารถทำให้ลูกน้องยอมรับได้ในช่วงเวลาสำคัญ",
+    "key_points": [
+      "4 สาเหตุหลัก: สนิทเกินไป จัดการอ่อนเกินไป ใจกว้างเกินไป ยังพิสูจน์ตัวเองไม่พอ",
+      "รักษาระยะห่างและขอบเขตที่เหมาะสมเพื่อสร้างบารมี",
+      "ยืนหยัดในหลักการเมื่อถูกลูกน้องเอาเปรียบความใจกว้าง",
+      "ใช้คำถามเฉพาะเจาะจงเพื่อค้นหาสาเหตุที่แท้จริงของความไม่พอใจ",
+      "แยกคุยกับแกนนำกลุ่มต่อต้านเป็นการส่วนตัว หลีกเลี่ยงการเผชิญหน้าต่อหน้ากลุ่ม"
+    ],
+    "application_note": "หัวหน้าแผนกศัลยกรรมที่เผชิญแพทย์ประจำบ้านหรือทีมพยาบาลที่โต้แย้งคำสั่งบ่อยครั้ง ควรทบทวนว่าตนรักษาขอบเขตและความเด็ดขาดในบทบาทหัวหน้าได้เหมาะสมหรือไม่"
+  },
+  {
+    "id": "p101",
+    "title_th": "5 ประเภทพนักงานที่บริหารยากและวิธีรับมือ",
+    "category": "การบริหารทีม",
+    "summary": "นำเสนอแนวทางบริหารพนักงาน 5 ประเภทที่มักสร้างความท้าทาย ได้แก่ พนักงานขี้เกียจ พนักงานที่ 'มีหนาม' พนักงานที่พัฒนาช้า พนักงานที่เก่งแต่ชอบโต้แย้ง และพนักงานที่ชอบก่อเรื่อง",
+    "key_points": [
+      "พนักงานขี้เกียจ: มอบงานท้าทายเพื่อกระตุ้นความรับผิดชอบ",
+      "พนักงานมีความสามารถแต่ดื้อ: ใช้ผู้นำสุขุมดึงเข้าหาเป้าหมายร่วม",
+      "พนักงานพัฒนาช้า: ติดตามใกล้ชิดและวางในทีมมีวินัย",
+      "พนักงานเก่งแต่ชอบโต้แย้ง: มอบเป้าหมายสูงขึ้นพร้อมพี่เลี้ยง",
+      "กลุ่มต่อต้าน: ดึงกลุ่มกลางออกมาและสร้างข้อตกลงความร่วมมือใหม่"
+    ],
+    "application_note": "ในการดูแลทีมสหวิชาชีพที่มีทั้งแพทย์ประจำบ้าน พยาบาล และเจ้าหน้าที่ หัวหน้าแผนกควรปรับวิธีมอบหมายงานและการโค้ชให้เหมาะกับแต่ละประเภทบุคลากรแทนการใช้วิธีเดียวกับทุกคน"
+  },
+  {
+    "id": "p102",
+    "title_th": "บริหารผู้ใต้บังคับบัญชาตามลักษณะบุคลิกภาพที่แตกต่างกัน",
+    "category": "การบริหารทีม",
+    "summary": "เสนอแนวทางรับมือลูกน้องตามลักษณะบุคลิกภาพเฉพาะตัว เช่น ลูกน้องที่ชอบแพร่ข่าวลือ ลูกน้องที่หยิ่งทะนงตน ลูกน้องที่กระตือรือร้นเกินไป ลูกน้องที่ดื้อรั้นยึดติดกฎ และลูกน้องที่อ่อนโยนเกินไป",
+    "key_points": [
+      "ลูกน้องชอบนินทา/สร้างข่าวลือ: ตำหนิจริงจังและมอบงานให้มีสมาธิ",
+      "ลูกน้องหยิ่งทะนงตน: ชี้ปัญหาตรงๆ สอนความถ่อมตน",
+      "ลูกน้องรีบแสดงผลงานเกินไป: แนะนำให้สุขุมและกำหนดขอบเขต",
+      "ลูกน้องดื้อรั้นยึดกฎ: เน้นประโยชน์ทีมและเคารพความเห็นต่าง",
+      "ลูกน้องอ่อนไหวรับแรงกดดันไม่ได้: กระตุ้นด้วยกิจกรรมกลุ่ม"
+    ],
+    "application_note": "หัวหน้าแผนกควรสังเกตบุคลิกเฉพาะของแพทย์ประจำบ้านหรือพยาบาลแต่ละคนในทีม แล้วเลือกวิธีตักเตือนหรือมอบหมายงานให้ตรงกับนิสัย"
+  },
+  {
+    "id": "p103",
+    "title_th": "4 กลยุทธ์บริหารเพื่อปลุกศักยภาพของทีม",
+    "category": "การบริหารทีม",
+    "summary": "นำเสนอ 4 กลยุทธ์หลักที่ผู้บริหารใช้ปลดปล่อยศักยภาพของทีมงาน ได้แก่ แบ่งปันผลประโยชน์และความสำเร็จ ดูแลบุคลากรอย่างรอบด้าน สร้างแรงจูงใจด้วยเป้าหมายที่ชัดเจน และมอบอำนาจและความไว้วางใจแก่พนักงาน",
+    "key_points": [
+      "แบ่งปันผลประโยชน์และรางวัลความสำเร็จร่วมกับทีม",
+      "ดูแลชีวิตความเป็นอยู่และครอบครัวของพนักงาน",
+      "ตั้งเป้าหมายชัดเจนทั้งระยะสั้น-กลาง-ยาว และรักษาคำมั่น",
+      "มอบอำนาจและไว้วางใจเพื่อกระตุ้นความคิดสร้างสรรค์",
+      "สนับสนุนการฝึกอบรมและเส้นทางความก้าวหน้าของบุคลากร"
+    ],
+    "application_note": "หัวหน้าแผนกควรแบ่งปันความสำเร็จของงานวิจัยหรือผลลัพธ์ทางคลินิกกับทีมอย่างเปิดเผย พร้อมมอบหมายความรับผิดชอบและโอกาสฝึกอบรมเพื่อกระตุ้นศักยภาพของทีม"
+  },
+  {
+    "id": "p104",
+    "title_th": "ความท้าทายและแนวทางพัฒนาตนเองของผู้บริหารรุ่นใหม่",
+    "category": "การพัฒนาตนเอง",
+    "summary": "กล่าวถึงปัญหาที่ผู้บริหารอายุน้อยมักเผชิญ เช่น มีแนวโน้มเอาใจผู้อื่นและกลัวความขัดแย้ง ระบุความสามารถสำคัญที่ต้องพัฒนา ได้แก่ การมองคนออก การสื่อสารชัดเจน การรับแรงกดดัน การคิดเชิงรุก และการจัดการอารมณ์",
+    "key_points": [
+      "ผู้บริหารรุ่นใหม่มักเอาใจผู้อื่นและกลัวความขัดแย้งเมื่อเผชิญแรงกดดัน",
+      "ต้องพัฒนาทักษะมองคน สื่อสาร รับแรงกดดัน คิดเชิงรุก และจัดการอารมณ์",
+      "มาตรฐานผู้บริหารที่ดี: ความสามารถหลัก 7 ด้าน และจิตสำนึก 5 ประการ",
+      "ยกระดับภาวะผู้นำด้วยการควบคุมอารมณ์ ทนต่อความโดดเดี่ยว และรักษาจุดยืน"
+    ],
+    "application_note": "หัวหน้าแผนกที่เพิ่งได้รับตำแหน่งบริหารควรฝึกควบคุมอารมณ์และกล้ายืนหยัดในการตัดสินใจทางคลินิกหรือการจัดตารางเวร แม้ต้องเผชิญแรงกดดันจากเพื่อนร่วมงานอาวุโส"
+  },
+  {
+    "id": "p105",
+    "title_th": "5 ช่วงเวลาสำคัญที่ผู้บริหารต้องผ่าน",
+    "category": "การพัฒนาตนเอง",
+    "summary": "อธิบาย 5 ขั้นตอนการเปลี่ยนผ่านสำคัญที่ผู้บริหารทุกคนต้องเผชิญ ได้แก่ การเปลี่ยนบทบาท การบริหารตนเอง การบริหารธุรกิจ การบริหารทีม และการบริหารขึ้นบนและรับผิดชอบลงล่าง",
+    "key_points": [
+      "ขั้น 1: เปลี่ยนบทบาทและเข้าใจหน้าที่ตำแหน่งใหม่",
+      "ขั้น 2: บริหารตนเอง จัดเวลาและอารมณ์",
+      "ขั้น 3: บริหารธุรกิจ กำหนดแผนและมองความเสี่ยง/โอกาส",
+      "ขั้น 4: บริหารทีม มองคนใช้คนและพัฒนาบุคลากร",
+      "ขั้น 5: บริหารขึ้นบนและรับผิดชอบลงล่างพร้อมกัน"
+    ],
+    "application_note": "แพทย์ที่เพิ่งขึ้นเป็นหัวหน้าแผนกควรประเมินตนเองว่าอยู่ในช่วงเปลี่ยนผ่านขั้นใดจากทั้ง 5 ขั้น เพื่อวางแผนพัฒนาทักษะบริหารที่ยังขาด"
+  },
+  {
+    "id": "p106",
+    "title_th": "หลักการตัดสินใจอย่างเด็ดขาดของผู้บริหาร",
+    "category": "การประชุมและการตัดสินใจ",
+    "summary": "นำเสนอ 4 หลักที่ผู้บริหารต้องยึดถือเมื่อต้องตัดสินใจในช่วงเวลาสำคัญ แยกแยะถูกผิดให้ชัดเจน รู้จักอ่อนโยนเมื่อควรอ่อนโยนและเด็ดขาดเมื่อควรเด็ดขาด ให้รางวัลและบทลงโทษที่ชัดเจน และเลือกคนให้แม่นยำ",
+    "key_points": [
+      "แยกแยะถูกผิดชัดเจน ให้รางวัล-ลงโทษอย่างมีหลักเกณฑ์",
+      "สมดุลระหว่างความอ่อนโยนกับความเด็ดขาดตามสถานการณ์",
+      "ให้ข้อมูลย้อนกลับอย่างทันท่วงทีทุกครั้งที่ให้รางวัลหรือลงโทษ",
+      "ตัดสินใจเรื่องบุคลากรอย่างรวดเร็ว ไม่ปล่อยปัญหาสะสม"
+    ],
+    "application_note": "ในฐานะประธานคณะกรรมการ ควรตัดสินใจเรื่องผลการปฏิบัติงานของบุคลากรอย่างเป็นธรรมและทันเวลา แทนที่จะเลี่ยงปัญหาเพราะความเกรงใจซึ่งจะบั่นทอนมาตรฐานของทีมในระยะยาว"
+  },
+  {
+    "id": "p107",
+    "title_th": "วิธีที่ผู้บริหารใหม่นำทีมที่ซับซ้อน",
+    "category": "การบริหารทีม",
+    "summary": "เสนอแนวทาง 4 ขั้นสำหรับผู้บริหารที่เพิ่งเข้ารับตำแหน่งในการนำทีมที่มีความซับซ้อน ค้นหาบุคลากรแกนหลัก สร้างแรงจูงใจให้คนลงมือทำจริง รักษาเสถียรภาพของพนักงานกลุ่มเดิม และจัดตำแหน่งที่เหมาะสมให้บุคลากรชายขอบ",
+    "key_points": [
+      "ค้นหาและดึงบุคลากรแกนหลักที่แนวคิดตรงกันมาช่วยผลักดันงาน",
+      "ยกย่องผู้ที่ลงมือทำจริงให้เป็นแบบอย่างในทีม",
+      "รักษาความมั่นคงและความรู้สึกของพนักงานอาวุโสกลุ่มเดิม",
+      "จัดวางบุคลากรชายขอบอย่างเหมาะสมโดยไม่รีบตัดสินใจ"
+    ],
+    "application_note": "เมื่อเข้ารับตำแหน่งหัวหน้าแผนกใหม่ ควรระบุแพทย์หรือพยาบาลแกนหลักที่เข้าใจแนวทางการทำงานของตนก่อน แล้วค่อยๆ สร้างเสถียรภาพให้ทีมทั้งกลุ่มเดิมและบุคลากรที่ยังปรับตัวไม่ทัน"
+  },
+  {
+    "id": "p108",
+    "title_th": "4 ข้อควรระวังในการบริหารทีม",
+    "category": "การบริหารทีม",
+    "summary": "เตือนถึง 4 ประเด็นสำคัญที่ผู้บริหารต้องระวังเพื่อรักษาเสถียรภาพของทีม ป้องกันความไม่สมดุลของอำนาจ ป้องกันการข้ามสายบังคับบัญชา ป้องกันการจับกลุ่มเป็นพวก และพัฒนาผู้ช่วยที่ไว้ใจได้พร้อมเตรียมผู้สืบทอด",
+    "key_points": [
+      "ถืออำนาจอนุมัติ แต่งตั้ง และจัดสรรทรัพยากรไว้อย่างสมดุล",
+      "ป้องกันการข้ามสายบังคับบัญชาด้วยโครงสร้างที่ชัดเจน",
+      "ระวังการจับกลุ่มเป็นพวกที่ทำลายความสามัคคีของทีม",
+      "พัฒนาผู้ช่วยไว้ใจได้และเตรียมผู้สืบทอดตำแหน่งล่วงหน้า"
+    ],
+    "application_note": "หัวหน้าแผนกควรกำหนดสายการอนุมัติและมอบหมายงานในทีมให้ชัดเจน พร้อมเตรียมแพทย์รุ่นรองหรือหัวหน้าพยาบาลไว้เป็นผู้สืบทอดบทบาทบางส่วนในคณะกรรมการ"
+  },
+  {
+    "id": "p109",
+    "title_th": "การเสริมบุคลิกและภาพลักษณ์ความเป็นผู้นำ",
+    "category": "การพัฒนาตนเอง",
+    "summary": "กล่าวถึงคุณสมบัติทางบุคลิกภาพที่ช่วยเสริมสร้างภาพลักษณ์ผู้นำที่น่าเชื่อถือ ได้แก่ ความสงบ จังหวะ ความมั่นคงทางจิตใจ ความสง่างาม และความใจกว้าง",
+    "key_points": [
+      "ความสงบ: รักษาวุฒิภาวะผ่านคำพูดและการกระทำ",
+      "จังหวะ: ควบคุมความเร็วในการพูด การตัดสินใจ และการลงมือทำ",
+      "ความมั่นคงทางใจ: ไม่พึ่งพาการยอมรับจากภายนอก",
+      "ความสง่างาม: รสนิยมและการวางตัวที่เหมาะสมช่วยเสริมความน่าเชื่อถือ",
+      "ความใจกว้าง: อ่อนโยน ไม่อวดเก่ง เปิดรับความเห็นต่าง"
+    ],
+    "application_note": "ในการประชุมคณะกรรมการที่มีความเห็นขัดแย้งกัน หัวหน้าแผนกควรฝึกรักษาความสงบและจังหวะการพูดเพื่อแสดงวุฒิภาวะและสร้างความไว้วางใจจากเพื่อนร่วมทีมสหวิชาชีพ"
+  },
+  {
+    "id": "p110",
+    "title_th": "พีระมิดความต้องการของมาสโลว์กับการสร้างแรงจูงใจพนักงาน",
+    "category": "การบริหารทีม",
+    "summary": "ประยุกต์ใช้ทฤษฎีลำดับขั้นความต้องการของมาสโลว์เป็นกระบวนการ 5 ขั้นตอนในการสร้างแรงจูงใจพนักงาน ไล่จากความต้องการพื้นฐาน ความปลอดภัย ความเชื่อมโยง การยอมรับ ไปจนถึงการเติมเต็มศักยภาพของตนเอง",
+    "key_points": [
+      "5 ขั้นความต้องการ: พื้นฐาน ความปลอดภัย ความเชื่อมโยง การยอมรับ การเติมเต็มศักยภาพ",
+      "ค่าตอบแทนและสวัสดิการตอบโจทย์ความต้องการพื้นฐาน",
+      "สภาพแวดล้อมที่มั่นคงตอบโจทย์ความต้องการความปลอดภัย",
+      "การยอมรับผลงานและโอกาสสร้างสรรค์ตอบโจทย์ความต้องการขั้นสูง",
+      "ใช้โมเดลนี้วิเคราะห์สาเหตุที่แท้จริงของการลาออกของพนักงาน"
+    ],
+    "application_note": "เมื่อพยาบาลหรือแพทย์ประจำบ้านในทีมแสดงสัญญาณไม่พอใจหรือมีแนวโน้มลาออก หัวหน้าแผนกควรวิเคราะห์ว่าความต้องการระดับใดตามพีระมิดมาสโลว์ที่ยังไม่ได้รับการตอบสนอง"
+  },
+  {
+    "id": "p111",
+    "title_th": "โมเดลภูเขาน้ำแข็ง (Iceberg Model) วิเคราะห์ศักยภาพส่วนบุคคล",
+    "category": "การคิดวิเคราะห์",
+    "summary": "อธิบายโมเดลภูเขาน้ำแข็งซึ่งเป็นเครื่องมือวิเคราะห์ศักยภาพและพฤติกรรมของบุคคล แบ่งเป็นส่วนที่มองเห็นได้เหนือน้ำ (ความรู้ ทักษะ สมรรถนะ ~30%) และส่วนที่ซ่อนอยู่ใต้น้ำ (ค่านิยม บุคลิกภาพ แรงจูงใจภายใน ~70%)",
+    "key_points": [
+      "ส่วนที่มองเห็น (30%): ความรู้ ทักษะ สมรรถนะทั่วไป",
+      "ส่วนที่ซ่อนอยู่ (70%): ค่านิยม บุคลิกภาพ แรงจูงใจภายใน",
+      "พฤติกรรมที่แสดงออกเป็นเพียงยอดของภูเขาน้ำแข็ง",
+      "ใช้วิเคราะห์สาเหตุที่แท้จริงเบื้องหลังพฤติกรรมพนักงาน"
+    ],
+    "application_note": "เมื่อบุคลากรในทีมมีพฤติกรรมที่ไม่พึงประสงค์ เช่น ขาดความกระตือรือร้นในงาน หัวหน้าแผนกควรใช้โมเดลภูเขาน้ำแข็งสืบค้นค่านิยมและแรงจูงใจที่ซ่อนอยู่แทนการตำหนิที่พฤติกรรมภายนอกเพียงอย่างเดียว"
+  },
+  {
+    "id": "p112",
+    "title_th": "แนวทางเติบโตและพัฒนาตนเองอย่างมั่นคงสู่อิสรภาพภายใน",
+    "category": "การพัฒนาตนเอง",
+    "summary": "นำเสนอขั้นตอนการเติบโตทางจิตใจของบุคคล ไล่จากการสร้างความมั่นคงในการดำรงชีวิต ไปจนถึงระดับสูงสุดคือการเป็นอิสระภายใน พร้อมเสนอชุดนิสัยประจำวันด้านการใช้ชีวิต สุขภาพ และการเรียนรู้",
+    "key_points": [
+      "เป้าหมายสูงสุดคืออิสรภาพภายใน ไม่หวั่นไหวง่าย มั่นคงดั่งภูเขา",
+      "สร้างวินัยด้านการใช้ชีวิตประจำวันที่เป็นระเบียบ",
+      "ดูแลสุขภาพกายด้วยการนอน อาหาร และการออกกำลังกายที่สม่ำเสมอ",
+      "การเติบโตที่ยั่งยืนมาจากนิสัยเล็กๆ ที่ทำต่อเนื่อง ไม่ใช่ความพยายามครั้งเดียว"
+    ],
+    "application_note": "หัวหน้าแผนกที่ภาระงานหนักควรจัดสรรเวลานอน การออกกำลังกาย และการอ่านวารสารวิชาการอย่างสม่ำเสมอ เพื่อรักษาความมั่นคงทั้งกายและใจในระยะยาว"
+  },
+  {
+    "id": "p113",
+    "title_th": "การทบทวนตนเองอย่างสม่ำเสมอ (รายวัน สัปดาห์ เดือน ปี)",
+    "category": "การบริหารเวลา",
+    "summary": "เสนอกรอบการทบทวนตนเองเป็นวงจร 4 ระดับเวลาเพื่อเร่งการเติบโตให้เร็วขึ้น การสรุปประจำวัน ประจำสัปดาห์ ประจำเดือน และประจำปี ช่วยให้เห็นรูปแบบพฤติกรรมและปรับปรุงประสิทธิภาพได้อย่างต่อเนื่อง",
+    "key_points": [
+      "ทบทวนรายวัน: งานสำเร็จ งานสำคัญจริงหรือไม่ อุปสรรคคืออะไร",
+      "ทบทวนรายสัปดาห์: วิเคราะห์ปัจจัยความสำเร็จและงานที่ควรตัด/มอบหมาย",
+      "ทบทวนรายเดือน: ประเมินเป้าหมายและวางแผนเดือนถัดไป",
+      "ทบทวนรายปี: สรุปผลงาน จุดเด่น และคำแนะนำสำหรับปีใหม่"
+    ],
+    "application_note": "หัวหน้าแผนกควรกำหนดเวลาสั้นๆ ทุกสัปดาห์เพื่อทบทวนภาระงานคลินิก งานสอน และงานคณะกรรมการ ว่างานใดควรมอบหมายต่อให้ทีมเพื่อลดภาระที่ไม่จำเป็น"
+  },
+  {
+    "id": "p114",
+    "title_th": "โมเดลความฉลาดทางอารมณ์ (Emotional Intelligence) 4 องค์ประกอบ",
+    "category": "การพัฒนาตนเอง",
+    "summary": "อธิบายองค์ประกอบหลักของความฉลาดทางอารมณ์ (EQ) ซึ่งประกอบด้วย 4 หัวใจสำคัญ ได้แก่ การตระหนักรู้ตนเอง การจัดการอารมณ์ ความสามารถในการเห็นอกเห็นใจผู้อื่น และทักษะทางสังคม",
+    "key_points": [
+      "4 องค์ประกอบ EQ: การตระหนักรู้ตนเอง การจัดการอารมณ์ การเห็นอกเห็นใจ ทักษะทางสังคม",
+      "เผชิญแรงกดดันอย่างสงบ ไม่หุนหันพลันแล่น",
+      "ย้อนมองสาเหตุจากตนเองแทนการโทษผู้อื่น",
+      "รู้จักรับฟังและเข้าใจความรู้สึกของผู้อื่นอย่างลึกซึ้ง"
+    ],
+    "application_note": "ในการบริหารทีมสหวิชาชีพที่มีความกดดันสูง หัวหน้าแผนกควรฝึกการตระหนักรู้และจัดการอารมณ์ตนเองก่อน เพื่อเป็นแบบอย่างการสื่อสารอย่างเห็นอกเห็นใจในการประชุมคณะกรรมการ"
+  },
+  {
+    "id": "p115",
+    "title_th": "โมเดลพฤติกรรมของฟ็อกก์ (Fogg Behavior Model): แรงจูงใจ ความสามารถ และสัญญาณกระตุ้น",
+    "category": "การพัฒนาตนเอง",
+    "summary": "อธิบายกลไกเบื้องหลังการเกิดพฤติกรรม พฤติกรรมจะเกิดขึ้นได้ก็ต่อเมื่อมีองค์ประกอบ 3 อย่างมาบรรจบกัน คือ แรงจูงใจ ความสามารถหรือความง่ายในการทำ และสัญญาณกระตุ้นหรือตัวเตือน",
+    "key_points": [
+      "พฤติกรรมเกิดขึ้นเมื่อ แรงจูงใจ ความสามารถ และสัญญาณกระตุ้น มาบรรจบกัน",
+      "แรงจูงใจอย่างเดียวรักษาไว้ระยะยาวได้ยาก",
+      "ควรลดความยากของพฤติกรรม (เพิ่มความสามารถ/ความง่าย) แทนการเพิ่มแรงจูงใจอย่างเดียว",
+      "ออกแบบสัญญาณกระตุ้นที่ชัดเจนในเวลาที่เหมาะสม"
+    ],
+    "application_note": "หากต้องการให้ทีมปฏิบัติตามแนวปฏิบัติใหม่ เช่น การบันทึกข้อมูลผู้ป่วยให้ครบถ้วน หัวหน้าแผนกควรลดความยุ่งยากของขั้นตอนและสร้างสัญญาณเตือนที่ชัดเจน แทนการหวังพึ่งแรงจูงใจของทีมเพียงอย่างเดียว"
+  },
+  {
+    "id": "p116",
+    "title_th": "พีระมิดการบริหารพลังงานส่วนบุคคล",
+    "category": "การพัฒนาตนเอง",
+    "summary": "นำเสนอแนวคิดการบริหารพลังงานส่วนบุคคลเป็น 4 ระดับซ้อนกันเป็นพีระมิด: พลังงานทางกาย พลังงานทางอารมณ์ พลังงานทางความคิด และพลังงานทางจิตวิญญาณหรือเจตจำนง",
+    "key_points": [
+      "4 ระดับพลังงาน: กาย อารมณ์ ความคิด และจิตวิญญาณ/เจตจำนง",
+      "พลังกาย: พักผ่อน อาหาร และออกกำลังกายสม่ำเสมอ",
+      "พลังความคิด: ใช้เทคนิคโพโมโดโรและสมาธิเพื่อคงสมาธิจดจ่อ",
+      "พลังจิตวิญญาณ: ใช้ชีวิตอย่างมีความหมายและเป้าหมายชัดเจน"
+    ],
+    "application_note": "หัวหน้าแผนกที่ต้องรับภาระงานคลินิก งานสอน และงานบริหารพร้อมกัน ควรจัดสรรเวลาดูแลพลังงานทั้ง 4 ระดับ เพื่อป้องกันภาวะหมดไฟ"
+  },
+  {
+    "id": "p117",
+    "title_th": "บันได 3 ขั้นของการพัฒนาความสามารถ",
+    "category": "การพัฒนาตนเอง",
+    "summary": "เสนอโมเดล 3 ระดับของการพัฒนาความสามารถในการทำงาน: ความสามารถในการจดจ่อ ความสามารถในการสะท้อนคิดและเข้าใจอย่างลึกซึ้ง และความสามารถด้านภาวะผู้นำ การมองเห็นเชิงลึก และการวางแผนเชิงกลยุทธ์",
+    "key_points": [
+      "ขั้นพื้นฐาน: ความสามารถในการจดจ่อกับทิศทางเดียว",
+      "ขั้นกลาง: การสะท้อนคิดและเข้าใจกระบวนการทำงานอย่างลึกซึ้ง",
+      "ขั้นสูง: ภาวะผู้นำ การมองเห็นเชิงลึก และการวางแผนเชิงกลยุทธ์",
+      "การพัฒนาความสามารถต้องเรียงลำดับจากฐานที่มั่นคงขึ้นไป"
+    ],
+    "application_note": "หัวหน้าแผนกควรฝึกความสามารถในการจดจ่อกับพันธกิจหลักของแผนกก่อน จากนั้นค่อยพัฒนาไปสู่การสะท้อนคิดกระบวนการทำงานทั้งระบบ และในที่สุดจึงก้าวสู่การวางแผนกลยุทธ์ระดับโรงพยาบาล"
+  },
+  {
+    "id": "p118",
+    "title_th": "กรอบความคิดแบบเข้มแข็ง (Growth Mindset) เทียบกับกรอบความคิดแบบอ่อนแอ (Fixed Mindset)",
+    "category": "การพัฒนาตนเอง",
+    "summary": "เปรียบเทียบรูปแบบความคิดของคนที่เข้มแข็งกับคนที่อ่อนแอใน 6 มิติหลัก การเรียนรู้ การคิดเชิงตรรกะ การจัดการอารมณ์ การสื่อสาร การวางแผนเชิงกลยุทธ์ และความสามารถในการรับมือกับแรงกดดัน",
+    "key_points": [
+      "6 มิติเปรียบเทียบ: การเรียนรู้ ตรรกะ อารมณ์ การสื่อสาร กลยุทธ์ การรับแรงกดดัน",
+      "คนกรอบคิดเข้มแข็งเรียนรู้เชิงรุกและสรุปบทเรียนต่อเนื่อง",
+      "คนกรอบคิดเข้มแข็งเปลี่ยนความล้มเหลวให้เป็นบทเรียนแทนการยอมแพ้",
+      "คนกรอบคิดอ่อนแอมักตัดสินใจด้วยอารมณ์และปฏิเสธความเห็นต่าง"
+    ],
+    "application_note": "หัวหน้าแผนกควรเป็นแบบอย่างของกรอบความคิดเข้มแข็งให้แพทย์ประจำบ้าน เช่น การใช้ข้อมูลทางคลินิกในการตัดสินใจและมองความล้มเหลวของเคสเป็นบทเรียนแทนการตำหนิ"
+  },
+  {
+    "id": "p119",
+    "title_th": "10 คุณลักษณะของผู้ที่เติบโตอย่างรวดเร็วในที่ทำงาน",
+    "category": "การพัฒนาตนเอง",
+    "summary": "สรุปคุณลักษณะ 10 ประการของบุคคลที่มักเติบโตในหน้าที่การงานได้อย่างรวดเร็ว โดยแต่ละข้อนำเสนอในรูปแบบ 'เป็น X แต่ไม่ Y' แก่นของคุณลักษณะทั้งหมดคือความสมดุลระหว่างจุดยืนของตนเองกับความสามารถในการอยู่ร่วมกับผู้อื่น",
+    "key_points": [
+      "สมดุลระหว่างความเป็นตัวของตัวเองกับการทำงานร่วมกับผู้อื่น",
+      "ขยันทำงานจริงโดยไม่จำเป็นต้องโอ้อวด",
+      "คิดเป็นของตนเองแต่ไม่ดื้อรั้นอย่างไร้เหตุผล",
+      "รับผิดชอบผลลัพธ์อย่างเต็มที่โดยไม่ยกยอตนเอง",
+      "ถอดบทเรียนจากความล้มเหลวและไม่ยอมแพ้"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถใช้ 10 คุณลักษณะนี้เป็นแนวทางประเมินและพัฒนาแพทย์ประจำบ้านที่มีศักยภาพสูง เพื่อเตรียมความพร้อมสู่บทบาทผู้นำในอนาคต"
+  },
+  {
+    "id": "p120",
+    "title_th": "ข้อควรระวังในการทำงานร่วมกับผู้บังคับบัญชาหรือผู้นำ",
+    "category": "การสื่อสาร",
+    "summary": "นำเสนอแนวปฏิบัติในการทำงานร่วมกับผู้บังคับบัญชาอย่างมีประสิทธิภาพ ตระหนักถึงขอบเขตความรับผิดชอบของตนเอง รักษาความใกล้ชิดในระดับที่พอดี ให้ความสำคัญกับผลลัพธ์จริงมากกว่าคำพูดสวยหรู และเป็นฝ่ายสื่อสารเชิงรุก",
+    "key_points": [
+      "รู้ขอบเขตความรับผิดชอบ ไม่ก้าวก่ายเรื่องที่ไม่เข้าใจถ่องแท้",
+      "รักษาความสัมพันธ์ที่ใกล้ชิดพอดี ไม่เกินขอบเขต",
+      "เน้นผลลัพธ์จริงมากกว่าคำพูด",
+      "สื่อสารกระชับชัดเจน เรียงข้อสรุปก่อนรายละเอียด",
+      "มาถึงตรงเวลาและสื่อสารเชิงรุกกับผู้บังคับบัญชาอยู่เสมอ"
+    ],
+    "application_note": "เมื่อรายงานต่อผู้บริหารโรงพยาบาลหรือประธานคณะกรรมการระดับสูง หัวหน้าแผนกควรสรุปประเด็นสำคัญก่อนรายละเอียด และสื่อสารเชิงรุกเกี่ยวกับปัญหาของแผนกแทนการรอให้ผู้บริหารถามเอง"
+  },
+  {
+    "id": "p121",
+    "title_th": "การฟังความหมายแฝงในการสื่อสารที่ทำงาน",
+    "category": "การสื่อสาร",
+    "summary": "หลักการนี้ชี้ให้เห็นว่าคำพูดของหัวหน้างานหรือเพื่อนร่วมงานมักมีความหมายแฝงซ่อนอยู่เบื้องหลังคำพูดตรงๆ เสมอ ต้องฟังทั้งสิ่งที่พูดออกมาและสิ่งที่ไม่ได้พูดออกมาตรงๆ ไปพร้อมกัน และควรหลีกเลี่ยงการรายงานปัญหาแบบโยนความรับผิดชอบให้ผู้อื่นทันที",
+    "key_points": [
+      "คำพูดของหัวหน้ามักมีนัยแฝงมากกว่าความหมายตามตัวอักษร",
+      "คำตอบสั้นห้วนอาจทำให้ดูเย็นชาหรือขาดความใส่ใจ",
+      "คำตอบที่ดีควรแสดงความเข้าใจสถานการณ์พร้อมเสนอความช่วยเหลือ",
+      "ไม่ควรรีบรายงานปัญหาแบบโยนความรับผิดชอบให้ผู้อื่น"
+    ],
+    "application_note": "ในการประชุมคณะกรรมการหรือเมื่อผู้บริหารระดับสูงให้ความเห็นแบบอ้อมๆ หัวหน้าแผนกควรฝึกตีความนัยแฝงและตอบสนองด้วยข้อเสนอเชิงรุกแทนคำตอบสั้นๆ เพื่อสร้างความไว้วางใจในระยะยาว"
+  },
+  {
+    "id": "p122",
+    "title_th": "3 ขั้นตอนพัฒนาทักษะการสื่อสารและถ่ายทอดความคิด",
+    "category": "การสื่อสาร",
+    "summary": "กรอบนี้เสนอวิธีพัฒนาการพูดและการนำเสนอผ่าน 3 ขั้นตอนหลัก: กำหนดหัวข้อ (เข้าใจผู้ฟังและเป้าหมาย) วางโครงสร้าง (ลำดับเวลา / ปัญหา-แก้ไข / FABE / SCQA) และเติมเนื้อหา (ข้อมูลสนับสนุนหรือการเล่าเรื่อง)",
+    "key_points": [
+      "กำหนดหัวข้อ: ระบุผู้ฟังและเป้าหมายให้ชัดเจนก่อนพูด",
+      "วางโครงสร้าง: เลือกใช้ลำดับเวลา ปัญหา-แก้ไข FABE หรือ SCQA",
+      "เติมเนื้อหา: ใช้ข้อมูลสนับสนุนอย่างเป็นเหตุเป็นผล",
+      "โครงสร้างที่ชัดเจนช่วยให้เนื้อหาเข้าใจง่ายและน่าเชื่อถือมากขึ้น"
+    ],
+    "application_note": "เมื่อนำเสนอผลการรักษาหรือรายงานตัวชี้วัดคุณภาพต่อคณะกรรมการโรงพยาบาล ควรกำหนดหัวข้อและเลือกโครงสร้างแบบปัญหา-สาเหตุ-แนวทางแก้ไข ก่อนเติมข้อมูลสนับสนุน"
+  },
+  {
+    "id": "p123",
+    "title_th": "แผนผังธุรกิจส่วนบุคคล (Personal Business Model Canvas)",
+    "category": "การพัฒนาตนเอง",
+    "summary": "หลักการนี้นำ Business Model Canvas มาปรับใช้กับการบริหารและพัฒนาตนเอง โดยให้มองตนเองเสมือนกำลังบริหารองค์กรหนึ่งแห่งผ่าน 9 องค์ประกอบ เช่น พันธมิตรหลัก คุณค่าที่นำเสนอ กลุ่มเป้าหมาย ทรัพยากรหลัก และกระแสรายได้",
+    "key_points": [
+      "พันธมิตรหลัก: ใครสามารถช่วยสนับสนุนเราได้บ้าง",
+      "คุณค่าที่นำเสนอ: เรามอบคุณค่าอะไรให้ผู้อื่นได้บ้าง",
+      "กลุ่มเป้าหมาย: เราให้บริการหรือส่งมอบคุณค่าแก่ใคร",
+      "ทรัพยากรหลักและโครงสร้างต้นทุน: ต้องลงทุนอะไรบ้างเพื่อพัฒนาตนเอง"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถใช้แผนผังนี้ทบทวนเส้นทางอาชีพของตนเอง โดยระบุคุณค่าที่นำเสนอต่อองค์กร กลุ่มผู้รับบริการ และเครือข่ายพันธมิตรที่สนับสนุนงาน"
+  },
+  {
+    "id": "p124",
+    "title_th": "8 ข้อควรระวังในที่ทำงานของพนักงานยอดเยี่ยม",
+    "category": "การพัฒนาตนเอง",
+    "summary": "เนื้อหานี้รวบรวมข้อควรระวัง 8 ประการที่แม้แต่พนักงานที่มีผลงานดีก็อาจพลาดพลั้ง เช่น ควบคุมอารมณ์ไม่ให้ส่งผลกระทบต่อผู้อื่น ไม่เชื่อมั่นในอิทธิพลของความสัมพันธ์มากเกินไป และเมื่อไม่แน่ใจควรถามให้ชัดเจนแทนการด่วนตัดสินใจเอง",
+    "key_points": [
+      "ควบคุมอารมณ์ไม่ให้ส่งผลกระทบต่อการทำงานร่วมกับผู้อื่น",
+      "อย่าเชื่อมั่นในอิทธิพลของความสัมพันธ์มากเกินความสามารถจริง",
+      "เมื่อไม่แน่ใจควรถามให้ชัดเจน ไม่ควรด่วนตัดสินใจเอง",
+      "ให้ความเคารพและสื่อสารกับผู้บังคับบัญชาโดยตรงอย่างเหมาะสม"
+    ],
+    "application_note": "ผู้บริหารแผนกควรเป็นแบบอย่างในการควบคุมอารมณ์และหลีกเลี่ยงการพึ่งพาความสัมพันธ์ส่วนตัวมากเกินไป เพื่อรักษาความน่าเชื่อถือในสายตาทีมแพทย์และเจ้าหน้าที่ในระยะยาว"
+  },
+  {
+    "id": "p125",
+    "title_th": "50 นิสัยการทำงานอย่างมีประสิทธิภาพที่ควรฝึกฝน",
+    "category": "การพัฒนาตนเอง",
+    "summary": "เนื้อหานี้รวบรวมนิสัยการทำงานเชิงปฏิบัติจำนวนมากที่ช่วยเสริมประสิทธิภาพ ครอบคลุมตั้งแต่การรายงานเป็นลายลักษณ์อักษร การวางแผนเส้นทางอาชีพ การให้ความสำคัญกับงานสำคัญและเร่งด่วนก่อน ไปจนถึงมารยาทพื้นฐานในที่ทำงาน",
+    "key_points": [
+      "รายงานเป็นลายลักษณ์อักษรที่ชัดเจน และโทรศัพท์เมื่อเรื่องเร่งด่วน",
+      "วางแผนงานอย่างต่อเนื่องทั้งรายวัน รายสัปดาห์ รายเดือน และรายปี",
+      "ให้ความสำคัญกับงานที่สำคัญและเร่งด่วนเป็นอันดับแรก",
+      "หลีกเลี่ยงการนินทาและรักษาทัศนคติแบบมืออาชีพอยู่เสมอ"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถคัดเลือกนิสัยเหล่านี้ เช่น การจดบันทึกอย่างเป็นระบบและการวางแผนงานล่วงหน้ารายสัปดาห์-รายเดือน มาปรับใช้เพื่อบริหารทีมแพทย์ประจำบ้านและงานบริหารแผนกให้มีประสิทธิภาพมากขึ้น"
+  },
+  {
+    "id": "p126",
+    "title_th": "การเปลี่ยนแปลงเล็กๆ ที่ช่วยส่งเสริมการเติบโตส่วนบุคคล",
+    "category": "การพัฒนาตนเอง",
+    "summary": "หลักการนี้เสนอว่าการเปลี่ยนนิสัยเล็กๆ น้อยๆ ในชีวิตประจำวันสามารถส่งผลต่อการเติบโตส่วนบุคคลได้อย่างมีนัยสำคัญเมื่อสะสมไปเรื่อยๆ เช่น การตื่นเช้า การออกกำลังกาย การกำหนดเป้าหมายประจำวัน และการจัดกลุ่มงานที่คล้ายกัน",
+    "key_points": [
+      "ตื่นเช้าเพื่อวางแผนและจัดการงานได้อย่างเป็นระบบมากขึ้น",
+      "ออกกำลังกายวันละประมาณ 30 นาทีสม่ำเสมอ",
+      "กำหนดเป้าหมายประจำวันให้ชัดเจนก่อนเริ่มงาน",
+      "จัดกลุ่มงานลักษณะคล้ายกันให้ทำในช่วงเวลาเดียวกัน"
+    ],
+    "application_note": "การปรับนิสัยเล็กๆ เช่น การตื่นเช้าเพื่อวางแผนงานผ่าตัดและตรวจผู้ป่วยล่วงหน้า หรือกำหนดเป้าหมายประจำวันก่อนเริ่มงาน จะช่วยให้ศัลยแพทย์บริหารเวลาราชการที่แน่นได้อย่างมีประสิทธิภาพมากขึ้น"
+  },
+  {
+    "id": "p127",
+    "title_th": "6 ด้านของการบริหารการเติบโตส่วนบุคคล",
+    "category": "การพัฒนาตนเอง",
+    "summary": "กรอบนี้แบ่งการบริหารการเติบโตส่วนบุคคลออกเป็น 6 ด้าน ครอบคลุมทั้งกาย ใจ และความสัมพันธ์ ด้านความรู้ พลังงานทางกาย ความสัมพันธ์และอารมณ์ และการบริหารเวลาตามคุณค่าและความเร่งด่วน",
+    "key_points": [
+      "การรับ จัดระเบียบ และทำให้ความรู้เป็นส่วนหนึ่งของตนเอง",
+      "การจัดการด้านอาหารและการออกกำลังกายเพื่อพลังงานทางกาย",
+      "การดูแลความสัมพันธ์และการวางตัวต่อผู้อื่นด้วยความจริงใจ",
+      "การประเมินงานตามคุณค่า ความเร่งด่วน และความสำคัญ"
+    ],
+    "application_note": "หัวหน้าแผนกควรบริหารการเติบโตของตนเองอย่างรอบด้าน ทั้งด้านความรู้ทางวิชาการ พลังกาย อารมณ์ และการบริหารเวลา เพื่อรักษาสมดุลระหว่างงานผ่าตัด งานบริหาร และงานสอนแพทย์ประจำบ้าน"
+  },
+  {
+    "id": "p128",
+    "title_th": "12 กรอบความคิดชั้นยอดที่ช่วยให้เติบโตได้รวดเร็ว",
+    "category": "การคิดวิเคราะห์",
+    "summary": "กรอบนี้รวบรวม 12 รูปแบบความคิดที่ช่วยเร่งการเติบโต ได้แก่ กรอบความคิดระยะยาว กรอบความคิดแบบมองหาจุดเด่น กรอบความคิดแบบลงทุน กรอบความคิดที่มุ่งผลลัพธ์ กรอบความคิดเชิงโครงสร้าง กรอบความคิดแบบวนซ้ำ และกรอบความคิดแบบคำนึงถึงผู้อื่น",
+    "key_points": [
+      "กรอบความคิดระยะยาว: ไม่ยึดติดผลได้ผลเสียระยะสั้น",
+      "กรอบความคิดแบบลงทุนและมุ่งผลลัพธ์ในสิ่งที่สร้างคุณค่า",
+      "กรอบความคิดเชิงโครงสร้าง: ทำให้เรื่องซับซ้อนเข้าใจง่ายขึ้น",
+      "กรอบความคิดแบบวนซ้ำ: พัฒนากระบวนการอย่างต่อเนื่อง"
+    ],
+    "application_note": "ในการพัฒนาโครงการปรับปรุงคุณภาพของแผนก การใช้กรอบความคิดเชิงโครงสร้างและกรอบความคิดแบบวนซ้ำจะช่วยให้ทีมงานปรับปรุงกระบวนการดูแลผู้ป่วยได้อย่างเป็นระบบและต่อเนื่อง"
+  },
+  {
+    "id": "p129",
+    "title_th": "10 วิธีพัฒนาความสามารถในการคิดเชิงลึก",
+    "category": "การคิดวิเคราะห์",
+    "summary": "หลักการนี้เสนอ 10 องค์ประกอบที่ช่วยพัฒนาความสามารถในการคิดเชิงลึก เริ่มจากแรงจูงใจที่ชัดเจน การมองปัญหาเป็นระบบ การใช้การสื่อสารเพื่อตรวจสอบมุมมอง การมองหาแก่นแท้และสาเหตุที่แท้จริง และการจดจ่อกับประเด็นสำคัญ",
+    "key_points": [
+      "เริ่มจากแรงจูงใจที่ชัดเจนว่าทำไมต้องทำสิ่งนั้น",
+      "มองปัจจุบันจากมุมมองอนาคตเพื่อไม่ติดผลประโยชน์ระยะสั้น",
+      "มองปัญหาเป็นระบบและค้นหาแก่นแท้ที่แท้จริง",
+      "ใช้ตรรกะเชื่อมโยงแนวคิด หลักฐาน และข้อสรุป พร้อมจดจ่อกับสิ่งสำคัญ"
+    ],
+    "application_note": "เมื่อวิเคราะห์สาเหตุของภาวะแทรกซ้อนหรือปัญหาคุณภาพในแผนก ควรใช้การคิดเชิงระบบและมองหาแบบแผนที่เกิดซ้ำ เพื่อค้นหาสาเหตุที่แท้จริงแทนการแก้ปัญหาที่ผิวเผิน"
+  },
+  {
+    "id": "p130",
+    "title_th": "เทคนิคการตอบอย่างมีชั้นเชิงเพื่อยกระดับความฉลาดทางอารมณ์",
+    "category": "การสื่อสาร",
+    "summary": "หลักการนี้เสนอเทคนิคปรับคำตอบสั้นๆ ห้วนๆ ให้นุ่มนวลและอบอุ่นขึ้นเพื่อยกระดับความฉลาดทางอารมณ์ในการสื่อสาร การเพิ่มคำหรือปรับน้ำเสียงเพียงเล็กน้อยช่วยให้อีกฝ่ายรู้สึกว่าเราใส่ใจ จริงใจ และพร้อมให้ความร่วมมือมากขึ้น",
+    "key_points": [
+      "เติมคำตอบรับให้มีความรู้สึกแทนคำตอบสั้นห้วนเพียงคำเดียว",
+      "ปรับคำปฏิเสธให้นุ่มนวลพร้อมให้เหตุผลประกอบ",
+      "แสดงความขอโทษอย่างจริงใจแทนการพูดลอยๆ",
+      "หลีกเลี่ยงคำว่า \"อะไรก็ได้\" ที่ทำให้ดูขาดความคิดเห็นของตนเอง"
+    ],
+    "application_note": "เมื่อตอบคำขอจากทีมพยาบาลหรือแพทย์ประจำบ้าน ควรหลีกเลี่ยงคำตอบห้วนๆ เช่น \"ไม่ว่าง\" และใช้คำตอบที่นุ่มนวลกว่าเพื่อรักษาบรรยากาศการทำงานที่ดีในทีม"
+  },
+  {
+    "id": "p131",
+    "title_th": "การพัฒนาความสามารถในการควบคุมตนเอง",
+    "category": "การพัฒนาตนเอง",
+    "summary": "หลักการนี้เสนอวิธีฝึกการควบคุมตนเอง 5 ขั้นตอน กำหนดเป้าหมายให้ชัดเจน ใช้พฤติกรรมเชิงบวกทดแทนสิ่งที่ไม่ควรทำ ให้รางวัลตนเองเป็นขั้นตอนย่อย ออกกำลังกาย และฝึกหายใจและสมาธิ",
+    "key_points": [
+      "กำหนดเป้าหมายให้ชัดเจนเพื่อลดการถูกครอบงำโดยสิ่งเร้าฉับพลัน",
+      "ใช้พฤติกรรมเชิงบวกทดแทนพฤติกรรมที่ไม่ต้องการ",
+      "แบ่งเป้าหมายใหญ่เป็นขั้นตอนย่อยและให้รางวัลตนเองเมื่อสำเร็จ",
+      "ออกกำลังกายสม่ำเสมอเพื่อเพิ่มความสามารถในการควบคุมตนเอง"
+    ],
+    "application_note": "เพื่อรักษาวินัยในการขับเคลื่อนโครงการพัฒนาคุณภาพของแผนกอย่างต่อเนื่อง หัวหน้าแผนกอาจแบ่งเป้าหมายใหญ่ เช่น การผ่านการรับรองคุณภาพ ออกเป็นขั้นตอนย่อยพร้อมให้รางวัลตนเองเมื่อสำเร็จแต่ละขั้น"
+  },
+  {
+    "id": "p132",
+    "title_th": "8 ลำดับ \"ก่อน-หลัง\" เพื่อความก้าวหน้าในหน้าที่การงาน",
+    "category": "การพัฒนาตนเอง",
+    "summary": "กรอบนี้เสนอลำดับความคิดและการกระทำแบบ \"ก่อน-หลัง\" 8 สถานการณ์ที่ช่วยให้หน้าที่การงานก้าวหน้าขึ้นทีละขั้น เช่น เพิ่มคุณค่าก่อนแล้วการเลื่อนตำแหน่งจะตามมา หาจุดร่วมก่อนแล้วค่อยหารือความแตกต่าง",
+    "key_points": [
+      "เพิ่มคุณค่าและพิสูจน์ผลงานก่อน แล้วการเลื่อนตำแหน่งจะตามมาเอง",
+      "หาจุดร่วมก่อนแล้วค่อยหารือความแตกต่างเมื่อสื่อสาร",
+      "ทำงานให้เสร็จก่อนแล้วค่อยปรับปรุงให้สมบูรณ์",
+      "รับฟังก่อนแล้วค่อยสร้างความไว้วางใจในความสัมพันธ์"
+    ],
+    "application_note": "ก่อนเสนอขอปรับตำแหน่งหรือขยายบทบาทในคณะกรรมการ หัวหน้าแผนกควรพิสูจน์ผลงานและคุณค่าของตนเองให้ประจักษ์ก่อน แล้วความไว้วางใจและโอกาสในการเลื่อนตำแหน่งจะตามมาเองตามธรรมชาติ"
+  },
+  {
+    "id": "p133",
+    "title_th": "10 คุณสมบัติของคนที่มีความสามารถโดดเด่น",
+    "category": "การพัฒนาตนเอง",
+    "summary": "กรอบนี้สรุปคุณสมบัติร่วม 10 ประการของคนที่มีความสามารถโดดเด่น มีทิศทางที่ชัดเจน คิดอย่างเป็นระบบ มองข้ามสิ่งที่ปรากฏภายนอกเพื่อเข้าใจแก่นแท้ กล้าเผชิญความท้าทาย และเก่งในการสรุปบทเรียน",
+    "key_points": [
+      "มีทิศทางและเป้าหมายที่ชัดเจน",
+      "คิดอย่างเป็นระบบและให้ความสำคัญกับความเป็นจริง",
+      "มองเห็นแก่นแท้และสาเหตุที่แท้จริงของปัญหา",
+      "สรุปบทเรียนจากข้อผิดพลาดเพื่อพัฒนาระบบความสามารถของตนเอง"
+    ],
+    "application_note": "การฝึกให้แพทย์ประจำบ้านมีคุณสมบัติเหล่านี้ เช่น การคิดอย่างเป็นระบบและกล้าเผชิญเคสที่ท้าทาย จะช่วยพัฒนาศักยภาพของทีมในระยะยาว"
+  },
+  {
+    "id": "p134",
+    "title_th": "6 สาเหตุที่ทำให้ขาดความสามารถในการลงมือทำ",
+    "category": "การพัฒนาตนเอง",
+    "summary": "กรอบนี้วิเคราะห์ 6 สาเหตุหลักที่ทำให้คนรู้ตัวว่าควรทำแต่ไม่สามารถลงมือทำได้จริง เช่น ตั้งความคาดหวังสูงเกินไป มีตัวเลือกมากเกินไป ขาดการจดจ่อ ทิศทางความคิดไม่ชัดเจน และขาดข้อมูลป้อนกลับ",
+    "key_points": [
+      "ตั้งความคาดหวังสูงเกินความเป็นจริงจนไม่กล้าเริ่มลงมือ",
+      "มีตัวเลือกหรือเป้าหมายมากเกินไปจนทุ่มเทไม่เต็มที่",
+      "ทิศทางความคิดไม่ชัดเจนเพราะไม่แบ่งงานเป็นขั้นตอนย่อย",
+      "ขาดแรงจูงใจภายในและขาดกลไกข้อมูลป้อนกลับ"
+    ],
+    "application_note": "เมื่อทีมงานหรือแพทย์ประจำบ้านผัดวันประกันพรุ่งในการทำงานวิจัยหรือโครงการพัฒนาคุณภาพ ควรช่วยแบ่งเป้าหมายใหญ่เป็นขั้นตอนย่อยที่ชัดเจนและสร้างระบบติดตามผลป้อนกลับเป็นระยะ"
+  },
+  {
+    "id": "p135",
+    "title_th": "คำเปรียบเทียบบุคลิก 12 แบบในที่ทำงาน",
+    "category": "การบริหารทีม",
+    "summary": "กรอบนี้เปรียบเทียบบุคลิกภาพการทำงาน 12 แบบผ่านสัตว์สัญลักษณ์ พร้อมจุดแข็งและข้อควรระวังของแต่ละแบบ เช่น เสือ แรด หมาป่า เสือชีตาห์ สิงโต ม้า นกยูง วัว แกะ นกฮูก และโคอาลา",
+    "key_points": [
+      "เสือและหมาป่า: มุ่งมั่นและกล้าริเริ่ม แต่ควรระวังความใจร้อน",
+      "แรดและม้า: มั่นคงมีวินัย แต่ควรเพิ่มความยืดหยุ่น",
+      "สิงโตและเสือชีตาห์: เด็ดขาดรวดเร็ว แต่ควรรับฟังผู้อื่นมากขึ้น",
+      "แกะ นกฮูก และโคอาลา: รอบคอบเอาใจใส่ แต่ควรกล้าตัดสินใจมากขึ้น"
+    ],
+    "application_note": "หัวหน้าแผนกสามารถใช้กรอบบุคลิกทั้ง 12 แบบนี้ทำความเข้าใจสไตล์การทำงานของแพทย์ประจำบ้านและเจ้าหน้าที่แต่ละคน เพื่อมอบหมายงานและบริหารทีมให้เหมาะกับจุดแข็งของแต่ละคน"
+  },
+  {
+    "id": "p136",
+    "title_th": "สูตรพลิกแรงกดดันในที่ทำงานให้เป็นโอกาสเติบโต",
+    "category": "การพัฒนาตนเอง",
+    "summary": "หลักการนี้เสนอสูตร \"ความกดดันในการทำงาน x มุมมองที่ถูกต้อง = ระดับการเติบโต\" วิธีเปลี่ยนแรงกดดันให้เป็นพลังเชิงบวกมี 4 ขั้นตอนคือ บันทึกข้อเท็จจริง ตระหนักรู้และปรับอารมณ์ ระบุบทเรียน และกำหนดภารกิจที่ท้าทายเป็นระยะ",
+    "key_points": [
+      "สูตรหลัก: ความกดดัน x มุมมองที่ถูกต้อง = ระดับการเติบโต",
+      "บันทึกข้อเท็จจริงของสถานการณ์อย่างเป็นกลาง",
+      "ตระหนักรู้และปรับอารมณ์ของตนเองก่อนตอบสนอง",
+      "กำหนดภารกิจท้าทายเป็นระยะและติดตามผลงานส่วนบุคคลอย่างเป็นรูปธรรม"
+    ],
+    "application_note": "เมื่อรู้สึกกดดันจากภาระงานบริหารที่ซ้อนทับกับงานผ่าตัด ควรบันทึกสถานการณ์อย่างเป็นกลาง ควบคุมอารมณ์ และมองหาบทเรียนเพื่อพัฒนาแนวทางบริหารแผนกให้ดีขึ้นอย่างเป็นระบบ"
+  },
+  {
+    "id": "p137",
+    "title_th": "9 ความสามารถสำคัญที่จำเป็นต่อการพัฒนาตนเอง (บันไดความก้าวหน้าในอาชีพ)",
+    "category": "การพัฒนาตนเอง",
+    "summary": "กรอบนี้เป็นบันได 9 ขั้นของความสามารถที่จำเป็นต่อการพัฒนาตนเองในเส้นทางอาชีพ ตั้งแต่การคิดเชิงลึก การสื่อสาร การบริหารเวลา นิสัยในที่ทำงาน การบริหารทีมขนาดเล็ก ไปจนถึงการคิดเชิงกลยุทธ์และการวางแผนอาชีพ",
+    "key_points": [
+      "พื้นฐาน: การคิดเชิงลึกและการตัดสินใจอย่างมีประสิทธิภาพ",
+      "ระดับกลาง: การสื่อสาร การบริหารเวลา และนิสัยการทำงาน",
+      "จุดเปลี่ยนสู่ผู้จัดการ: การบริหารทีมขนาดเล็กและความสัมพันธ์กับผู้บังคับบัญชา",
+      "ระดับสูงสุด: การวางแผนอาชีพและการยกระดับความสามารถทางการเงิน"
+    ],
+    "application_note": "กรอบนี้ช่วยให้หัวหน้าแผนกวางแผนพัฒนาตนเองเป็นลำดับขั้น ตั้งแต่การคิดเชิงลึกและการสื่อสาร ไปจนถึงการบริหารทีมและการคิดเชิงกลยุทธ์ระดับองค์กร"
+  }
+];
+
+  const PRINCIPLE_CATEGORIES = [
+    { key: "การคิดวิเคราะห์", slug: "cat-analytical" },
+    { key: "กลยุทธ์องค์กร", slug: "cat-strategy" },
+    { key: "การบริหารทีม", slug: "cat-team" },
+    { key: "การสื่อสาร", slug: "cat-comm" },
+    { key: "การพัฒนาตนเอง", slug: "cat-self" },
+    { key: "การประชุมและการตัดสินใจ", slug: "cat-meeting" },
+    { key: "การบริหารเวลา", slug: "cat-time" },
+    { key: "อื่นๆ", slug: "cat-other" },
+  ];
+  function catSlug(cat) {
+    const found = PRINCIPLE_CATEGORIES.find(c => c.key === cat);
+    return found ? found.slug : "cat-other";
+  }
+  let activePrincipleCat = "all";
+
+  function renderPrincipleChips() {
+    const wrap = document.getElementById("principleCatChips");
+    if (!wrap) return;
+    const counts = {};
+    principles.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
+    let chips = `<span class="chip ${activePrincipleCat === "all" ? "active" : ""}" data-cat="all">ทั้งหมด (${principles.length})</span>`;
+    chips += PRINCIPLE_CATEGORIES.filter(c => counts[c.key]).map(c =>
+      `<span class="chip ${activePrincipleCat === c.key ? "active" : ""}" data-cat="${c.key}">${c.key} (${counts[c.key]})</span>`
+    ).join("");
+    wrap.innerHTML = chips;
+    wrap.querySelectorAll(".chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        activePrincipleCat = chip.dataset.cat;
+        renderPrinciples();
+      });
+    });
+  }
+
+  function renderPrinciples() {
+    const listWrap = document.getElementById("principlesList");
+    const countWrap = document.getElementById("principlesCount");
+    if (!listWrap) return;
+    renderPrincipleChips();
+    const searchEl = document.getElementById("principleSearch");
+    const term = (searchEl ? searchEl.value : "").trim().toLowerCase();
+
+    const filtered = principles.filter(p => {
+      if (activePrincipleCat !== "all" && p.category !== activePrincipleCat) return false;
+      if (!term) return true;
+      const haystack = (p.title_th + " " + p.summary + " " + p.key_points.join(" ") + " " + p.application_note).toLowerCase();
+      return haystack.includes(term);
+    });
+
+    countWrap.innerHTML = `พบ <b>${filtered.length}</b> หลักการ จากทั้งหมด <b>${principles.length}</b> หลักการ`;
+
+    if (filtered.length === 0) {
+      listWrap.innerHTML = `<div class="principles-empty">ไม่พบหลักการที่ตรงกับคำค้นหา ลองคำอื่นหรือเลือก "ทั้งหมด"</div>`;
+      return;
+    }
+
+    listWrap.innerHTML = filtered.map((p, idx) => `
+      <details class="principle-card">
+        <summary>
+          <span class="p-num">${idx + 1}.</span>
+          <span class="p-title-text">${p.title_th}</span>
+          <span class="p-cat-badge ${catSlug(p.category)}">${p.category}</span>
+        </summary>
+        <div class="p-detail">
+          <div class="p-body">${p.summary}</div>
+          <ul class="p-keypoints">${p.key_points.map(k => `<li>${k}</li>`).join("")}</ul>
+          <div class="p-apply"><b>นำไปใช้กับคุณหมอ:</b> ${p.application_note}</div>
+        </div>
+      </details>
+    `).join("");
+  }
+  renderPrinciples();
+
+  const tabs = document.querySelectorAll('#tabs button');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  document.getElementById('lastUpdated').textContent =
+    'อัปเดตล่าสุด: ' + new Date().toLocaleString('th-TH', { dateStyle: 'medium', timeStyle: 'short' });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ความพร้อมจัดตั้ง CRC — รพ.มะเร็งอุบลราชธานี</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card-bg: #1a1d24;
+    --card-border: #2a2e38;
+    --text-main: #f0f0f2;
+    --text-dim: #9498a3;
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --green: #22c55e;
+    --gray: #4b5563;
+    --blue: #3b82f6;
+    --purple: #a78bfa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    padding: 16px;
+    padding-bottom: 60px;
+  }
+  header { margin-bottom: 20px; }
+  header h1 { font-size: 1.3rem; margin: 0 0 4px 0; }
+  header .subtitle { color: var(--text-dim); font-size: 0.82rem; }
+
+  .countdown-hero {
+    background: linear-gradient(135deg, #1a1d24, #232838);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .countdown-hero .label { font-size: 0.8rem; color: var(--text-dim); }
+  .countdown-hero .target { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+  .countdown-hero .num { font-size: 2.4rem; font-weight: 800; line-height: 1; }
+  .countdown-hero .num.urgent { color: var(--orange); }
+  .countdown-hero .num.ok { color: var(--green); }
+
+  .section { margin: 26px 0; }
+  .section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .section-desc { color: var(--text-dim); font-size: 0.78rem; margin-bottom: 14px; }
+
+  .progress-overview {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 18px;
+    flex-wrap: wrap;
+  }
+  .ring-wrap { position: relative; width: 96px; height: 96px; flex-shrink: 0; }
+  .ring-wrap svg { transform: rotate(-90deg); }
+  .ring-label {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.15rem; font-weight: 800;
+  }
+  .progress-stats { flex: 1; min-width: 200px; display: flex; gap: 18px; flex-wrap: wrap; }
+  .stat { }
+  .stat .n { font-size: 1.3rem; font-weight: 800; }
+  .stat .l { font-size: 0.72rem; color: var(--text-dim); }
+  .stat.mi .n { color: var(--green); }
+  .stat.check .n { color: var(--orange); }
+  .stat.kad .n { color: var(--red); }
+
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+  }
+  .role-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--gray);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .role-card.mi { border-left-color: var(--green); }
+  .role-card.check { border-left-color: var(--orange); }
+  .role-card.kad { border-left-color: var(--red); }
+  .role-card .role-name { font-weight: 600; font-size: 0.88rem; margin-bottom: 3px; }
+  .role-card .role-note { font-size: 0.76rem; color: var(--text-dim); margin-bottom: 6px; }
+  .badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .badge.mi { background: rgba(34,197,94,0.15); color: var(--green); }
+  .badge.check { background: rgba(245,158,11,0.15); color: var(--orange); }
+  .badge.kad { background: rgba(239,68,68,0.15); color: var(--red); }
+
+  table.checklist {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  table.checklist th {
+    text-align: left;
+    color: var(--text-dim);
+    font-weight: 600;
+    font-size: 0.72rem;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  table.checklist td {
+    padding: 10px 10px;
+    border-bottom: 1px solid var(--card-border);
+    vertical-align: top;
+  }
+  table.checklist tr:last-child td { border-bottom: none; }
+  .comp-name { font-weight: 600; }
+  .comp-note { color: var(--text-dim); font-size: 0.76rem; margin-top: 2px; }
+
+  .roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .phase-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 14px;
+  }
+  .phase-badge {
+    flex-shrink: 0;
+    width: 70px;
+    text-align: center;
+  }
+  .phase-badge .wk { font-size: 0.68rem; color: var(--text-dim); }
+  .phase-badge .num { font-size: 1.1rem; font-weight: 800; color: var(--purple); }
+  .phase-content .phase-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 4px; }
+  .phase-content ul { margin: 0; padding-left: 18px; font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+  .phase-content ul li b { color: var(--text-main); }
+
+  .benchmark-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-dim);
+  }
+  .benchmark-box b { color: var(--text-main); }
+
+  .updated { color: var(--text-dim); font-size: 0.72rem; margin-top: 24px; text-align: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ความพร้อมจัดตั้งศูนย์วิจัยทางคลินิก (CRC)</h1>
+  <div class="subtitle">โรงพยาบาลมะเร็งอุบลราชธานี — เตรียมรับการตรวจเยี่ยม</div>
+</header>
+
+<div class="countdown-hero">
+  <div>
+    <div class="label">เหลือเวลาก่อนกำหนดจัดตั้ง (รับตรวจเยี่ยม)</div>
+    <div class="target" id="targetDateText"></div>
+  </div>
+  <div class="num" id="countdownNum">-</div>
+</div>
+
+<div class="section">
+  <div class="section-title">ภาพรวมความพร้อม</div>
+  <div class="section-desc">คำนวณจากบุคลากรหลัก 10 ตำแหน่งที่จำเป็นสำหรับ CRC ตามแนวทางกรมการแพทย์</div>
+  <div class="progress-overview">
+    <div class="ring-wrap">
+      <svg width="96" height="96" viewBox="0 0 96 96">
+        <circle cx="48" cy="48" r="42" fill="none" stroke="#2a2e38" stroke-width="10"/>
+        <circle id="ringProgress" cx="48" cy="48" r="42" fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round"/>
+      </svg>
+      <div class="ring-label" id="ringLabel">-</div>
+    </div>
+    <div class="progress-stats">
+      <div class="stat mi"><div class="n">5</div><div class="l">มีแล้ว</div></div>
+      <div class="stat check"><div class="n">1</div><div class="l">ต้องประเมิน</div></div>
+      <div class="stat kad"><div class="n">4</div><div class="l">ยังขาด</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">บุคลากรหลักของ CRC</div>
+  <div class="section-desc">เทียบเคียงกับโครงสร้างทีม CRU รพ.มะเร็งอุดรธานี (ตัวอย่างต้นแบบ)</div>
+  <div class="role-grid" id="roleGrid"></div>
+</div>
+
+<div class="section">
+  <div class="section-title">Checklist 8 องค์ประกอบ (ตามแนวทางกรมการแพทย์)</div>
+  <div class="section-desc">สถานะเบื้องต้น — ควรทำ self-assessment ฉบับเต็มก่อนวันตรวจเยี่ยม</div>
+  <table class="checklist" id="checklistTable">
+    <thead>
+      <tr><th style="width:28px">#</th><th>องค์ประกอบ</th><th style="width:110px">สถานะ</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-title">แผนเริ่มต้น 2 เดือน</div>
+  <div class="section-desc">ลำดับความสำคัญ เน้นความพร้อมเชิงบริหาร/บุคลากรก่อน เพราะสร้างได้เร็วกว่าโครงสร้างทางกายภาพเต็มรูปแบบ</div>
+  <div class="roadmap" id="roadmap"></div>
+</div>
+
+<div class="section">
+  <div class="section-title">อ้างอิงต้นแบบ: CRU รพ.มะเร็งอุดรธานี</div>
+  <div class="benchmark-box">
+    ทีม CRU อุดรธานี ใช้บุคลากรเพียง <b>6 คน</b> (หัวหน้าหน่วย 1, แพทย์เชี่ยวชาญ 1, เภสัชกร 1, นักเทคนิคการแพทย์ 1, พยาบาลวิชาชีพ 1, นักวิชาการสาธารณสุข 1) ภายใต้ "กลุ่มงานวิจัย ถ่ายทอด และสนับสนุนวิชาการ" ที่มี EC เป็นหน่วยคู่ขนานรายงานตรงผู้อำนวยการ — ใช้เวลาจากเริ่มทำวิจัยทางคลินิก (2015) จนเปิดหน่วยอย่างเป็นทางการ (2023) ราว 8 ปี แต่ส่วนที่ทำได้เร็วคือ<b>โครงสร้างบุคลากรและระบบพิจารณาจริยธรรม</b> (ประชุม EC ทุกวันศุกร์แรกของเดือน ลงมติภายใน 4 สัปดาห์ แจ้งผลภายใน 2 สัปดาห์) — ส่วนพื้นที่กายภาพเต็มรูปแบบ (ห้องพักผู้ป่วยวิจัย 24 ชม.) เป็นขั้นที่ทำภายหลังได้ ไม่จำเป็นต้องพร้อมทันการตรวจเยี่ยมรอบนี้
+  </div>
+</div>
+
+<div class="updated" id="lastUpdated"></div>
+
+<script>
+  const TARGET_DATE = "2026-10-08"; // 2 เดือนจาก 8 ส.ค. 2569
+
+  const roles = [
+    { name: "หัวหน้าศูนย์วิจัยทางคลินิก (Director)", note: "คุณหมอดำรงตำแหน่ง Head of Clinical Research Center อยู่แล้ว", status: "mi" },
+    { name: "แพทย์นักวิจัย (PI)", note: "มีทีมแพทย์ที่ทำวิจัยอยู่แล้ว รวมถึงตัวคุณหมอเอง", status: "mi" },
+    { name: "คณะกรรมการจริยธรรมการวิจัยในคน (EC)", note: "เข้มแข็ง — จุดแข็งที่สุดของหน่วยงานตอนนี้", status: "mi" },
+    { name: "ผู้ประสานงานวิจัย (Research Coordinator)", note: "กลุ่มงานวิจัยให้คำปรึกษาและประสานงาน EC ได้ดีเยี่ยม", status: "mi" },
+    { name: "พยาบาลวิจัย / ทีมวิชาการพยาบาล", note: "มีทีมวิชาการและวิจัยทางการพยาบาลแล้ว", status: "mi" },
+    { name: "นักชีวสถิติ / Data Manager", note: "ยังไม่ทราบสถานะชัดเจน ต้องตรวจสอบว่ามีคนทำหน้าที่นี้อยู่แล้วหรือไม่ (อาจซ้อนกับกลุ่มงานวิจัย)", status: "check" },
+    { name: "เภสัชกรวิจัย", note: "ยังไม่มีในทีม — ต้นแบบอุดรมีเภสัชกรชำนาญการพิเศษประจำทีม", status: "kad" },
+    { name: "นักเทคนิคการแพทย์", note: "ยังไม่มีในทีม — จำเป็นสำหรับงานเก็บ/ตรวจสิ่งส่งตรวจงานวิจัย", status: "kad" },
+    { name: "เจ้าหน้าที่เวชระเบียน", note: "ยังไม่มีในทีม — จำเป็นสำหรับการเข้าถึงและจัดการข้อมูลผู้ป่วยในโครงการวิจัย", status: "kad" },
+    { name: "เจ้าหน้าที่การเงิน/พัสดุ", note: "ยังไม่มีในทีม — จำเป็นสำหรับงบประมาณ การเบิกจ่าย และพัสดุงานวิจัย", status: "kad" },
+  ];
+
+  const checklist = [
+    { name: "ก) บทบาทและหน้าที่ของศูนย์", note: "ยังไม่มีนโยบาย/วิสัยทัศน์/ภารกิจอย่างเป็นทางการในนาม CRC — ต้องจัดทำ", status: "check" },
+    { name: "ข) บุคลากรที่ปฏิบัติงาน", note: "มีบางส่วน (ดูรายละเอียดด้านบน) ขาด 4 ตำแหน่งสนับสนุน", status: "check" },
+    { name: "ค) การบริหารจัดการและกิจกรรม", note: "ยังไม่มี SOP ของศูนย์ ต้องจัดทำ", status: "kad" },
+    { name: "ง) หน่วยงานและเครือข่ายสนับสนุน", note: "มี EC เข้มแข็ง — ยังไม่ทราบว่ามีคณะกรรมการวิจัยประจำสถาบันแยกต่างหากหรือไม่", status: "check" },
+    { name: "จ) การบริการทางห้องปฏิบัติการ", note: "ยังขาดนักเทคนิคการแพทย์ในทีม อาจกระทบส่วนนี้", status: "kad" },
+    { name: "ฉ) การบริการทางเภสัชกรรม", note: "ยังไม่มีเภสัชกรในทีม", status: "kad" },
+    { name: "ช) การจัดหอวิจัยทางคลินิก", note: "ยังไม่มีข้อมูล — ไม่จำเป็นต้องพร้อมเต็มรูปแบบสำหรับการตรวจเยี่ยมรอบนี้", status: "check" },
+    { name: "ซ) การบริหารจัดการข้อมูล", note: "ยังไม่มีข้อมูล ต้องประเมินร่วมกับกลุ่มงานวิจัย", status: "check" },
+  ];
+
+  const roadmap = [
+    {
+      week: "สัปดาห์ 1-2", title: "ประกาศจัดตั้ง CRC อย่างเป็นทางการ",
+      items: [
+        "<b>ออกนโยบาย/คำสั่งแต่งตั้ง</b> CRC ต่อยอดจากกลุ่มงานวิจัยเดิมและ EC ที่มีอยู่",
+        "แต่งตั้งคุณหมอเป็นหัวหน้าศูนย์อย่างเป็นทางการ (เอกสารคำสั่ง)",
+        "กำหนดวิสัยทัศน์/ภารกิจ/โครงสร้างองค์กร โดยใช้แนวทางกรมการแพทย์เป็นต้นแบบ"
+      ]
+    },
+    {
+      week: "สัปดาห์ 2-4", title: "ขอตัวบุคลากร 4 ตำแหน่งที่ขาด",
+      items: [
+        "ทาบทามบุคลากรจากแผนก <b>เภสัชกรรม นักเทคนิคการแพทย์ เวชระเบียน การเงิน</b> อย่างน้อยแผนกละ 1 คน",
+        "ไม่จำเป็นต้องเต็มเวลา — ตามแนวทางกรมการแพทย์อนุญาตให้ปฏิบัติงานบางเวลาตามสัดส่วนที่เหมาะสม",
+        "อ้างอิงโมเดลอุดรที่ใช้ทีมเล็กเพียง 6 คนแต่ครบทุกบทบาทหลัก"
+      ]
+    },
+    {
+      week: "สัปดาห์ 3-5", title: "จัดทำ SOP เบื้องต้น",
+      items: [
+        "SOP การรับพิจารณาโครงการวิจัยเข้า EC/CRC",
+        "SOP การจัดการข้อมูลและเอกสารวิจัย",
+        "SOP การจัดเก็บยา/ผลิตภัณฑ์วิจัย (เมื่อมีเภสัชกรเข้าร่วมทีม)"
+      ]
+    },
+    {
+      week: "สัปดาห์ 5-6", title: "เตรียมพื้นที่ขั้นต่ำ",
+      items: [
+        "จัดห้องให้คำปรึกษา/ขอความยินยอมอาสาสมัคร อย่างน้อย 1 ห้อง",
+        "จัดพื้นที่เก็บเอกสารโครงการวิจัยแยกจากงานปกติ",
+        "ยังไม่จำเป็นต้องมีหอผู้ป่วยวิจัยเต็มรูปแบบสำหรับรอบตรวจเยี่ยมนี้"
+      ]
+    },
+    {
+      week: "สัปดาห์ 6-8", title: "Self-assessment และเตรียมเอกสาร",
+      items: [
+        "กรอก CRC checklist ฉบับเต็ม (แนวทางกรมการแพทย์ หน้า 30-32) ตามสถานะจริง",
+        "รวบรวมเอกสารประกอบการตรวจเยี่ยม",
+        "ซักซ้อมนำเสนอความพร้อมทีมกับผู้ตรวจเยี่ยม"
+      ]
+    },
+  ];
+
+  function daysUntil(dateStr) {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const target = new Date(dateStr + "T00:00:00");
+    return Math.round((target - today) / 86400000);
+  }
+
+  function renderCountdown() {
+    const days = daysUntil(TARGET_DATE);
+    const el = document.getElementById("countdownNum");
+    el.textContent = days >= 0 ? days + " วัน" : Math.abs(days) + " วันที่เกิน";
+    el.className = "num " + (days <= 14 ? "urgent" : "ok");
+    const d = new Date(TARGET_DATE + "T00:00:00");
+    document.getElementById("targetDateText").textContent =
+      "เป้าหมาย: " + d.toLocaleDateString("th-TH", { year: "numeric", month: "long", day: "numeric" });
+  }
+
+  function renderRing() {
+    const weights = { mi: 1, check: 0.5, kad: 0 };
+    const total = roles.length;
+    const score = roles.reduce((s, r) => s + weights[r.status], 0);
+    const pct = Math.round((score / total) * 100);
+    const circle = document.getElementById("ringProgress");
+    const r = 42, c = 2 * Math.PI * r;
+    circle.style.strokeDasharray = c;
+    circle.style.strokeDashoffset = c - (pct / 100) * c;
+    circle.style.stroke = pct >= 70 ? "#22c55e" : pct >= 40 ? "#f59e0b" : "#ef4444";
+    document.getElementById("ringLabel").textContent = pct + "%";
+  }
+
+  function statusLabel(s) {
+    return s === "mi" ? "มีแล้ว" : s === "check" ? "ต้องประเมิน" : "ยังขาด";
+  }
+
+  function renderRoles() {
+    const grid = document.getElementById("roleGrid");
+    grid.innerHTML = roles.map(r => `
+      <div class="role-card ${r.status}">
+        <div class="role-name">${r.name}</div>
+        <div class="role-note">${r.note}</div>
+        <span class="badge ${r.status}">${statusLabel(r.status)}</span>
+      </div>
+    `).join("");
+  }
+
+  function renderChecklist() {
+    const tbody = document.querySelector("#checklistTable tbody");
+    tbody.innerHTML = checklist.map((c, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td><div class="comp-name">${c.name}</div><div class="comp-note">${c.note}</div></td>
+        <td><span class="badge ${c.status}">${statusLabel(c.status)}</span></td>
+      </tr>
+    `).join("");
+  }
+
+  function renderRoadmap() {
+    const wrap = document.getElementById("roadmap");
+    wrap.innerHTML = roadmap.map(p => `
+      <div class="phase-card">
+        <div class="phase-badge"><div class="wk">${p.week}</div></div>
+        <div class="phase-content">
+          <div class="phase-title">${p.title}</div>
+          <ul>${p.items.map(it => `<li>${it}</li>`).join("")}</ul>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  renderCountdown();
+  renderRing();
+  renderRoles();
+  renderChecklist();
+  renderRoadmap();
+  document.getElementById("lastUpdated").textContent =
+    "อัปเดตล่าสุด: " + new Date().toLocaleString("th-TH", { dateStyle: "medium", timeStyle: "short" });
+  setInterval(renderCountdown, 60 * 60 * 1000);
+</script>
+
+</body>
+</html>
