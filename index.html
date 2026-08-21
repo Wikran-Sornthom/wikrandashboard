@@ -966,17 +966,15 @@
 
   // ===== งานจุกจิก: อบรม/ประชุมออนไลน์ที่ต้องเข้าร่วมตามวันเวลา (ตั้งเตือนจริงคู่กันแล้วผ่าน scheduled task) =====
   const trainingEvents = [
-    {
-      title: "TBS 2026: The Future of Breast Care — Innovation, Integration and Inspiration (Zoom, วันสุดท้าย)",
-      date: "2026-08-21", time: "08:00",
-      detail: "Meeting ID: 663 6262 0524",
-      link: "https://thairen.zoom.us/w/66362620524"
-    },
   ];
 
   function renderTrainingCards() {
     const wrap = document.getElementById("trainingCards");
     if (!wrap) return;
+    if (trainingEvents.length === 0) {
+      wrap.innerHTML = `<div class="empty-state">ไม่มีอบรม/ประชุมออนไลน์ที่นัดไว้ในระบบตอนนี้</div>`;
+      return;
+    }
     wrap.innerHTML = trainingEvents.map(t => `
       <div class="card blue">
         <div class="card-title">🎥 ${t.title}</div>
@@ -992,7 +990,6 @@
 
   // ===== งานบริหาร/กรรมการ: คัดลอกจาก committee-deadlines.html ด้วยมือ (sync ทุกครั้งที่ไฟล์นั้นมีการเปลี่ยนแปลง) =====
   const committeeItems = [
-    { title: "พิธีมอบรางวัล Poster Presentation / พิธีปิดการประชุม", sub: "งานประชุมวิชาการด้านโรคมะเร็ง ครั้งที่ 1 ปี 2569 · 13.00-13.30 น. · ห้องทับทิมสยาม 3 ชั้น 5", deadline: "2026-08-21" },
   ];
 
   // ===== รวมงานค้างทั้งหมดสำหรับแท็บภาพรวม =====
